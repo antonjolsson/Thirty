@@ -1,16 +1,12 @@
 package com.antware.thirty;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -20,13 +16,10 @@ import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
 
-    final static int SELECTED_CARD_ELEV = 2;
-    final static int UNSELECTED_CARD_ELEV = 0;
-
     TextView roundsView, scoreView, throwsView;
     Button throwButton;
     List<CardView> cardViews = new ArrayList<>();
-
+    ImageView[] diceViews = new ImageView[6];
 
     Game game = new Game();
 
@@ -35,7 +28,8 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initElements();
-        initUI();
+        game.initGame();
+        updateUI();
     }
 
     private void initElements() {
@@ -57,15 +51,34 @@ public class GameActivity extends AppCompatActivity {
                 cardViews.add((CardView) row.getChildAt(j));
             }
         }
+
+        table = findViewById(R.id.diceTable);
+        for (int i = 0; i < table.getChildCount(); i++) {
+            TableRow row = (TableRow) table.getChildAt(i);
+            for (int j = 0; j < row.getChildCount(); j++) {
+                diceViews[i * row.getChildCount() + j] = ((ImageView) row.getChildAt(j));
+            }
+        }
     }
 
     private void throwDice() {
-        //game.throwDice();
+        game.throwDice();
+        for (int i = 0; i < diceViews.length; i++) {
+            int d = 0;
+            switch (game.getDieFace(i)) {
+                case 1: d = R.drawable.die1; break;
+                case 2: d = R.drawable.die2; break;
+                case 3: d = R.drawable.die3; break;
+                case 4: d = R.drawable.die4; break;
+                case 5: d = R.drawable.die5; break;
+                case 6: d = R.drawable.die6; break;
+            }
+            diceViews[i].setImageResource(d);
+        }
+        updateUI();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void initUI() {
-        game.initGame();
+    private void updateUI() {
         setNumberInTextView(throwsView, game.getThrowsLeft());
         setNumberInTextView(scoreView, game.getScore());
         setNumberInTextView(roundsView, game.getRound());

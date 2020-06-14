@@ -9,15 +9,16 @@ public class Game {
     private int score;
     private int diceThrowsLeft;
 
-    private Die[] dices = new Die[6];
+    private Die[] dice = new Die[6];
     private Combination[] combs = new Combination[10];
 
     public void initGame() {
         round = 0;
         score = 0;
         diceThrowsLeft = MAX_THROWS;
-        for (Die die : dices)
-            die = new Die();
+        for (int i = 0; i < dice.length; i++) {
+            dice[i] = new Die();
+        }
         for (int i = 0; i < combs.length; i++)
             combs[i] = new Combination(i);
     }
@@ -28,7 +29,13 @@ public class Game {
     }
 
     public void throwDice() {
-
+        for (Die die : dice) {
+            die.throwDie();
+        }
+        if (--diceThrowsLeft == 0) {
+            round++;
+            diceThrowsLeft = MAX_THROWS;
+        }
     }
 
     public int getThrowsLeft() {
@@ -41,5 +48,9 @@ public class Game {
 
     public int getRound() {
         return round;
+    }
+
+    public int getDieFace(int i) {
+        return dice[i].getFace();
     }
 }
