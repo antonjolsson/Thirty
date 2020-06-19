@@ -1,5 +1,10 @@
 package com.antware.thirty;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+
 public class Game {
 
     private final static int MAX_ROUNDS = 10;
@@ -35,9 +40,22 @@ public class Game {
             round++;
             diceThrowsLeft = MAX_THROWS;
             isCombPicked = false;
+            if (pickedComb != null)
+                score += pickedComb.getPoints();
+            pickedComb = null;
         }
+        /*Die[] testDice = new Die[4];
+        testDice[0] = new Die();
+        testDice[1] = new Die();
+        testDice[2] = new Die();
+        testDice[3] = new Die();
+        testDice[0].setFace(1);
+        testDice[1].setFace(2);
+        testDice[2].setFace(3);
+        testDice[3].setFace(4);*/
+        Set<Set<List<Die>>> allDicePartitions = Combination.getPartitions(new ArrayList<>(Arrays.asList(dice)));
         for (Combination comb : combs) {
-            comb.computePoints(dice);
+            comb.computePoints(allDicePartitions, dice);
         }
     }
 
