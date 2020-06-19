@@ -95,9 +95,11 @@ public class GameActivity extends AppCompatActivity {
         cardView.setCardElevation(2);
         int bgColorId = getResources().getColor(R.color.colorAccent);
         cardView.setCardBackgroundColor(bgColorId);
+        updateFigures();
     }
 
     private void throwDice() {
+        int round = game.getRound();
         game.throwDice();
         for (int i = 0; i < diceViews.length; i++) {
             int d = 0;
@@ -112,7 +114,7 @@ public class GameActivity extends AppCompatActivity {
             diceViews[i].setImageResource(d);
         }
         updateFigures();
-        if (game.getThrowsLeft() == game.getMaxThrows()) {
+        if (round < game.getRound()) {
             for (CardView cardView : cardViews)
                 cardViewNotClicked(cardView);
         }
@@ -124,7 +126,7 @@ public class GameActivity extends AppCompatActivity {
         setNumberInTextView(roundsView, game.getRound());
         for (int i = 0; i < cardViews.size(); i++) {
             TextView text = (TextView) cardViews.get(i).getChildAt(0);
-            setCombPoints(text, game.getCombPoints(i));
+            setCombPoints(text, game.isCombPicked() ? game.getCombPoints(i) : -1);
         }
     }
 
@@ -135,8 +137,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setCombPoints(TextView text, int points) {
-        String pointStr = points + " P";
-        String newText = text.getText().toString().replaceAll("(\\d)+\\sP", pointStr);
+        String pointStr = "\n" + ((points >= 0) ? points + " P" : "");
+        String newText = text.getText().toString().replaceFirst("\\n.*", pointStr);
         text.setText(newText);
     }
 }
