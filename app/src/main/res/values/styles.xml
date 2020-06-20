@@ -27,11 +27,11 @@
 
     <style name="card">
         <item name="cardBackgroundColor">@color/colorAccent</item>
-        <item name="cardElevation">2dp</item>
+        <item name="cardElevation">@dimen/selectedCardElev</item>
     </style>
 
     <style name="invisibleCard">
-        <item name="cardElevation">0dp</item>
+        <item name="cardElevation">@dimen/nonSelectedCardElev</item>
         <item name="cardBackgroundColor">#00000000</item>
     </style>
 

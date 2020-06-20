@@ -86,4 +86,12 @@ public class Game {
     public int getMaxThrows() {
         return MAX_THROWS;
     }
+
+    public boolean isDiePicked(int index) {
+        return dice[index].isPicked();
+    }
+
+    public void setDiePicked(int index, boolean isPicked) {
+        dice[index].setPicked(isPicked);
+    }
 }

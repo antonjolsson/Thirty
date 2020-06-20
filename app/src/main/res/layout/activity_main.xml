@@ -67,28 +67,51 @@
             android:clipToPadding="false"
             android:gravity="center_horizontal">
 
-            <ImageView
-                android:id="@+id/diePlaceOne"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:contentDescription="@string/die_one"
-                android:elevation="10dp"
-                android:padding="5dp"
-                android:src="@drawable/die1" />
+            <androidx.cardview.widget.CardView
+                style="@style/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
 
-            <ImageView
-                android:id="@+id/diePlaceTwo"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:padding="5dp"
-                android:src="@drawable/die2" />
+                <ImageView
+                    android:id="@+id/diePlaceOne"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="#00FFD200"
+                    android:contentDescription="@string/die_one"
+                    android:elevation="10dp"
+                    android:padding="5dp"
+                    android:src="@drawable/die1" />
+            </androidx.cardview.widget.CardView>
 
-            <ImageView
-                android:id="@+id/diePlaceThree"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:padding="5dp"
-                android:src="@drawable/die3" />
+            <androidx.cardview.widget.CardView
+                style="@style/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/diePlaceTwo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:padding="5dp"
+                    android:src="@drawable/die2" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                style="@style/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible" >
+
+                <ImageView
+                    android:id="@+id/diePlaceThree"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:padding="5dp"
+                    android:src="@drawable/die3" />
+            </androidx.cardview.widget.CardView>
+
         </TableRow>
 
         <TableRow
@@ -96,27 +119,49 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal">
 
-            <ImageView
-                android:id="@+id/diePlaceFour"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:contentDescription="@string/die_one"
-                android:padding="5dp"
-                android:src="@drawable/die4" />
+            <androidx.cardview.widget.CardView
+                style="@style/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
 
-            <ImageView
-                android:id="@+id/diePlaceFive"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:padding="5dp"
-                android:src="@drawable/die5" />
+                <ImageView
+                    android:id="@+id/diePlaceFour"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:contentDescription="@string/die_one"
+                    android:padding="5dp"
+                    android:src="@drawable/die4" />
+            </androidx.cardview.widget.CardView>
 
-            <ImageView
-                android:id="@+id/diePlaceSix"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:padding="5dp"
-                android:src="@drawable/die6" />
+            <androidx.cardview.widget.CardView
+                style="@style/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/diePlaceFive"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:padding="5dp"
+                    android:src="@drawable/die5" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                style="@style/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/diePlaceSix"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:padding="5dp"
+                    android:src="@drawable/die6" />
+            </androidx.cardview.widget.CardView>
+
         </TableRow>
 
     </TableLayout>

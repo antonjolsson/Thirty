@@ -18,7 +18,7 @@ public class GameActivity extends AppCompatActivity {
 
     TextView roundsView, scoreView, throwsView;
     Button throwButton;
-    List<CardView> cardViews = new ArrayList<>();
+    List<CardView> combViews = new ArrayList<>();
     ImageView[] diceViews = new ImageView[6];
 
     Game game = new Game();
@@ -50,7 +50,22 @@ public class GameActivity extends AppCompatActivity {
         for (int i = 0; i < table.getChildCount(); i++) {
             TableRow row = (TableRow) table.getChildAt(i);
             for (int j = 0; j < row.getChildCount(); j++) {
-                diceViews[i * row.getChildCount() + j] = ((ImageView) row.getChildAt(j));
+                CardView cardView = (CardView) row.getChildAt(j);
+                ImageView diceView = (ImageView) cardView.getChildAt(0);
+                final int index = i * row.getChildCount() + j;
+                diceViews[index] = diceView;
+                setCardBackground(cardView, R.dimen.nonSelectedCardElev, R.color.transparent);
+                cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (game.isDiePicked(index)) {
+                            setDiePicked((CardView) view, index, false);
+                        }
+                        else {
+                            setDiePicked((CardView) view, index, true);
+                        }
+                    }
+                });
             }
         }
     }
@@ -61,7 +76,7 @@ public class GameActivity extends AppCompatActivity {
             final TableRow row = (TableRow) table.getChildAt(i);
             for (int j = 0; j < row.getChildCount(); j++) {
                 CardView cardView = (CardView) row.getChildAt(j);
-                cardViews.add(cardView);
+                combViews.add(cardView);
                 final int finalI = i;
                 final int finalJ = j;
                 cardView.setOnClickListener(new View.OnClickListener() {
@@ -70,19 +85,30 @@ public class GameActivity extends AppCompatActivity {
                         cardViewClicked((CardView) view, finalI * row.getChildCount() + finalJ);
                     }
                 });
-                cardViewNotClicked(cardView);
+                setCardViewNotClicked(cardView);
             }
         }
     }
 
-    private void cardViewNotClicked(CardView cardView) {
+    private void setDiePicked(CardView view, int index, boolean isPicked) {
+        int elevation = isPicked ? R.dimen.selectedCardElev : R.dimen.nonSelectedCardElev;
+        int color = isPicked ? R.color.colorAccent : R.color.transparent;
+        game.setDiePicked(index, isPicked);
+        setCardBackground(view, elevation, color);
+    }
+
+    private void setCardBackground(CardView cardView, int elevation, int color) {
+        cardView.setCardElevation(elevation);
+        int bgColorId = getResources().getColor(color);
+        cardView.setCardBackgroundColor(bgColorId);
+    }
+
+    private void setCardViewNotClicked(CardView cardView) {
         TextView text = (TextView) cardView.getChildAt(0);
         text.setTextColor(getResources().getColor(R.color.colorAccent));
         text.setShadowLayer(5, text.getShadowDx(), text.getShadowDy(),
                 text.getShadowColor());
-        cardView.setCardElevation(0);
-        int bgColorId = getResources().getColor(R.color.transparent);
-        cardView.setCardBackgroundColor(bgColorId);
+        setCardBackground(cardView, R.dimen.nonSelectedCardElev, R.color.transparent);
     }
 
     private void cardViewClicked(CardView cardView, int cardNum) {
@@ -92,9 +118,7 @@ public class GameActivity extends AppCompatActivity {
         text.setTextColor(getResources().getColor(R.color.blackSemiTransparent));
         text.setShadowLayer(0, text.getShadowDx(), text.getShadowDy(),
                 text.getShadowColor());
-        cardView.setCardElevation(2);
-        int bgColorId = getResources().getColor(R.color.colorAccent);
-        cardView.setCardBackgroundColor(bgColorId);
+        setCardBackground(cardView, R.dimen.selectedCardElev, R.color.colorAccent);
         updateFigures();
     }
 
@@ -115,8 +139,12 @@ public class GameActivity extends AppCompatActivity {
         }
         updateFigures();
         if (round < game.getRound()) {
-            for (CardView cardView : cardViews)
-                cardViewNotClicked(cardView);
+            for (CardView cardView : combViews)
+                setCardViewNotClicked(cardView);
+            for (int i = 0; i < diceViews.length; i++) {
+                ImageView diceView = diceViews[i];
+                setDiePicked((CardView) diceView.getParent(), i, false);
+            }
         }
     }
 
@@ -124,8 +152,8 @@ public class GameActivity extends AppCompatActivity {
         setNumberInTextView(throwsView, game.getThrowsLeft());
         setNumberInTextView(scoreView, game.getScore());
         setNumberInTextView(roundsView, game.getRound());
-        for (int i = 0; i < cardViews.size(); i++) {
-            TextView text = (TextView) cardViews.get(i).getChildAt(0);
+        for (int i = 0; i < combViews.size(); i++) {
+            TextView text = (TextView) combViews.get(i).getChildAt(0);
             setCombPoints(text, game.isCombPicked() ? game.getCombPoints(i) : -1);
         }
     }

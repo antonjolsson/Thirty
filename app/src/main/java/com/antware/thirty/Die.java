@@ -6,6 +6,7 @@ public class Die {
 
     Random random = new Random();
     private int face = 0;
+    private boolean isPicked;
 
     Die() {
         setFace(0);
@@ -21,5 +22,13 @@ public class Die {
 
     public int getFace() {
         return face;
+    }
+
+    public boolean isPicked() {
+        return isPicked;
+    }
+
+    public void setPicked(boolean isPicked) {
+        this.isPicked = isPicked;
     }
 }
