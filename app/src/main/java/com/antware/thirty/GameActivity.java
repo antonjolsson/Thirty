@@ -82,10 +82,13 @@ public class GameActivity extends AppCompatActivity {
                 cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        cardViewClicked((CardView) view, finalI * row.getChildCount() + finalJ);
+                        if (game.isCombPicked()) return;
+                        int cardNum = finalI * row.getChildCount() + finalJ;
+                        game.setPickedComb(cardNum);
+                        setCombinationClicked((CardView) view, true);
                     }
                 });
-                setCardViewNotClicked(cardView);
+                setCombinationClicked(cardView, false);
             }
         }
     }
@@ -103,22 +106,14 @@ public class GameActivity extends AppCompatActivity {
         cardView.setCardBackgroundColor(bgColorId);
     }
 
-    private void setCardViewNotClicked(CardView cardView) {
+    private void setCombinationClicked(CardView cardView, boolean isClicked) {
         TextView text = (TextView) cardView.getChildAt(0);
-        text.setTextColor(getResources().getColor(R.color.colorAccent));
-        text.setShadowLayer(5, text.getShadowDx(), text.getShadowDy(),
+        text.setTextColor(getResources().getColor(isClicked ? R.color.blackSemiTransparent : R.color.colorAccent));
+        text.setShadowLayer(isClicked ? 0 : 5, text.getShadowDx(), text.getShadowDy(),
                 text.getShadowColor());
-        setCardBackground(cardView, R.dimen.nonSelectedCardElev, R.color.transparent);
-    }
-
-    private void cardViewClicked(CardView cardView, int cardNum) {
-        if (game.isCombPicked()) return;
-        game.setPickedComb(cardNum);
-        TextView text = (TextView) cardView.getChildAt(0);
-        text.setTextColor(getResources().getColor(R.color.blackSemiTransparent));
-        text.setShadowLayer(0, text.getShadowDx(), text.getShadowDy(),
-                text.getShadowColor());
-        setCardBackground(cardView, R.dimen.selectedCardElev, R.color.colorAccent);
+        int elevation = isClicked ? R.dimen.selectedCardElev : R.dimen.nonSelectedCardElev;
+        int color = isClicked ? R.color.colorAccent : R.color.transparent;
+        setCardBackground(cardView, elevation, color);
         updateFigures();
     }
 
@@ -139,8 +134,8 @@ public class GameActivity extends AppCompatActivity {
         }
         updateFigures();
         if (round < game.getRound()) {
-            for (CardView cardView : combViews)
-                setCardViewNotClicked(cardView);
+            for (CardView combView : combViews)
+                setCombinationClicked(combView, false);
             for (int i = 0; i < diceViews.length; i++) {
                 ImageView diceView = diceViews[i];
                 setDiePicked((CardView) diceView.getParent(), i, false);
