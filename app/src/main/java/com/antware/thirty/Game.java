@@ -33,7 +33,8 @@ public class Game {
 
     public void throwDice() {
         for (Die die : dice) {
-            die.throwDie();
+            if (!die.isPicked())
+                die.throwDie();
         }
         Set<Set<List<Die>>> allDicePartitions = Combination.getPartitions(new ArrayList<>(Arrays.asList(dice)));
         for (Combination comb : combs) {
@@ -81,6 +82,9 @@ public class Game {
         pickedComb = combs[cardNum];
         pickedComb.setPickedComb(true);
         isCombPicked = true;
+
+        if (diceThrowsLeft == 0)
+            score += pickedComb.getPoints();
     }
 
     public int getMaxThrows() {

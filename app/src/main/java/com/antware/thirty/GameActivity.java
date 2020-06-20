@@ -29,6 +29,8 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initElements();
         game.initGame();
+
+        throwDice();
         updateFigures();
     }
 
@@ -118,6 +120,11 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void throwDice() {
+        if (game.getThrowsLeft() == 0) {
+            for (int i = 0; i < diceViews.length; i++) {
+                setDiePicked((CardView) diceViews[i].getParent(), i, false);
+            }
+        }
         int round = game.getRound();
         game.throwDice();
         for (int i = 0; i < diceViews.length; i++) {
@@ -136,10 +143,6 @@ public class GameActivity extends AppCompatActivity {
         if (round < game.getRound()) {
             for (CardView combView : combViews)
                 setCombinationClicked(combView, false);
-            for (int i = 0; i < diceViews.length; i++) {
-                ImageView diceView = diceViews[i];
-                setDiePicked((CardView) diceView.getParent(), i, false);
-            }
         }
     }
 
