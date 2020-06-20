@@ -11,6 +11,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,7 +106,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void setCardBackground(CardView cardView, int elevation, int color) {
         cardView.setCardElevation(elevation);
-        int bgColorId = getResources().getColor(color);
+        int bgColorId = getResources().getColor(color, null);
         cardView.setCardBackgroundColor(bgColorId);
     }
 
@@ -144,6 +146,9 @@ public class GameActivity extends AppCompatActivity {
             for (CardView combView : combViews)
                 setCombinationClicked(combView, false);
         }
+        if (game.getThrowsLeft() == 0)
+            throwButton.setText(R.string.next_round);
+        else throwButton.setText(R.string.throw_string);
     }
 
     private void updateFigures() {

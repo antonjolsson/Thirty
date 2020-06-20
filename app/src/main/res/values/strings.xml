@@ -4,7 +4,7 @@
     <string name="score">SCORE: 12</string>
     <string name="round">ROUND: 3</string>
     <string name="throws_left">THROWS LEFT: 2</string>
-    <string name="throw_button">THROW</string>
+    <string name="throw_string">THROW</string>
     <string name="low_combs">LOW\n9 P</string>
     <string name="four_combs">4\n12 P</string>
     <string name="five_combs">5\n10 P</string>
@@ -15,4 +15,5 @@
     <string name="ten_combs">10\n0 P</string>
     <string name="eleven_combs">11\n0 P</string>
     <string name="twelve_combs">12\n12 P</string>
+    <string name="next_round">NEXT ROUND</string>
 </resources>

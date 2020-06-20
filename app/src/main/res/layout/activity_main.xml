@@ -10,7 +10,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="19dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -56,6 +56,10 @@
 
     </LinearLayout>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="11dp" />
+
     <TableLayout
         android:id="@+id/diceTable"
         android:layout_width="match_parent"
@@ -68,7 +72,7 @@
             android:gravity="center_horizontal">
 
             <androidx.cardview.widget.CardView
-                style="@style/card"
+                style="@style/invisibleCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible">
@@ -85,7 +89,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                style="@style/card"
+                style="@style/invisibleCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible">
@@ -99,10 +103,10 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                style="@style/card"
+                style="@style/invisibleCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible" >
+                android:visibility="visible">
 
                 <ImageView
                     android:id="@+id/diePlaceThree"
@@ -135,7 +139,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                style="@style/card"
+                style="@style/invisibleCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible">
@@ -149,7 +153,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                style="@style/card"
+                style="@style/invisibleCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible">
@@ -168,7 +172,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="18dp" />
 
     <TextView
         android:id="@+id/throwTextView"
@@ -180,7 +184,9 @@
         android:fontFamily="@font/bangers"
         android:gravity="center|center_horizontal"
         android:outlineProvider="bounds"
-        android:padding="10dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="10dp"
         android:shadowColor="@android:color/black"
         android:shadowDx="4"
         android:shadowDy="4"
@@ -200,13 +206,13 @@
         android:gravity="center|center_horizontal|center_vertical"
         android:paddingStart="40dp"
         android:paddingEnd="40dp"
-        android:text="@string/throw_button"
+        android:text="@string/throw_string"
         android:textAlignment="gravity"
         android:textSize="24sp" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="23dp" />
+        android:layout_height="29dp" />
 
     <TableLayout
         android:id="@+id/combTable"
