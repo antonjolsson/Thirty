@@ -16,4 +16,7 @@
     <string name="eleven_combs">11\n0 P</string>
     <string name="twelve_combs">12\n12 P</string>
     <string name="next_round">NEXT ROUND</string>
+    <string name="game_over">GAME OVER</string>
+    <string name="show_score">SHOW SCORE</string>
+    <string name="new_game">NEW GAME</string>
 </resources>

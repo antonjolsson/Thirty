@@ -19,6 +19,8 @@ public class Game {
     private Combination pickedComb;
     private boolean isCombPicked;
 
+    private int[] roundScores = new int[MAX_ROUNDS];
+
     public void initGame() {
         round = 1;
         score = 0;
@@ -46,6 +48,7 @@ public class Game {
                 score += pickedComb.getPoints();
         }
         else if (diceThrowsLeft < 0) {
+            roundScores[round - 1] = pickedComb == null ? 0 : pickedComb.getPoints();
             round++;
             diceThrowsLeft += MAX_THROWS;
             isCombPicked = false;
@@ -97,5 +100,9 @@ public class Game {
 
     public void setDiePicked(int index, boolean isPicked) {
         dice[index].setPicked(isPicked);
+    }
+
+    public int getMaxRounds() {
+        return MAX_ROUNDS;
     }
 }

@@ -11,15 +11,13 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
 
     TextView roundsView, scoreView, throwsView;
-    Button throwButton;
+    Button throwButton, resultButton;
     List<CardView> combViews = new ArrayList<>();
     ImageView[] diceViews = new ImageView[6];
 
@@ -32,7 +30,7 @@ public class GameActivity extends AppCompatActivity {
         initElements();
         game.initGame();
 
-        throwDice();
+        onThrowButtonPressed();
         updateFigures();
     }
 
@@ -44,12 +42,24 @@ public class GameActivity extends AppCompatActivity {
         throwButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                throwDice();
+                onThrowButtonPressed();
+            }
+        });
+        resultButton = findViewById(R.id.resultButton);
+        resultButton.setVisibility(View.GONE);
+        resultButton.setEnabled(false);
+        resultButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showResult();
             }
         });
 
         initCombinations();
+        initDices();
+    }
 
+    private void initDices() {
         TableLayout table = findViewById(R.id.diceTable);
         for (int i = 0; i < table.getChildCount(); i++) {
             TableRow row = (TableRow) table.getChildAt(i);
@@ -72,6 +82,10 @@ public class GameActivity extends AppCompatActivity {
                 });
             }
         }
+    }
+
+    private void showResult() {
+
     }
 
     private void initCombinations() {
@@ -121,7 +135,7 @@ public class GameActivity extends AppCompatActivity {
         updateFigures();
     }
 
-    private void throwDice() {
+    private void onThrowButtonPressed() {
         if (game.getThrowsLeft() == 0) {
             for (int i = 0; i < diceViews.length; i++) {
                 setDiePicked((CardView) diceViews[i].getParent(), i, false);
@@ -129,6 +143,27 @@ public class GameActivity extends AppCompatActivity {
         }
         int round = game.getRound();
         game.throwDice();
+        setDiceFaces();
+        updateFigures();
+        if (round < game.getRound()) {
+            for (CardView combView : combViews)
+                setCombinationClicked(combView, false);
+        }
+        if (game.getThrowsLeft() == 0){
+            if (game.getRound() == game.getMaxRounds())
+                onGameOver();
+            else throwButton.setText(R.string.next_round);}
+        else throwButton.setText(R.string.throw_string);
+    }
+
+    private void onGameOver() {
+        throwsView.setText(R.string.game_over);
+        throwButton.setText(R.string.new_game);
+        resultButton.setEnabled(true);
+        resultButton.setVisibility(View.VISIBLE);
+    }
+
+    private void setDiceFaces() {
         for (int i = 0; i < diceViews.length; i++) {
             int d = 0;
             switch (game.getDieFace(i)) {
@@ -141,14 +176,6 @@ public class GameActivity extends AppCompatActivity {
             }
             diceViews[i].setImageResource(d);
         }
-        updateFigures();
-        if (round < game.getRound()) {
-            for (CardView combView : combViews)
-                setCombinationClicked(combView, false);
-        }
-        if (game.getThrowsLeft() == 0)
-            throwButton.setText(R.string.next_round);
-        else throwButton.setText(R.string.throw_string);
     }
 
     private void updateFigures() {
