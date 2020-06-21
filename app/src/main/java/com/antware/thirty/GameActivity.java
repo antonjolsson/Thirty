@@ -2,6 +2,7 @@ package com.antware.thirty;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.view.View;
@@ -23,12 +24,18 @@ public class GameActivity extends AppCompatActivity {
 
     Game game = new Game();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initElements();
+
+        initGameUI();
+    }
+
+    private void initGameUI() {
         game.initGame();
+        initElements();
 
         onThrowButtonPressed();
         updateFigures();
@@ -38,6 +45,7 @@ public class GameActivity extends AppCompatActivity {
         roundsView = findViewById(R.id.roundTextView);
         scoreView = findViewById(R.id.scoreTextView);
         throwsView = findViewById(R.id.throwTextView);
+        throwsView.setText(R.string.throws_left);
         throwButton = findViewById(R.id.throwButton);
         throwButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +97,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void initCombinations() {
+        combViews.clear();
         TableLayout table = findViewById(R.id.combTable);
         for (int i = 0; i < table.getChildCount(); i++) {
             final TableRow row = (TableRow) table.getChildAt(i);
@@ -159,6 +168,12 @@ public class GameActivity extends AppCompatActivity {
     private void onGameOver() {
         throwsView.setText(R.string.game_over);
         throwButton.setText(R.string.new_game);
+        throwButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initGameUI();
+            }
+        });
         resultButton.setEnabled(true);
         resultButton.setVisibility(View.VISIBLE);
     }

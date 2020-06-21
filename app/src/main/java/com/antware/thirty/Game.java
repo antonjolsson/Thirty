@@ -1,5 +1,7 @@
 package com.antware.thirty;
 
+import androidx.lifecycle.ViewModel;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +19,7 @@ public class Game {
     private Die[] dice = new Die[6];
     private Combination[] combs = new Combination[10];
     private Combination pickedComb;
-    private boolean isCombPicked;
+    //private boolean isCombPicked;
 
     private int[] roundScores = new int[MAX_ROUNDS];
 
@@ -25,7 +27,8 @@ public class Game {
         round = 1;
         score = 0;
         diceThrowsLeft = MAX_THROWS;
-        isCombPicked = false;
+        pickedComb = null;
+        //isCombPicked = false;
         for (int i = 0; i < dice.length; i++) {
             dice[i] = new Die();
         }
@@ -51,7 +54,7 @@ public class Game {
             roundScores[round - 1] = pickedComb == null ? 0 : pickedComb.getPoints();
             round++;
             diceThrowsLeft += MAX_THROWS;
-            isCombPicked = false;
+            //isCombPicked = false;
             pickedComb = null;
         }
 
@@ -78,13 +81,14 @@ public class Game {
     }
 
     public boolean isCombPicked() {
-        return isCombPicked;
+        //return isCombPicked;
+        return pickedComb != null;
     }
 
     public void setPickedComb(int cardNum) {
         pickedComb = combs[cardNum];
         pickedComb.setPickedComb(true);
-        isCombPicked = true;
+        //isCombPicked = true;
 
         if (diceThrowsLeft == 0)
             score += pickedComb.getPoints();
