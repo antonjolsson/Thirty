@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class Game {
 
-    private final static int MAX_ROUNDS = 10;
+    private final static int MAX_ROUNDS = 1;
     private final static int MAX_THROWS = 3;
 
     private int round = 1;
@@ -21,7 +21,10 @@ public class Game {
     private Combination pickedComb;
     //private boolean isCombPicked;
 
-    private int[] roundScores = new int[MAX_ROUNDS];
+    //private int[] roundScores = new int[MAX_ROUNDS];
+    private Combination[] roundCombs = new Combination[MAX_ROUNDS];
+    private int[] scorePerRound = new int[MAX_ROUNDS];
+    private String[] combPerRound = new String[MAX_ROUNDS];
 
     public void initGame() {
         round = 1;
@@ -51,7 +54,14 @@ public class Game {
                 score += pickedComb.getPoints();
         }
         else if (diceThrowsLeft < 0) {
-            roundScores[round - 1] = pickedComb == null ? 0 : pickedComb.getPoints();
+            //roundScores[round - 1] = pickedComb == null ? 0 : pickedComb.getPoints();
+            /*try {
+                roundCombs[round - 1] = pickedComb == null ? null : (Combination) pickedComb.clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }*/
+            scorePerRound[round - 1] = pickedComb == null ? 0 : pickedComb.getPoints();
+            combPerRound[round - 1] = pickedComb == null ? "NONE" : pickedComb.getName();
             round++;
             diceThrowsLeft += MAX_THROWS;
             //isCombPicked = false;
@@ -108,5 +118,17 @@ public class Game {
 
     public int getMaxRounds() {
         return MAX_ROUNDS;
+    }
+
+    public int[] getScorePerRound() {
+        return scorePerRound;
+    }
+
+    public String[] getCombPerRound() {
+        return combPerRound;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
     }
 }
