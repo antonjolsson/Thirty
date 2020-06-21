@@ -11,7 +11,8 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="19dp"
+        android:layout_height="11dp"
+        android:layout_marginTop="-20dp"
         android:layout_weight="0" />
 
     <TextView
@@ -26,13 +27,13 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="37dp"
+        android:layout_height="13dp"
         android:layout_weight="0" />
 
     <TableLayout
         android:id="@+id/scoreTable"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="0"
         android:paddingStart="10dp"
         android:paddingEnd="10dp">
@@ -520,7 +521,7 @@
                 android:text="5" />
         </TableRow>
 
-        <Space android:layout_height="24dp"></Space>
+        <Space android:layout_height="wrap_content"></Space>
 
         <TableRow
             android:layout_width="match_parent"
@@ -532,6 +533,7 @@
                 style="@style/smallText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingEnd="15dp"
@@ -544,7 +546,7 @@
 
             <TextView
                 android:id="@+id/totalScoreView"
-                style="@style/smallText"
+                style="@style/largeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
@@ -563,4 +565,22 @@
                 android:paddingEnd="0dp" />
         </TableRow>
     </TableLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_weight="0" />
+
+    <Button
+        android:id="@+id/scoreBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="0"
+        android:background="@color/colorAccent"
+        android:elevation="10dp"
+        android:fontFamily="@font/bangers"
+        android:text="@string/back"
+        android:textSize="24sp" />
+
 </LinearLayout>

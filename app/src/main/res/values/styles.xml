@@ -19,7 +19,7 @@
         <item name="android:shadowRadius">5</item>
     </style>
 
-    <style name="button">
+    <style name="cardButton">
         <item name="android:background">@color/colorAccent</item>
         <item name="elevation">2dp</item>
         <item name="android:textColor">@color/blackSemiTransparent</item>
