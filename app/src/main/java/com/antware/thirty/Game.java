@@ -1,7 +1,5 @@
 package com.antware.thirty;
 
-import androidx.lifecycle.ViewModel;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +7,7 @@ import java.util.Set;
 
 public class Game {
 
-    private final static int MAX_ROUNDS = 1;
+    private final static int NUM_ROUNDS = 2;
     private final static int MAX_THROWS = 3;
 
     private int round = 1;
@@ -22,9 +20,9 @@ public class Game {
     //private boolean isCombPicked;
 
     //private int[] roundScores = new int[MAX_ROUNDS];
-    private Combination[] roundCombs = new Combination[MAX_ROUNDS];
-    private int[] scorePerRound = new int[MAX_ROUNDS];
-    private String[] combPerRound = new String[MAX_ROUNDS];
+    private Combination[] roundCombs = new Combination[NUM_ROUNDS];
+    private int[] scorePerRound = new int[NUM_ROUNDS];
+    private String[] combPerRound = new String[NUM_ROUNDS];
 
     public void initGame() {
         round = 1;
@@ -117,7 +115,7 @@ public class Game {
     }
 
     public int getMaxRounds() {
-        return MAX_ROUNDS;
+        return NUM_ROUNDS;
     }
 
     public int[] getScorePerRound() {
