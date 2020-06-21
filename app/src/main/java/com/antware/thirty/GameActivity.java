@@ -2,12 +2,9 @@ package com.antware.thirty;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,15 +14,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity {
 
-    private static final String SCORE_MESSAGE = "com.example.geoquiz.SCORE_MESSAGE";
-    private static final String COMB_PER_ROUND_MESSAGE = "com.example.geoquiz.COMB_PER_ROUND_MESSAGE";
-    private static final String SCORE_PER_ROUND_MESSAGE = "com.example.geoquiz.SCORE_PER_ROUND_MESSAGE";
+    public static final String SCORE_MESSAGE = "com.example.geoquiz.SCORE_MESSAGE";
+    public static final String COMB_PER_ROUND_MESSAGE = "com.example.geoquiz.COMB_PER_ROUND_MESSAGE";
+    public static final String SCORE_PER_ROUND_MESSAGE = "com.example.geoquiz.SCORE_PER_ROUND_MESSAGE";
 
     private static final int DEBUG_COMB = 8;
 
@@ -70,7 +64,7 @@ public class GameActivity extends AppCompatActivity {
         resultButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showResult();
+                showDetailedScore();
             }
         });
 
@@ -103,8 +97,8 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void showResult() {
-        Intent intent = new Intent(this, ResultActivity.class);
+    private void showDetailedScore() {
+        Intent intent = new Intent(this, ScoreActivity.class);
         intent.putExtra(SCORE_MESSAGE, game.getScore());
         intent.putExtra(SCORE_PER_ROUND_MESSAGE, game.getScorePerRound());
         intent.putExtra(COMB_PER_ROUND_MESSAGE, game.getCombPerRound());

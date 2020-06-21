@@ -117,7 +117,19 @@ public class Combination implements Cloneable{
         return super.clone();
     }
 
-    public String getName() { return name.toString();
+    public String getName() {
+        return name.toString();
+    }
+
+    public int getNameAsInt() {
+        if (name == CombName.LOW) return 1;
+        else {
+            for (int i = 0; i < combNames.length; i++) {
+                if (combNames[i] == name)
+                    return i + LOWEST_NUM_VALUE - 1;
+            }
+        }
+        return -1;
     }
 
 }

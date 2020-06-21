@@ -7,7 +7,7 @@
     android:background="@drawable/background"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".ResultActivity">
+    tools:context=".ScoreActivity">
 
     <Space
         android:layout_width="match_parent"
@@ -30,6 +30,7 @@
         android:layout_weight="0" />
 
     <TableLayout
+        android:id="@+id/scoreTable"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0"
@@ -542,7 +543,7 @@
                 android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/pointsView11"
+                android:id="@+id/totalScoreView"
                 style="@style/smallText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
