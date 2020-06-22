@@ -42,7 +42,6 @@ public class ScoreActivity extends AppCompatActivity {
             score.setText(String.valueOf(scorePerRound[i]));
             comb.setText(getCombName(combPerRound[i]));
         }
-
     }
 
     private void initBackButton() {

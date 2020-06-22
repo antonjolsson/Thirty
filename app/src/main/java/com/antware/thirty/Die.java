@@ -12,6 +12,10 @@ public class Die {
         setFace(0);
     }
 
+    Die(int face) {
+        this.face = face;
+    }
+
     public void setFace(int face) {
         this.face = face;
     }

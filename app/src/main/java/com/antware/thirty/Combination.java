@@ -76,6 +76,7 @@ public class Combination implements Cloneable{
     public void setPickedComb(boolean isPicked) {
         this.isPicked = isPicked;
     }
+
     public void computePoints(Set<Set<List<Die>>> allPartitions, Die[] dice) {
         points = 0;
         if (name == CombName.LOW){
@@ -123,11 +124,14 @@ public class Combination implements Cloneable{
 
     public int getNameAsInt() {
         if (name == CombName.LOW) return 1;
-        else {
-            for (int i = 0; i < combNames.length; i++) {
-                if (combNames[i] == name)
-                    return i + LOWEST_NUM_VALUE - 1;
-            }
+        else return getOrderNumber() + LOWEST_NUM_VALUE - 1;
+    }
+
+    public int getOrderNumber() {
+
+        for (int i = 0; i < combNames.length; i++) {
+            if (combNames[i] == name)
+                return i;
         }
         return -1;
     }
