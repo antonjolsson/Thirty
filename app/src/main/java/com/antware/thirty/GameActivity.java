@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -160,6 +161,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void onThrowButtonPressed() {
+        playSound(R.raw.dice_roll_board_game_amp);
         if (game.getThrowsLeft() == 0) {
             for (int i = 0; i < diceViews.length; i++) {
                 setDiePicked((CardView) diceViews[i].getParent(), i, false);
@@ -176,6 +178,12 @@ public class GameActivity extends AppCompatActivity {
         if (game.getThrowsLeft() == 0)
             onNoThrowsLeft();
         else throwButton.setText(R.string.throw_string);
+    }
+
+    private void playSound(int soundId) {
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, soundId);
+        mediaPlayer.setVolume(1, 1);
+        mediaPlayer.start();
     }
 
     private void onNoThrowsLeft() {
