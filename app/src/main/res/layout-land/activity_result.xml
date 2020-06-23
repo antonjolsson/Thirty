@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".ScoreActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/largeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0"
+        android:padding="2dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:paddingBottom="2dp"
+        android:text="@string/detailed_results"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <TableLayout
+        android:id="@+id/scoreTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:gravity="bottom">
+
+            <TextView
+                android:id="@+id/roundView1"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_weight="1"
+                android:gravity="bottom|center_horizontal"
+                android:includeFontPadding="false"
+                android:paddingEnd="10dp"
+                android:text="@string/results_round"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/pointsView1"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:includeFontPadding="false"
+                android:text="POINTS"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/combView1"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:includeFontPadding="false"
+                android:paddingStart="2dp"
+                android:text="COMBINATION"
+                android:textSize="18sp" />
+
+        </TableRow>
+
+        <TextView
+            android:id="@+id/divider2"
+            style="@style/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="13dp"
+            android:layout_gravity="top"
+            android:layout_weight="0"
+            android:gravity="center|top"
+            android:includeFontPadding="false"
+            android:shadowColor="#56000000"
+            android:text="̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ "
+            android:textColor="@color/colorAccent" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/roundView"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingEnd="15dp"
+                android:text="1"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/pointsView"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:text="18"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/combView"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingStart="15dp"
+                android:paddingEnd="0dp"
+                android:text="6"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="3dp">
+
+            <TextView
+                android:id="@+id/roundView2"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingEnd="15dp"
+                android:text="2"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/pointsView2"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:text="7"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/combView2"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:paddingStart="15dp"
+                android:paddingEnd="0dp"
+                android:text="LOW"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="3dp">
+
+            <TextView
+                android:id="@+id/roundView3"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingEnd="15dp"
+                android:text="3"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/pointsView3"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:text="22"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/combView3"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:paddingStart="15dp"
+                android:paddingEnd="0dp"
+                android:text="11"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="3dp">
+
+            <TextView
+                android:id="@+id/roundView12"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingEnd="15dp"
+                android:text="4"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/pointsView4"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:text="24"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/combView4"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:paddingStart="15dp"
+                android:paddingEnd="0dp"
+                android:text="12"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="3dp">
+
+            <TextView
+                android:id="@+id/roundView13"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingEnd="15dp"
+                android:text="5"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/pointsView5"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:text="18"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/combView5"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:paddingStart="15dp"
+                android:paddingEnd="0dp"
+                android:text="9"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="3dp">
+
+            <TextView
+                android:id="@+id/roundView14"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingEnd="15dp"
+                android:text="6"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/pointsView6"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:text="18"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/combView6"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:paddingStart="15dp"
+                android:paddingEnd="0dp"
+                android:text="6"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="3dp">
+
+            <TextView
+                android:id="@+id/roundView15"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingEnd="15dp"
+                android:text="7"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/pointsView7"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:text="20"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/combView7"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:paddingStart="15dp"
+                android:paddingEnd="0dp"
+                android:text="10"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="3dp">
+
+            <TextView
+                android:id="@+id/roundView16"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingEnd="15dp"
+                android:text="8"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/pointsView8"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:text="36"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/combView8"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:paddingStart="15dp"
+                android:paddingEnd="0dp"
+                android:text="6"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="3dp">
+
+            <TextView
+                android:id="@+id/roundView17"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingEnd="15dp"
+                android:text="9"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/pointsView9"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:text="24"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/combView9"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:paddingStart="15dp"
+                android:paddingEnd="0dp"
+                android:text="12"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="3dp">
+
+            <TextView
+                android:id="@+id/roundView18"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingEnd="15dp"
+                android:text="10"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/pointsView10"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:text="25"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/combView10"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:paddingStart="15dp"
+                android:paddingEnd="0dp"
+                android:text="5"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <Space android:layout_height="wrap_content" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="15dp">
+
+            <TextView
+                android:id="@+id/roundView20"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingEnd="15dp"
+                android:text="TOTAL"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/totalScoreView"
+                style="@style/largeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="0sp"
+                android:padding="2dp"
+                android:password="false"
+                android:text="236"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/combView11"
+                style="@style/smallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:paddingStart="15dp"
+                android:paddingEnd="0dp" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/scoreBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0"
+        android:background="@color/colorAccent"
+        android:elevation="10dp"
+        android:fontFamily="@font/bangers"
+        android:text="@string/back"
+        android:textSize="18sp" />
+
+</LinearLayout>
