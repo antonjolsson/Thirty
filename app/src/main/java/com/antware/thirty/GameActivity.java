@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
+import android.graphics.drawable.AnimationDrawable;
+import android.media.AudioAttributes;
+import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,6 +19,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -25,12 +30,17 @@ public class GameActivity extends AppCompatActivity {
 
     private static final String KEY_GAME = "game";
 
+    private static final int DICE_ROLL_SOUND_DUR = 600;
+    private static final int DICE_ANIMATION_FRAME_DUR = 100;
+
     TextView roundsView, scoreView, throwsView;
     Button throwButton, resultButton;
     List<CardView> combViews = new ArrayList<>();
     ImageView[] diceViews = new ImageView[6];
 
     Game game = new Game();
+    private int diceRollSound, selectDieSound, combPickSound;
+    private SoundPool soundPool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +49,18 @@ public class GameActivity extends AppCompatActivity {
 
         if (savedInstanceState != null){
             game = savedInstanceState.getParcelable(KEY_GAME);
-            initElements();
+            initElements(false);
             setDieFaces();
             updateFigures();
             if (game.getThrowsLeft() == 0)
                 onNoThrowsLeft();
         }
         else init();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override
@@ -56,16 +71,19 @@ public class GameActivity extends AppCompatActivity {
 
     private void init() {
         game.initGame();
-        initElements();
+        initElements(true);
         onThrowButtonPressed();
     }
 
-    private void initElements() {
+    private void initElements(boolean rollDice) {
+        loadSounds(rollDice);
+
         roundsView = findViewById(R.id.roundTextView);
         scoreView = findViewById(R.id.scoreTextView);
         throwsView = findViewById(R.id.throwTextView);
         throwsView.setText(R.string.throws_left);
         throwButton = findViewById(R.id.throwButton);
+        throwButton.setSoundEffectsEnabled(false);
         throwButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,12 +104,34 @@ public class GameActivity extends AppCompatActivity {
         initDice();
     }
 
+    private void loadSounds(final boolean rollDice) {
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .build();
+        soundPool = new SoundPool.Builder()
+                .setMaxStreams(5)
+                .setAudioAttributes(audioAttributes)
+                .build();
+        diceRollSound = soundPool.load(this, R.raw.dice_roll_board_game_amp, 0);
+        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                if (sampleId == diceRollSound && rollDice)
+                    soundPool.play(diceRollSound, 1.0f, 1.0f, 0, 0, 1.0f);
+            }
+        });
+        selectDieSound = soundPool.load(this, R.raw.browse_menu, 0);
+        combPickSound = soundPool.load(this, R.raw.lock, 0);
+    }
+
     private void initDice() {
         TableLayout table = findViewById(R.id.diceTable);
         for (int i = 0; i < table.getChildCount(); i++) {
             TableRow row = (TableRow) table.getChildAt(i);
             for (int j = 0; j < row.getChildCount(); j++) {
                 CardView cardView = (CardView) row.getChildAt(j);
+                cardView.setSoundEffectsEnabled(false);
                 ImageView diceView = (ImageView) cardView.getChildAt(0);
                 final int index = i * row.getChildCount() + j;
                 diceViews[index] = diceView;
@@ -99,7 +139,8 @@ public class GameActivity extends AppCompatActivity {
                 cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                            setDiePicked((CardView) view, index, !game.isDiePicked(index));
+                        soundPool.play(selectDieSound, 1, 1, 0, 0, 1);
+                        setDiePicked((CardView) view, index, !game.isDiePicked(index));
                     }
                 });
             }
@@ -123,6 +164,7 @@ public class GameActivity extends AppCompatActivity {
                 CardView cardView = (CardView) row.getChildAt(j);
                 combViews.add(cardView);
                 final int cardNum = i * row.getChildCount() + j;
+                cardView.setSoundEffectsEnabled(false);
                 cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -150,6 +192,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setCombinationClicked(CardView cardView, boolean isClicked) {
+        if (isClicked)
+            soundPool.play(combPickSound, 1, 1, 0, 0, 1);
         TextView text = (TextView) cardView.getChildAt(0);
         text.setTextColor(getResources().getColor(isClicked ? R.color.blackSemiTransparent : R.color.colorAccent));
         text.setShadowLayer(isClicked ? 0 : 5, text.getShadowDx(), text.getShadowDy(),
@@ -161,7 +205,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void onThrowButtonPressed() {
-        playSound(R.raw.dice_roll_board_game_amp);
+        soundPool.play(diceRollSound, 1, 1, 0, 0, 1);
+        animateDice();
         if (game.getThrowsLeft() == 0) {
             for (int i = 0; i < diceViews.length; i++) {
                 setDiePicked((CardView) diceViews[i].getParent(), i, false);
@@ -169,7 +214,6 @@ public class GameActivity extends AppCompatActivity {
         }
         int round = game.getRound();
         game.throwDice();
-        setDieFaces();
         updateFigures();
         if (round < game.getRound()) {
             for (CardView combView : combViews)
@@ -180,10 +224,31 @@ public class GameActivity extends AppCompatActivity {
         else throwButton.setText(R.string.throw_string);
     }
 
-    private void playSound(int soundId) {
-        MediaPlayer mediaPlayer = MediaPlayer.create(this, soundId);
-        mediaPlayer.setVolume(1, 1);
-        mediaPlayer.start();
+    private void animateDice() {
+        for (int i = 0; i < diceViews.length; i++) {
+            if (game.isDiePicked(i)) continue;
+            diceViews[i].setImageResource(R.drawable.dice_animation);
+            Random random = new Random();
+            final AnimationDrawable animation = (AnimationDrawable) diceViews[i].getDrawable();
+            for (int j = 0; j < DICE_ROLL_SOUND_DUR / DICE_ANIMATION_FRAME_DUR; j++) {
+                int dieFace = random.nextInt(6) + 1;
+                animation.addFrame(Objects.requireNonNull(getDrawable(getDieFaceView(dieFace))), DICE_ANIMATION_FRAME_DUR);
+            }
+            Handler animationHandler = new Handler();
+            animationHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    animation.start();
+                }
+            });
+            animationHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    animation.stop();
+                    setDieFaces();
+                }
+            }, DICE_ROLL_SOUND_DUR);
+        }
     }
 
     private void onNoThrowsLeft() {
@@ -207,16 +272,19 @@ public class GameActivity extends AppCompatActivity {
 
     private void setDieFaces() {
         for (int i = 0; i < diceViews.length; i++) {
-            int d = 0;
-            switch (game.getDieFace(i)) {
-                case 1: d = R.drawable.die1; break;
-                case 2: d = R.drawable.die2; break;
-                case 3: d = R.drawable.die3; break;
-                case 4: d = R.drawable.die4; break;
-                case 5: d = R.drawable.die5; break;
-                case 6: d = R.drawable.die6; break;
-            }
+            int d = getDieFaceView(game.getDieFace(i));
             diceViews[i].setImageResource(d);
+        }
+    }
+
+    private int getDieFaceView(int dieFace) {
+        switch (dieFace) {
+            case 1: return R.drawable.die1;
+            case 2: return R.drawable.die2;
+            case 3: return R.drawable.die3;
+            case 4: return R.drawable.die4;
+            case 5: return R.drawable.die5;
+            case 6: default: return R.drawable.die6;
         }
     }
 

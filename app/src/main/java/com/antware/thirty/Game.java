@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class Game implements Parcelable {
 
-    private final static int NUM_ROUNDS = 10;
+    private final static int NUM_ROUNDS = 2;
     private final static int MAX_THROWS = 3;
 
     private int round = 1;
