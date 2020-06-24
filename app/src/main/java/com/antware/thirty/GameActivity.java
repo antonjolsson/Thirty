@@ -10,6 +10,7 @@ import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,6 +33,9 @@ public class GameActivity extends AppCompatActivity {
 
     private static final int DICE_ROLL_SOUND_DUR = 600;
     private static final int DICE_ANIMATION_FRAME_DUR = 100;
+    private static final int SCORE_ANIM_FRAME_DUR = 50;
+    private static final int COMB_PICKED_SOUND_DUR = 600;
+    private static final float INCREASE_POINT_VOLUME = 0.5f;
 
     TextView roundsView, scoreView, throwsView;
     Button throwButton, resultButton;
@@ -39,7 +43,7 @@ public class GameActivity extends AppCompatActivity {
     ImageView[] diceViews = new ImageView[6];
 
     Game game = new Game();
-    private int diceRollSound, selectDieSound, combPickSound;
+    private int diceRollSound, selectDieSound, combPickSound, increasePointsSound;
     private SoundPool soundPool;
 
     @Override
@@ -53,7 +57,7 @@ public class GameActivity extends AppCompatActivity {
             setDieFaces();
             updateFigures();
             if (game.getThrowsLeft() == 0)
-                onNoThrowsLeft();
+                onNoThrowsLeft(false);
         }
         else init();
     }
@@ -80,6 +84,7 @@ public class GameActivity extends AppCompatActivity {
 
         roundsView = findViewById(R.id.roundTextView);
         scoreView = findViewById(R.id.scoreTextView);
+        setNumberInTextView(scoreView, 0);
         throwsView = findViewById(R.id.throwTextView);
         throwsView.setText(R.string.throws_left);
         throwButton = findViewById(R.id.throwButton);
@@ -110,10 +115,10 @@ public class GameActivity extends AppCompatActivity {
                 .setUsage(AudioAttributes.USAGE_MEDIA)
                 .build();
         soundPool = new SoundPool.Builder()
-                .setMaxStreams(5)
+                .setMaxStreams(1)
                 .setAudioAttributes(audioAttributes)
                 .build();
-        diceRollSound = soundPool.load(this, R.raw.dice_roll_board_game_amp, 0);
+        diceRollSound = soundPool.load(this, R.raw.dice_roll_board_game_amp, 1);
         soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
@@ -122,7 +127,9 @@ public class GameActivity extends AppCompatActivity {
             }
         });
         selectDieSound = soundPool.load(this, R.raw.browse_menu, 0);
-        combPickSound = soundPool.load(this, R.raw.lock, 0);
+        combPickSound = soundPool.load(this, R.raw.lock, 1);
+        increasePointsSound = soundPool.load(this, R.raw.point, 0);
+
     }
 
     private void initDice() {
@@ -192,8 +199,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setCombinationClicked(CardView cardView, boolean isClicked) {
-        if (isClicked)
-            soundPool.play(combPickSound, 1, 1, 0, 0, 1);
+
         TextView text = (TextView) cardView.getChildAt(0);
         text.setTextColor(getResources().getColor(isClicked ? R.color.blackSemiTransparent : R.color.colorAccent));
         text.setShadowLayer(isClicked ? 0 : 5, text.getShadowDx(), text.getShadowDy(),
@@ -202,6 +208,19 @@ public class GameActivity extends AppCompatActivity {
         int color = isClicked ? R.color.colorAccent : R.color.transparent;
         setCardBackground(cardView, elevation, color);
         updateFigures();
+
+        if (isClicked) {
+            if (game.getThrowsLeft() == 0) {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        animateScoreIncrease();
+                    }
+                }, COMB_PICKED_SOUND_DUR);
+            }
+            soundPool.play(combPickSound, 1, 1, 0, 0, 1);
+        }
     }
 
     private void onThrowButtonPressed() {
@@ -220,7 +239,7 @@ public class GameActivity extends AppCompatActivity {
                 setCombinationClicked(combView, false);
         }
         if (game.getThrowsLeft() == 0)
-            onNoThrowsLeft();
+            onNoThrowsLeft(true);
         else throwButton.setText(R.string.throw_string);
     }
 
@@ -251,10 +270,14 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void onNoThrowsLeft() {
+    private void onNoThrowsLeft(boolean animateScore) {
         if (game.getRound() == game.getMaxRounds())
             onGameOver();
         else throwButton.setText(R.string.next_round);
+        if (game.isAnyCombPicked()){
+            if (animateScore) animateScoreIncrease();
+            else setNumberInTextView(scoreView, game.getScore());
+        }
     }
 
     private void onGameOver() {
@@ -290,12 +313,32 @@ public class GameActivity extends AppCompatActivity {
 
     private void updateFigures() {
         setNumberInTextView(throwsView, game.getThrowsLeft());
-        setNumberInTextView(scoreView, game.getScore());
+        //animateScoreIncrease();
         setNumberInTextView(roundsView, game.getRound());
         for (int i = 0; i < combViews.size(); i++) {
             TextView text = (TextView) combViews.get(i).getChildAt(0);
             setCombPoints(text, game.isAnyCombPicked() ? game.getCombPoints(i) : -1);
         }
+    }
+
+    private void animateScoreIncrease() {
+        final int oldScore = Integer.parseInt(scoreView.getText().toString().
+                replaceAll("[^\\d]", ""));
+
+        for (int i = 1; i <= game.getScore() - oldScore; i++) {
+            Handler animationHandler = new Handler();
+            final int finalI = i;
+            animationHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    setNumberInTextView(scoreView, oldScore + finalI);
+                    soundPool.play(increasePointsSound, INCREASE_POINT_VOLUME,
+                            INCREASE_POINT_VOLUME, finalI, 0, 1);
+                    Log.d("GameActivity", scoreView.getText().toString());
+                }
+            }, SCORE_ANIM_FRAME_DUR * i);
+        }
+
     }
 
     private void setNumberInTextView(TextView textView, int number) {
