@@ -36,10 +36,11 @@ public class GameActivity extends AppCompatActivity {
     private static final int DICE_ANIMATION_FRAME_DUR = 100;
     private static final int SCORE_ANIM_FRAME_DUR = 50;
     private static final int COMB_PICKED_SOUND_DUR = 600;
-    private static final float INCREASE_POINT_VOLUME = 0.5f;
-    private static final float MUSIC_VOLUME = 0.5f;
+    private static final float INCREASE_POINT_VOLUME = 0.3f;
+    private static final float LARGE_TEXT_SIZE = 24;
+    private static final float SMALL_TEXT_SIZE = 18;
 
-    TextView roundsView, scoreView, throwsView;
+    TextView roundsView, scoreView, throwsView, musicControlView;
     Button throwButton, resultButton;
     List<CardView> combViews = new ArrayList<>();
     ImageView[] diceViews = new ImageView[6];
@@ -49,6 +50,7 @@ public class GameActivity extends AppCompatActivity {
     private SoundPool soundPool;
 
     Intent musicIntent;
+    boolean playMusic = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,9 +108,35 @@ public class GameActivity extends AppCompatActivity {
                 showDetailedScore();
             }
         });
+        musicControlView = findViewById(R.id.playView);
+        musicControlView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleMusic();
+            }
+        });
+
+        musicIntent = new Intent(this, MusicService.class);
+        if (playMusic)
+            startService(musicIntent);
 
         initCombinations();
         initDice();
+    }
+
+    private void toggleMusic() {
+        if (playMusic) {
+            stopService(musicIntent);
+            musicControlView.setText(R.string.play);
+            musicControlView.setTextSize(LARGE_TEXT_SIZE);
+            playMusic = false;
+        }
+        else {
+            startService(musicIntent);
+            musicControlView.setText(R.string.pause);
+            musicControlView.setTextSize(SMALL_TEXT_SIZE);
+            playMusic = true;
+        }
     }
 
     private void loadSounds(final boolean rollDice) {

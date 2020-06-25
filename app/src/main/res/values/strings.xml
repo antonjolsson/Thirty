@@ -23,4 +23,7 @@
     <string name="results_round"><u>ROUND</u></string>
     <string name="top_score">̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅ ̅</string>
     <string name="back">BACK</string>
+    <string name="music">♫</string>
+    <string name="pause">❚❚</string>
+    <string name="play">►</string>
 </resources>

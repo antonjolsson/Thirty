@@ -5,14 +5,12 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 
-import androidx.annotation.Nullable;
-
 public class MusicService extends Service {
 
-    private static final String TAG = null;
     private static final float MUSIC_VOLUME = 0.5f;
 
     MediaPlayer player;
+    private static int currentPos = 0;
 
     public IBinder onBind(Intent arg0) {
 
@@ -27,33 +25,16 @@ public class MusicService extends Service {
 
     }
     public int onStartCommand(Intent intent, int flags, int startId) {
+        player.seekTo(currentPos);
         player.start();
         return START_STICKY;
     }
 
-    public void onStart(Intent intent, int startId) {
-        // TO DO
-    }
-
-    public void onStop() {
-        player.pause();
-    }
-    public void onPause() {
-        player.pause();
-    }
-
-    public void onResume() {
-        player.start();
-    }
-
     @Override
     public void onDestroy() {
+        currentPos = player.getCurrentPosition();
         player.stop();
         player.release();
     }
 
-    @Override
-    public void onLowMemory() {
-
-    }
 }
