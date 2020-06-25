@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioAttributes;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,6 +37,7 @@ public class GameActivity extends AppCompatActivity {
     private static final int SCORE_ANIM_FRAME_DUR = 50;
     private static final int COMB_PICKED_SOUND_DUR = 600;
     private static final float INCREASE_POINT_VOLUME = 0.5f;
+    private static final float MUSIC_VOLUME = 0.5f;
 
     TextView roundsView, scoreView, throwsView;
     Button throwButton, resultButton;
@@ -45,6 +47,8 @@ public class GameActivity extends AppCompatActivity {
     Game game = new Game();
     private int diceRollSound, selectDieSound, combPickSound, increasePointsSound;
     private SoundPool soundPool;
+
+    Intent musicIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +67,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(KEY_GAME, game);
@@ -81,6 +80,9 @@ public class GameActivity extends AppCompatActivity {
 
     private void initElements(boolean rollDice) {
         loadSounds(rollDice);
+
+        musicIntent = new Intent(this, MusicService.class);
+        startService(musicIntent);
 
         roundsView = findViewById(R.id.roundTextView);
         scoreView = findViewById(R.id.scoreTextView);
@@ -338,7 +340,6 @@ public class GameActivity extends AppCompatActivity {
                 }
             }, SCORE_ANIM_FRAME_DUR * i);
         }
-
     }
 
     private void setNumberInTextView(TextView textView, int number) {
