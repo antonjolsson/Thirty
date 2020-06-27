@@ -11,6 +11,42 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textView3"
+            style="@style/smallText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-2dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/music"
+            android:textSize="30sp" />
+
+        <Space
+            android:layout_width="7dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/playView"
+            style="@style/smallText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:text="@string/pause"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center|center_horizontal"
         android:orientation="horizontal">
@@ -77,7 +113,7 @@
                     android:contentDescription="@string/die_one"
                     android:elevation="10dp"
                     android:padding="5dp"
-                    android:src="@drawable/die1" />
+                    android:src="@drawable/die1grad" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -91,7 +127,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:padding="5dp"
-                    android:src="@drawable/die2" />
+                    android:src="@drawable/die2grad" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -105,7 +141,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:padding="5dp"
-                    android:src="@drawable/die3" />
+                    android:src="@drawable/die3grad" />
             </androidx.cardview.widget.CardView>
 
         </TableRow>
@@ -127,7 +163,7 @@
                     android:layout_height="70dp"
                     android:contentDescription="@string/die_one"
                     android:padding="5dp"
-                    android:src="@drawable/die4" />
+                    android:src="@drawable/die4grad" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -141,7 +177,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:padding="5dp"
-                    android:src="@drawable/die5" />
+                    android:src="@drawable/die5grad" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -155,7 +191,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:padding="5dp"
-                    android:src="@drawable/die6" />
+                    android:src="@drawable/die6grad" />
             </androidx.cardview.widget.CardView>
 
         </TableRow>

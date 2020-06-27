@@ -3,19 +3,53 @@ package com.antware.thirty;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Binder;
 import android.os.IBinder;
 
-public class MusicService extends Service {
+public class MusicService extends Service implements MediaPlayer.OnErrorListener{
 
     private static final float MUSIC_VOLUME = 0.5f;
+    private final IBinder mBinder = new ServiceBinder();
 
     MediaPlayer player;
-    private static int currentPos = 0;
+    private int currentPos = 0;
 
     public IBinder onBind(Intent arg0) {
-
-        return null;
+        return mBinder;
     }
+
+    public class ServiceBinder extends Binder {
+        MusicService getService() {
+            return MusicService.this;
+        }
+    }
+
+    public void pauseMusic()
+    {
+        if(player.isPlaying())
+        {
+            player.pause();
+            currentPos = player.getCurrentPosition();
+
+        }
+    }
+
+    public void resumeMusic()
+    {
+        if(!player.isPlaying())
+        {
+            player.seekTo(currentPos);
+            player.start();
+        }
+    }
+
+    public void stopMusic()
+    {
+        player.stop();
+        player.release();
+        player = null;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -37,4 +71,8 @@ public class MusicService extends Service {
         player.release();
     }
 
+    @Override
+    public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
+        return false;
+    }
 }

@@ -4,13 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.res.Configuration;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioAttributes;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +37,13 @@ public class GameActivity extends AppCompatActivity {
     public static final String SCORE_PER_ROUND_MESSAGE = "com.example.geoquiz.SCORE_PER_ROUND_MESSAGE";
 
     private static final String KEY_GAME = "game";
+    private static final String KEY_PLAY_MUSIC = "playMusic";
 
     private static final int DICE_ROLL_SOUND_DUR = 600;
     private static final int DICE_ANIMATION_FRAME_DUR = 100;
     private static final int SCORE_ANIM_FRAME_DUR = 50;
     private static final int COMB_PICKED_SOUND_DUR = 600;
-    private static final float INCREASE_POINT_VOLUME = 0.3f;
+    private static final float INCREASE_POINT_VOLUME = 0.15f;
     private static final float LARGE_TEXT_SIZE = 24;
     private static final float SMALL_TEXT_SIZE = 18;
 
@@ -51,6 +58,13 @@ public class GameActivity extends AppCompatActivity {
 
     Intent musicIntent;
     boolean playMusic = true;
+    boolean serviceBound = false;
+    MusicService musicService;
+    private ServiceConnection serviceConnection;
+    private boolean launchingScoreActivity;
+
+    //private boolean orientationChanged;
+    private int lastOrientation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,33 +72,51 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState != null){
-            game = savedInstanceState.getParcelable(KEY_GAME);
-            initElements(false);
-            setDieFaces();
-            updateFigures();
-            if (game.getThrowsLeft() == 0)
-                onNoThrowsLeft(false);
+            resumeGame(savedInstanceState);
         }
-        else init();
+        else initGameActivity();
+
+        lastOrientation = getResources().getConfiguration().orientation;
+    }
+
+    private void resumeGame(Bundle savedInstanceState) {
+        game = savedInstanceState.getParcelable(KEY_GAME);
+        playMusic = savedInstanceState.getBoolean(KEY_PLAY_MUSIC);
+        initServiceConnection();
+        bindMusicService();
+        //initMusic();
+        initElements(false);
+        setDieFaces();
+        updateFigures();
+        if (game.getThrowsLeft() == 0)
+            onNoThrowsLeft(false);
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(KEY_GAME, game);
+        outState.putBoolean(KEY_PLAY_MUSIC, playMusic);
     }
 
-    private void init() {
+    private void initGameActivity() {
         game.initGame();
+        initMusic();
         initElements(true);
         onThrowButtonPressed();
     }
 
+    private void initMusic() {
+        initServiceConnection();
+        bindMusicService();
+        musicIntent = new Intent();
+        musicIntent.setClass(this, MusicService.class);
+        if (playMusic)
+            startService(musicIntent);
+    }
+
     private void initElements(boolean rollDice) {
         loadSounds(rollDice);
-
-        musicIntent = new Intent(this, MusicService.class);
-        startService(musicIntent);
 
         roundsView = findViewById(R.id.roundTextView);
         scoreView = findViewById(R.id.scoreTextView);
@@ -109,6 +141,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
         musicControlView = findViewById(R.id.playView);
+        musicControlView.setText(playMusic ? R.string.pause : R.string.play);
         musicControlView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,23 +149,19 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        musicIntent = new Intent(this, MusicService.class);
-        if (playMusic)
-            startService(musicIntent);
-
         initCombinations();
         initDice();
     }
 
     private void toggleMusic() {
         if (playMusic) {
-            stopService(musicIntent);
+            musicService.pauseMusic();
             musicControlView.setText(R.string.play);
             musicControlView.setTextSize(LARGE_TEXT_SIZE);
             playMusic = false;
         }
         else {
-            startService(musicIntent);
+            musicService.resumeMusic();
             musicControlView.setText(R.string.pause);
             musicControlView.setTextSize(SMALL_TEXT_SIZE);
             playMusic = true;
@@ -189,6 +218,7 @@ public class GameActivity extends AppCompatActivity {
         intent.putExtra(SCORE_MESSAGE, game.getScore());
         intent.putExtra(SCORE_PER_ROUND_MESSAGE, game.getScorePerRound());
         intent.putExtra(COMB_PER_ROUND_MESSAGE, game.getCombPerRound());
+        launchingScoreActivity = true;
         startActivity(intent);
     }
 
@@ -316,7 +346,7 @@ public class GameActivity extends AppCompatActivity {
         throwButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                init();
+                initGameActivity();
             }
         });
         resultButton.setEnabled(true);
@@ -331,19 +361,11 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private int getDieFaceView(int dieFace) {
-        switch (dieFace) {
-            case 1: return R.drawable.die1;
-            case 2: return R.drawable.die2;
-            case 3: return R.drawable.die3;
-            case 4: return R.drawable.die4;
-            case 5: return R.drawable.die5;
-            case 6: default: return R.drawable.die6;
-        }
+        return getResources().getIdentifier("die" + dieFace + "grad", "drawable", getPackageName());
     }
 
     private void updateFigures() {
         setNumberInTextView(throwsView, game.getThrowsLeft());
-        //animateScoreIncrease();
         setNumberInTextView(roundsView, game.getRound());
         for (int i = 0; i < combViews.size(); i++) {
             TextView text = (TextView) combViews.get(i).getChildAt(0);
@@ -380,5 +402,40 @@ public class GameActivity extends AppCompatActivity {
         String pointStr = "\n" + ((points >= 0) ? points + " P" : "");
         String newText = text.getText().toString().replaceFirst("\\n.*", pointStr);
         text.setText(newText);
+    }
+
+    private void initServiceConnection() {
+        serviceConnection = new ServiceConnection(){
+
+            public void onServiceConnected(ComponentName name, IBinder binder) {
+                musicService = ((MusicService.ServiceBinder) binder).getService();
+            }
+
+            public void onServiceDisconnected(ComponentName name) {
+                musicService = null;
+            }
+        };
+    }
+
+    void bindMusicService(){
+        bindService(new Intent(this, MusicService.class), serviceConnection,
+                Context.BIND_AUTO_CREATE);
+        serviceBound = true;
+    }
+
+    void unbindMusicService()
+    {
+        if(serviceBound)
+        {
+            unbindService(serviceConnection);
+            serviceBound = false;
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        /*if (!launchingScoreActivity && getResources().getConfiguration().orientation == lastOrientation)
+            musicService.pauseMusic();*/
     }
 }

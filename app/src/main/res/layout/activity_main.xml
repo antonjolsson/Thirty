@@ -125,7 +125,7 @@
                     android:contentDescription="@string/die_one"
                     android:elevation="10dp"
                     android:padding="5dp"
-                    android:src="@drawable/die1" />
+                    android:src="@drawable/die1grad" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -139,7 +139,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:padding="5dp"
-                    android:src="@drawable/die2" />
+                    android:src="@drawable/die2grad" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -153,7 +153,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:padding="5dp"
-                    android:src="@drawable/die3" />
+                    android:src="@drawable/die3grad" />
             </androidx.cardview.widget.CardView>
 
         </TableRow>
@@ -175,7 +175,7 @@
                     android:layout_height="100dp"
                     android:contentDescription="@string/die_one"
                     android:padding="5dp"
-                    android:src="@drawable/die4" />
+                    android:src="@drawable/die4grad" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -189,7 +189,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:padding="5dp"
-                    android:src="@drawable/die5" />
+                    android:src="@drawable/die5grad" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -203,7 +203,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:padding="5dp"
-                    android:src="@drawable/die6" />
+                    android:src="@drawable/die6grad" />
             </androidx.cardview.widget.CardView>
 
         </TableRow>
