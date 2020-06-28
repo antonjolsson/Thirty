@@ -9,55 +9,24 @@
     tools:context=".GameActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/textView3"
-            style="@style/smallText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="-2dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/music"
-            android:textSize="30sp" />
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <Space
-            android:layout_width="7dp"
-            android:layout_height="wrap_content"
+            android:layout_width="239dp"
+            android:layout_height="13dp"
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/playView"
-            style="@style/smallText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginEnd="20dp"
-            android:gravity="center"
-            android:text="@string/pause"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center|center_horizontal"
-        android:orientation="horizontal">
-
-        <TextView
             android:id="@+id/roundTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="83dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="85dp"
             android:layout_weight="1"
             android:backgroundTint="#000000"
+            android:ellipsize="none"
             android:fontFamily="@font/bangers"
             android:outlineProvider="bounds"
             android:paddingEnd="5dp"
@@ -67,14 +36,21 @@
             android:shadowRadius="5"
             android:text="@string/round"
             android:textColor="@color/colorAccent"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:singleLine="true" />
+
+        <Space
+            android:layout_width="18dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/scoreTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="82dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/bangers"
+            android:maxLines="1"
             android:paddingEnd="5dp"
             android:shadowColor="@android:color/black"
             android:shadowDx="4"
@@ -85,6 +61,40 @@
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
             android:typeface="normal" />
+
+        <Space
+            android:layout_width="165dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/smallText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="-2dp"
+            android:layout_weight="1"
+            android:minLines="1"
+            android:text="@string/music"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/playView"
+            style="@style/smallText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:ellipsize="none"
+            android:text="@string/pause"
+            android:textSize="18sp"
+            android:singleLine="true" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
     </LinearLayout>
 

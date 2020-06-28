@@ -27,6 +27,7 @@ public class ScoreActivity extends MusicPlayingActivity {
         setContentView(R.layout.activity_result);
         TextView scoreView = findViewById(R.id.totalScoreView);
         initBackButton();
+        initMusicControlView();
 
         int totalScore = getIntent().getIntExtra(SCORE_MESSAGE, 0);
         int[] scorePerRound = getIntent().getIntArrayExtra(SCORE_PER_ROUND_MESSAGE);

@@ -43,10 +43,10 @@ public class GameActivity extends MusicPlayingActivity {
     private static final int SCORE_ANIM_FRAME_DUR = 50;
     private static final int COMB_PICKED_SOUND_DUR = 600;
     private static final float INCREASE_POINT_VOLUME = 0.15f;
-    private static final float LARGE_TEXT_SIZE = 24;
-    private static final float SMALL_TEXT_SIZE = 18;
 
-    TextView roundsView, scoreView, throwsView, musicControlView;
+    TextView roundsView;
+    TextView scoreView;
+    TextView throwsView;
     Button throwButton, resultButton;
     List<CardView> combViews = new ArrayList<>();
     ImageView[] diceViews = new ImageView[6];
@@ -114,32 +114,11 @@ public class GameActivity extends MusicPlayingActivity {
                 showDetailedScore();
             }
         });
-        musicControlView = findViewById(R.id.playView);
-        musicControlView.setText(playMusic ? R.string.pause : R.string.play);
-        musicControlView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleMusic();
-            }
-        });
+
+        initMusicControlView();
 
         initCombinations();
         initDice();
-    }
-
-    private void toggleMusic() {
-        if (playMusic) {
-            musicService.pauseMusic();
-            musicControlView.setText(R.string.play);
-            musicControlView.setTextSize(LARGE_TEXT_SIZE);
-            playMusic = false;
-        }
-        else {
-            musicService.resumeMusic();
-            musicControlView.setText(R.string.pause);
-            musicControlView.setTextSize(SMALL_TEXT_SIZE);
-            playMusic = true;
-        }
     }
 
     private void loadSounds(final boolean rollDice) {
