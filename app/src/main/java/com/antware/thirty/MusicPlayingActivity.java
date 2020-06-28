@@ -67,8 +67,8 @@ public class MusicPlayingActivity extends AppCompatActivity {
         bindMusicService();
         musicIntent = new Intent();
         musicIntent.setClass(this, MusicService.class);
-        if (playMusic)
-            startService(musicIntent);
+        musicIntent.putExtra(KEY_PLAY_MUSIC, playMusic);
+        startService(musicIntent);
     }
 
     protected void unbindMusicService()

@@ -58,18 +58,28 @@ public class Combination implements Cloneable{
 
     private CombName name;
     private int points = 0;
+    private int finalPoints;
     private boolean isPicked;
 
     Combination(int combNum) {
         name = combNames[combNum];
         isPicked = false;
+        finalPoints = 0;
+    }
+
+    public void setFinalPoints() {
+        finalPoints = points;
+    }
+
+    public int getFinalPoints() {
+        return finalPoints;
     }
 
     public int getPoints() {
         return points;
     }
 
-    public boolean isPicked() {
+    public boolean hasBeenPicked() {
         return isPicked;
     }
 
@@ -116,10 +126,6 @@ public class Combination implements Cloneable{
             CloneNotSupportedException
     {
         return super.clone();
-    }
-
-    public String getName() {
-        return name.toString();
     }
 
     public int getNameAsInt() {

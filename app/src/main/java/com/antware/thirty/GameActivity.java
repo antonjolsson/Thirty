@@ -1,20 +1,14 @@
 package com.antware.thirty;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.content.res.Configuration;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,8 +16,6 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,8 +179,8 @@ public class GameActivity extends MusicPlayingActivity {
                 cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (game.isAnyCombPicked()) return;
-                        game.setPickedComb(cardNum);
+                        if (game.isAnyCombPickedThisRound() || game.isCombPicked(cardNum)) return;
+                        game.setCombPicked(cardNum);
                         setCombinationClicked((CardView) view, true);
                     }
                 });
@@ -211,7 +203,6 @@ public class GameActivity extends MusicPlayingActivity {
     }
 
     private void setCombinationClicked(CardView cardView, boolean isClicked) {
-
         TextView text = (TextView) cardView.getChildAt(0);
         text.setTextColor(getResources().getColor(isClicked ? R.color.blackSemiTransparent : R.color.colorAccent));
         text.setShadowLayer(isClicked ? 0 : 5, text.getShadowDx(), text.getShadowDy(),
@@ -246,13 +237,24 @@ public class GameActivity extends MusicPlayingActivity {
         int round = game.getRound();
         game.throwDice();
         updateFigures();
-        if (round < game.getRound()) {
-            for (CardView combView : combViews)
-                setCombinationClicked(combView, false);
+        if (newRound(round)) {
+            resetCombPoints();
         }
         if (game.getThrowsLeft() == 0)
             onNoThrowsLeft(true);
         else throwButton.setText(R.string.throw_string);
+    }
+
+    private boolean newRound(int round) {
+        return round < game.getRound();
+    }
+
+    private void resetCombPoints() {
+        for (int i = 0; i < combViews.size(); i++) {
+            if (game.isCombPicked(i)) continue;
+            CardView combView = combViews.get(i);
+            setCombPoints((TextView) combView.getChildAt(0), -1);
+        }
     }
 
     private void animateDice() {
@@ -286,7 +288,7 @@ public class GameActivity extends MusicPlayingActivity {
         if (game.getRound() == game.getMaxRounds())
             onGameOver();
         else throwButton.setText(R.string.next_round);
-        if (game.isAnyCombPicked()){
+        if (game.isAnyCombPickedThisRound()){
             if (animateScore) animateScoreIncrease();
             else setNumberInTextView(scoreView, game.getScore());
         }
@@ -321,7 +323,12 @@ public class GameActivity extends MusicPlayingActivity {
         setNumberInTextView(roundsView, game.getRound());
         for (int i = 0; i < combViews.size(); i++) {
             TextView text = (TextView) combViews.get(i).getChildAt(0);
-            setCombPoints(text, game.isAnyCombPicked() ? game.getCombPoints(i) : -1);
+            int points = -1;
+            if (game.isCombPicked(i))
+                points = game.getFinalCombPoints(i);
+            else if (game.isAnyCombPickedThisRound())
+                points = game.getCombPoints(i);
+            setCombPoints(text, points);
         }
     }
 

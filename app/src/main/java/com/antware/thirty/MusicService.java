@@ -44,7 +44,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
 
     public void pauseMusic()
     {
-        if(player.isPlaying())
+        if (player.isPlaying())
         {
             player.pause();
             currentPos = player.getCurrentPosition();
@@ -54,7 +54,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
     public void resumeMusic()
     {
         pauseHandler.removeCallbacks(pauseRunnable);
-        if(!player.isPlaying()) {
+        if (!player.isPlaying()) {
             player.seekTo(currentPos);
             player.start();
         }
@@ -77,7 +77,8 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
     }
     public int onStartCommand(Intent intent, int flags, int startId) {
         player.seekTo(currentPos);
-        player.start();
+        boolean playMusic = intent.getBooleanExtra("playMusic", false);
+        if (playMusic) player.start();
         return START_STICKY;
     }
 
