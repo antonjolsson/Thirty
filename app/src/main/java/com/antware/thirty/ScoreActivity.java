@@ -15,7 +15,7 @@ import static com.antware.thirty.GameActivity.COMB_PER_ROUND_MESSAGE;
 import static com.antware.thirty.GameActivity.SCORE_MESSAGE;
 import static com.antware.thirty.GameActivity.SCORE_PER_ROUND_MESSAGE;
 
-public class ScoreActivity extends AppCompatActivity {
+public class ScoreActivity extends MusicPlayingActivity {
 
     private final static int SCORE_VIEW_INDEX = 2;
     private static final int COMB_VIEW_INDEX = 3;
@@ -42,6 +42,8 @@ public class ScoreActivity extends AppCompatActivity {
             score.setText(String.valueOf(scorePerRound[i]));
             comb.setText(getCombName(combPerRound[i]));
         }
+
+        bindMusicService();
     }
 
     private void initBackButton() {

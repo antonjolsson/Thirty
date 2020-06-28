@@ -30,14 +30,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends MusicPlayingActivity {
 
     public static final String SCORE_MESSAGE = "com.example.geoquiz.SCORE_MESSAGE";
     public static final String COMB_PER_ROUND_MESSAGE = "com.example.geoquiz.COMB_PER_ROUND_MESSAGE";
     public static final String SCORE_PER_ROUND_MESSAGE = "com.example.geoquiz.SCORE_PER_ROUND_MESSAGE";
 
     private static final String KEY_GAME = "game";
-    private static final String KEY_PLAY_MUSIC = "playMusic";
 
     private static final int DICE_ROLL_SOUND_DUR = 600;
     private static final int DICE_ANIMATION_FRAME_DUR = 100;
@@ -56,16 +55,6 @@ public class GameActivity extends AppCompatActivity {
     private int diceRollSound, selectDieSound, combPickSound, increasePointsSound;
     private SoundPool soundPool;
 
-    Intent musicIntent;
-    boolean playMusic = true;
-    boolean serviceBound = false;
-    MusicService musicService;
-    private ServiceConnection serviceConnection;
-    private boolean launchingScoreActivity;
-
-    //private boolean orientationChanged;
-    private int lastOrientation;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,15 +65,11 @@ public class GameActivity extends AppCompatActivity {
         }
         else initGameActivity();
 
-        lastOrientation = getResources().getConfiguration().orientation;
+        bindMusicService();
     }
 
     private void resumeGame(Bundle savedInstanceState) {
         game = savedInstanceState.getParcelable(KEY_GAME);
-        playMusic = savedInstanceState.getBoolean(KEY_PLAY_MUSIC);
-        initServiceConnection();
-        bindMusicService();
-        //initMusic();
         initElements(false);
         setDieFaces();
         updateFigures();
@@ -96,23 +81,12 @@ public class GameActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(KEY_GAME, game);
-        outState.putBoolean(KEY_PLAY_MUSIC, playMusic);
     }
 
     private void initGameActivity() {
         game.initGame();
-        initMusic();
         initElements(true);
         onThrowButtonPressed();
-    }
-
-    private void initMusic() {
-        initServiceConnection();
-        bindMusicService();
-        musicIntent = new Intent();
-        musicIntent.setClass(this, MusicService.class);
-        if (playMusic)
-            startService(musicIntent);
     }
 
     private void initElements(boolean rollDice) {
@@ -218,7 +192,6 @@ public class GameActivity extends AppCompatActivity {
         intent.putExtra(SCORE_MESSAGE, game.getScore());
         intent.putExtra(SCORE_PER_ROUND_MESSAGE, game.getScorePerRound());
         intent.putExtra(COMB_PER_ROUND_MESSAGE, game.getCombPerRound());
-        launchingScoreActivity = true;
         startActivity(intent);
     }
 
@@ -404,38 +377,4 @@ public class GameActivity extends AppCompatActivity {
         text.setText(newText);
     }
 
-    private void initServiceConnection() {
-        serviceConnection = new ServiceConnection(){
-
-            public void onServiceConnected(ComponentName name, IBinder binder) {
-                musicService = ((MusicService.ServiceBinder) binder).getService();
-            }
-
-            public void onServiceDisconnected(ComponentName name) {
-                musicService = null;
-            }
-        };
-    }
-
-    void bindMusicService(){
-        bindService(new Intent(this, MusicService.class), serviceConnection,
-                Context.BIND_AUTO_CREATE);
-        serviceBound = true;
-    }
-
-    void unbindMusicService()
-    {
-        if(serviceBound)
-        {
-            unbindService(serviceConnection);
-            serviceBound = false;
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        /*if (!launchingScoreActivity && getResources().getConfiguration().orientation == lastOrientation)
-            musicService.pauseMusic();*/
-    }
 }
