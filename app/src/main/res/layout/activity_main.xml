@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    android:foregroundTint="@color/colorAccent"
 
+    android:foregroundTint="@color/colorAccent"
     android:orientation="vertical"
     tools:context=".GameActivity">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="11dp" />
-
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView3"
@@ -50,12 +49,15 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="-10dp"
         android:gravity="center|center_horizontal"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/diceTable"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
         <TextView
             android:id="@+id/roundTextView"
@@ -96,14 +98,15 @@
 
     </LinearLayout>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="11dp" />
-
     <TableLayout
         android:id="@+id/diceTable"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/throwTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
         <TableRow
             android:layout_width="match_parent"
@@ -210,16 +213,10 @@
 
     </TableLayout>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="18dp" />
-
     <TextView
         android:id="@+id/throwTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center|center_horizontal"
-        android:layout_weight="0"
         android:backgroundTint="#000000"
         android:fontFamily="@font/bangers"
         android:gravity="center|center_horizontal"
@@ -233,16 +230,26 @@
         android:shadowRadius="5"
         android:text="@string/throws_left"
         android:textColor="@color/colorAccent"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/linearLayout6"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="50dp"
         android:animateLayoutChanges="true"
         android:clipToPadding="false"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/combTable"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/throwButton"
@@ -277,14 +284,14 @@
             tools:visibility="gone" />
     </LinearLayout>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="22dp" />
-
     <TableLayout
         android:id="@+id/combTable"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TableRow
             android:id="@+id/combRow0"
@@ -579,7 +586,4 @@
 
     </TableLayout>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="14dp" />
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
