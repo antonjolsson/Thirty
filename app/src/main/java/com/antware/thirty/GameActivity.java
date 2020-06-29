@@ -66,7 +66,7 @@ public class GameActivity extends MusicPlayingActivity {
         game = savedInstanceState.getParcelable(KEY_GAME);
         initElements(false);
         setDieFaces();
-        updateFigures();
+        updateFigures(true);
         if (game.getThrowsLeft() == 0)
             onNoThrowsLeft(false);
     }
@@ -223,7 +223,7 @@ public class GameActivity extends MusicPlayingActivity {
         int elevation = isClicked ? R.dimen.selectedCardElev : R.dimen.nonSelectedCardElev;
         int color = isClicked ? R.color.colorAccent : R.color.transparent;
         setCardBackground(cardView, elevation, color);
-        updateFigures();
+        updateFigures(false);
 
         if (isClicked) {
             if (game.getThrowsLeft() == 0) {
@@ -249,7 +249,7 @@ public class GameActivity extends MusicPlayingActivity {
         animateDice();
         int round = game.getRound();
         game.throwDice();
-        updateFigures();
+        updateFigures(false);
         if (newRound(round)) {
             resetCombPoints();
         }
@@ -332,9 +332,10 @@ public class GameActivity extends MusicPlayingActivity {
         return getResources().getIdentifier("die" + dieFace + "grad", "drawable", getPackageName());
     }
 
-    private void updateFigures() {
+    private void updateFigures(boolean updateScore) {
         setNumberInTextView(throwsView, game.getThrowsLeft());
         setNumberInTextView(roundsView, game.getRound());
+        if (updateScore) setNumberInTextView(scoreView, game.getScore());
         for (int i = 0; i < combViews.size(); i++) {
             TextView text = (TextView) combViews.get(i).getChildAt(0);
             int points = game.isCombPicked(i) || game.isAnyCombPickedThisRound() ?
