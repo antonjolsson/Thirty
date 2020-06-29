@@ -285,10 +285,11 @@ public class GameActivity extends MusicPlayingActivity {
     }
 
     private void onNoThrowsLeft(boolean animateScore) {
-        if (game.getRound() == game.getMaxRounds())
+        int round = game.getRound();
+        if (round == game.getMaxRounds())
             onGameOver();
         else throwButton.setText(R.string.next_round);
-        if (game.isAnyCombPickedThisRound()){
+        if (game.getScorePerRound()[round - 1] > 0){
             if (animateScore) animateScoreIncrease();
             else setNumberInTextView(scoreView, game.getScore());
         }
@@ -323,11 +324,8 @@ public class GameActivity extends MusicPlayingActivity {
         setNumberInTextView(roundsView, game.getRound());
         for (int i = 0; i < combViews.size(); i++) {
             TextView text = (TextView) combViews.get(i).getChildAt(0);
-            int points = -1;
-            if (game.isCombPicked(i))
-                points = game.getFinalCombPoints(i);
-            else if (game.isAnyCombPickedThisRound())
-                points = game.getCombPoints(i);
+            int points = game.isCombPicked(i) || game.isAnyCombPickedThisRound() ?
+                    game.getCombPoints(i) : -1;
             setCombPoints(text, points);
         }
     }

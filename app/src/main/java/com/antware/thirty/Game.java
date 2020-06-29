@@ -36,10 +36,18 @@ public class Game implements Parcelable {
         initCombinations();
         int pickCombNum = in.readInt();
         if (pickCombNum >= 0) setCombPicked(pickCombNum);
-        computeCombPoints();
 
         scorePerRound = in.createIntArray();
         combPerRound = in.createIntArray();
+        for (int i = 0; i < round; i++) {
+            assert combPerRound != null;
+            if (combPerRound[i] == -1) continue;
+            int orderNum = Combination.getOrderNum(combPerRound[i]);
+            combs[orderNum].setPickedComb(true);
+            combs[orderNum].setPoints(scorePerRound[i]);
+        }
+
+        computeCombPoints();
     }
 
     private void restoreDice(Parcel in) {
@@ -123,12 +131,13 @@ public class Game implements Parcelable {
     }
 
     public void throwDice() {
+        diceThrowsLeft--;
+
         for (Die die : dice) {
             if (!die.isPicked())
                 die.throwDie();
         }
         computeCombPoints();
-        diceThrowsLeft--;
 
         if (diceThrowsLeft == 0 && combPickedThisRound != null)
             setRoundScore();
@@ -139,7 +148,7 @@ public class Game implements Parcelable {
     private void computeCombPoints() {
         Set<Set<List<Die>>> allDicePartitions = Combination.getPartitions(new ArrayList<>(Arrays.asList(dice)));
         for (Combination comb : combs) {
-            if (comb != combPickedThisRound && comb.hasBeenPicked())
+            if (comb != combPickedThisRound && comb.isPicked())
                 continue;
             comb.computePoints(allDicePartitions, dice);
         }
@@ -148,14 +157,13 @@ public class Game implements Parcelable {
     private void initNextRound() {
         round++;
         diceThrowsLeft += MAX_THROWS;
-        combPickedThisRound = null;
         scorePerRound[round - 1] = 0;
     }
 
     private void setRoundScore() {
         score += combPickedThisRound.getPoints();
         scorePerRound[round - 1] = combPickedThisRound.getPoints();
-        combPickedThisRound.setFinalPoints();
+        combPickedThisRound = null;
     }
 
     public int getThrowsLeft() {
@@ -212,10 +220,7 @@ public class Game implements Parcelable {
     }
 
     public boolean isCombPicked(int comb) {
-        return combs[comb].hasBeenPicked();
+        return combs[comb].isPicked();
     }
 
-    public int getFinalCombPoints(int i) {
-        return combs[i].getFinalPoints();
-    }
 }

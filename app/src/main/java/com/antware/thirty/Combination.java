@@ -53,33 +53,31 @@ public class Combination implements Cloneable{
     private final static int LOWEST_NUM_VALUE = 4;
     private final static int HIGHEST_NUM_VALUE = 12;
 
+    public static int getOrderNum(int nameAsInt) {
+        return nameAsInt == 1 ? 0 : nameAsInt - LOWEST_NUM_VALUE + 1;
+    }
+
     private enum CombName {LOW, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, ELEVEN, TWELVE}
     CombName[] combNames = CombName.values();
 
     private CombName name;
     private int points = 0;
-    private int finalPoints;
     private boolean isPicked;
 
     Combination(int combNum) {
         name = combNames[combNum];
         isPicked = false;
-        finalPoints = 0;
     }
 
-    public void setFinalPoints() {
-        finalPoints = points;
-    }
-
-    public int getFinalPoints() {
-        return finalPoints;
+    public void setPoints(int points) {
+        this.points = points;
     }
 
     public int getPoints() {
         return points;
     }
 
-    public boolean hasBeenPicked() {
+    public boolean isPicked() {
         return isPicked;
     }
 
@@ -134,7 +132,6 @@ public class Combination implements Cloneable{
     }
 
     public int getOrderNumber() {
-
         for (int i = 0; i < combNames.length; i++) {
             if (combNames[i] == name)
                 return i;
