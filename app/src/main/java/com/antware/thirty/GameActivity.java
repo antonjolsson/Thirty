@@ -240,13 +240,13 @@ public class GameActivity extends MusicPlayingActivity {
     }
 
     private void onThrowButtonPressed() {
-        soundPool.play(diceRollSound, 1, 1, 0, 0, 1);
-        animateDice();
         if (game.getThrowsLeft() == 0) {
             for (int i = 0; i < diceViews.length; i++) {
                 setDiePicked((CardView) diceViews[i].getParent(), i, false);
             }
         }
+        soundPool.play(diceRollSound, 1, 1, 0, 0, 1);
+        animateDice();
         int round = game.getRound();
         game.throwDice();
         updateFigures();
