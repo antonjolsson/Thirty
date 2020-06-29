@@ -24,7 +24,7 @@ public class MusicPlayingActivity extends AppCompatActivity {
     TextView musicControlView;
 
     protected Intent musicIntent;
-    protected boolean playMusic = true;
+    protected boolean playMusic = false;
     protected boolean serviceBound = false;
     protected MusicService musicService;
 
@@ -46,13 +46,11 @@ public class MusicPlayingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null){
             playMusic = savedInstanceState.getBoolean(KEY_PLAY_MUSIC);
-            Log.d("MusicPlayingActivity", "playMusic = " + playMusic);
         }
     }
 
     protected void initMusicControlView() {
         musicControlView = findViewById(R.id.playView);
-        //musicControlView.setText(playMusic ? R.string.pause : R.string.play);
         setMusicControlText();
         musicControlView.setOnClickListener(new View.OnClickListener() {
             @Override

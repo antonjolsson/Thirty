@@ -21,8 +21,8 @@ public class Game implements Parcelable {
     private Combination[] combs = new Combination[10];
     private Combination combPickedThisRound;
 
-    private int[] scorePerRound = new int[NUM_ROUNDS];
-    private int[] combPerRound = new int[NUM_ROUNDS];
+    private int[] scorePerRound;
+    private int[] combPerRound;
 
     public Game() {}
 
@@ -113,6 +113,8 @@ public class Game implements Parcelable {
         score = 0;
         diceThrowsLeft = MAX_THROWS;
         combPickedThisRound = null;
+        scorePerRound = new int[NUM_ROUNDS];
+        combPerRound = new int[NUM_ROUNDS];
         initDice(null);
         initCombinations();
     }
@@ -187,7 +189,7 @@ public class Game implements Parcelable {
     }
 
     public boolean isAnyCombPickedThisRound() {
-        return combPickedThisRound != null;
+        return combPerRound[round - 1] > 0;
     }
 
     public void setCombPicked(int cardNum) {
