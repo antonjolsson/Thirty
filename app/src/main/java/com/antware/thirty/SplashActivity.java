@@ -8,7 +8,7 @@ import android.os.Handler;
 
 public class SplashActivity extends MusicPlayingActivity {
 
-    private final static int SPLASH_DUR = 4000;
+    private final static int SPLASH_DUR = 0; // 4000
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

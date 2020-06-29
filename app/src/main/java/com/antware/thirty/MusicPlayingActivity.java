@@ -24,7 +24,7 @@ public class MusicPlayingActivity extends AppCompatActivity {
     TextView musicControlView;
 
     protected Intent musicIntent;
-    protected boolean playMusic = false;
+    protected boolean playMusic = true;
     protected boolean serviceBound = false;
     protected MusicService musicService;
 
