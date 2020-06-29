@@ -1,6 +1,7 @@
 package com.antware.thirty;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
@@ -35,6 +36,7 @@ public class GameActivity extends MusicPlayingActivity {
     private static final int SCORE_ANIM_FRAME_DUR = 50;
     private static final int COMB_PICKED_SOUND_DUR = 600;
     private static final float INCREASE_POINT_VOLUME = 0.15f;
+
 
     TextView roundsView;
     TextView scoreView;
@@ -163,7 +165,18 @@ public class GameActivity extends MusicPlayingActivity {
         intent.putExtra(SCORE_MESSAGE, game.getScore());
         intent.putExtra(SCORE_PER_ROUND_MESSAGE, game.getScorePerRound());
         intent.putExtra(COMB_PER_ROUND_MESSAGE, game.getCombPerRound());
-        startActivity(intent);
+        intent.putExtra(KEY_PLAY_MUSIC, playMusic);
+        startActivityForResult(intent, MESSAGE_PLAY_MUSIC);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MESSAGE_PLAY_MUSIC) {
+            assert data != null;
+            if (playMusic != data.getBooleanExtra(KEY_PLAY_MUSIC, playMusic))
+                toggleMusic();
+        }
     }
 
     private void initCombinations() {

@@ -9,10 +9,13 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 public class MusicPlayingActivity extends AppCompatActivity {
+
+    protected static final int MESSAGE_PLAY_MUSIC = 0;
 
     public static final String KEY_PLAY_MUSIC = "playMusic";
     private static final float LARGE_TEXT_SIZE = 24;
@@ -21,7 +24,7 @@ public class MusicPlayingActivity extends AppCompatActivity {
     TextView musicControlView;
 
     protected Intent musicIntent;
-    protected boolean playMusic = false;
+    protected boolean playMusic = true;
     protected boolean serviceBound = false;
     protected MusicService musicService;
 
@@ -43,12 +46,14 @@ public class MusicPlayingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null){
             playMusic = savedInstanceState.getBoolean(KEY_PLAY_MUSIC);
+            Log.d("MusicPlayingActivity", "playMusic = " + playMusic);
         }
     }
 
     protected void initMusicControlView() {
         musicControlView = findViewById(R.id.playView);
-        musicControlView.setText(playMusic ? R.string.pause : R.string.play);
+        //musicControlView.setText(playMusic ? R.string.pause : R.string.play);
+        setMusicControlText();
         musicControlView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,16 +105,26 @@ public class MusicPlayingActivity extends AppCompatActivity {
 
     protected void toggleMusic() {
         if (playMusic) {
-            musicService.pauseMusic();
-            musicControlView.setText(R.string.play);
-            musicControlView.setTextSize(LARGE_TEXT_SIZE);
+            if (musicService != null)
+                musicService.pauseMusic();
             playMusic = false;
         }
         else {
-            musicService.resumeMusic();
+            if (musicService != null)
+                musicService.resumeMusic();
+            playMusic = true;
+        }
+        setMusicControlText();
+    }
+
+    private void setMusicControlText() {
+        if (!playMusic) {
+            musicControlView.setText(R.string.play);
+            musicControlView.setTextSize(LARGE_TEXT_SIZE);
+        }
+        else {
             musicControlView.setText(R.string.pause);
             musicControlView.setTextSize(SMALL_TEXT_SIZE);
-            playMusic = true;
         }
     }
 }

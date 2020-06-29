@@ -41,8 +41,8 @@ public class Game implements Parcelable {
         combPerRound = in.createIntArray();
         for (int i = 0; i < round; i++) {
             assert combPerRound != null;
-            if (combPerRound[i] == -1) continue;
             int orderNum = Combination.getOrderNum(combPerRound[i]);
+            if (orderNum < 0) continue;
             combs[orderNum].setPickedComb(true);
             combs[orderNum].setPoints(scorePerRound[i]);
         }

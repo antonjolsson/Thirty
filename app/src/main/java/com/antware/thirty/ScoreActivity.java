@@ -2,6 +2,7 @@ package com.antware.thirty;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,11 +28,13 @@ public class ScoreActivity extends MusicPlayingActivity {
         setContentView(R.layout.activity_result);
         TextView scoreView = findViewById(R.id.totalScoreView);
         initBackButton();
-        initMusicControlView();
 
         int totalScore = getIntent().getIntExtra(SCORE_MESSAGE, 0);
         int[] scorePerRound = getIntent().getIntArrayExtra(SCORE_PER_ROUND_MESSAGE);
         int[] combPerRound = getIntent().getIntArrayExtra(COMB_PER_ROUND_MESSAGE);
+
+        playMusic = getIntent().getBooleanExtra(KEY_PLAY_MUSIC, false);
+        initMusicControlView();
 
         scoreView.setText(String.valueOf(totalScore));
         TableLayout scoreTable = findViewById(R.id.scoreTable);
@@ -52,9 +55,16 @@ public class ScoreActivity extends MusicPlayingActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                onBackButtonPressed();
             }
         });
+    }
+
+    private void onBackButtonPressed() {
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra(KEY_PLAY_MUSIC, playMusic);
+        setResult(MESSAGE_PLAY_MUSIC, intent);
+        finish();
     }
 
     private String getCombName(int combAsInt) {

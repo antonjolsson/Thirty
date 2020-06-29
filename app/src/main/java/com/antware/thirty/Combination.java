@@ -50,12 +50,12 @@ public class Combination implements Cloneable{
         return partitionCopy;
     }
 
-    private final static int LOWEST_NUM_VALUE = 4;
-    private final static int HIGHEST_NUM_VALUE = 12;
-
     public static int getOrderNum(int nameAsInt) {
         return nameAsInt == 1 ? 0 : nameAsInt - LOWEST_NUM_VALUE + 1;
     }
+
+    private final static int LOWEST_NUM_VALUE = 4;
+    private final static int HIGHEST_NUM_VALUE = 12;
 
     private enum CombName {LOW, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, ELEVEN, TWELVE}
     CombName[] combNames = CombName.values();
