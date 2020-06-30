@@ -10,7 +10,6 @@ import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -112,7 +111,7 @@ public class GameActivity extends MusicPlayingActivity {
         initMusicControlView();
 
         float relativeViewSize = 1;
-        initCombinations(relativeViewSize);
+        initCombinations();
         initDice(relativeViewSize);
     }
 
@@ -184,7 +183,7 @@ public class GameActivity extends MusicPlayingActivity {
         }
     }
 
-    private void initCombinations(float relativeViewSize) {
+    private void initCombinations() {
         combViews.clear();
         TableLayout table = findViewById(R.id.combTable);
         for (int i = 0; i < table.getChildCount(); i++) {

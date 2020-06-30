@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,8 +18,12 @@ public class MusicPlayingActivity extends AppCompatActivity {
     protected static final int MESSAGE_PLAY_MUSIC = 0;
 
     public static final String KEY_PLAY_MUSIC = "playMusic";
-    private static final float LARGE_TEXT_SIZE = 24;
-    private static final float SMALL_TEXT_SIZE = 18;
+    private static final float SMALL_SCREEN_DP_LIMIT = 411;
+    private static final int LARGE_TEXT_SIZE_LARGE_SCREEN = 24;
+    private static final int SMALL_TEXT_SIZE_LARGE_SCREEN = 18;
+    private static final int LARGE_TEXT_SIZE_SMALL_SCREEN = 18;
+    private static final int SMALL_TEXT_SIZE_SMALL_SCREEN = 14;
+    private int largeTextSize, smallTextSize;
 
     TextView musicControlView;
 
@@ -44,9 +48,19 @@ public class MusicPlayingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTextSizes();
         if (savedInstanceState != null){
             playMusic = savedInstanceState.getBoolean(KEY_PLAY_MUSIC);
         }
+    }
+
+    private void setTextSizes() {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        boolean smallScreen = Math.min(dpHeight, dpWidth) < SMALL_SCREEN_DP_LIMIT;
+        largeTextSize = smallScreen ? LARGE_TEXT_SIZE_SMALL_SCREEN : LARGE_TEXT_SIZE_LARGE_SCREEN;
+        smallTextSize = smallScreen ? SMALL_TEXT_SIZE_SMALL_SCREEN : SMALL_TEXT_SIZE_LARGE_SCREEN;
     }
 
     protected void initMusicControlView() {
@@ -118,11 +132,11 @@ public class MusicPlayingActivity extends AppCompatActivity {
     private void setMusicControlText() {
         if (!playMusic) {
             musicControlView.setText(R.string.play);
-            musicControlView.setTextSize(LARGE_TEXT_SIZE);
+            musicControlView.setTextSize(largeTextSize);
         }
         else {
             musicControlView.setText(R.string.pause);
-            musicControlView.setTextSize(SMALL_TEXT_SIZE);
+            musicControlView.setTextSize(smallTextSize);
         }
     }
 }

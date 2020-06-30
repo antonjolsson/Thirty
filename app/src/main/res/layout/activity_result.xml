@@ -54,6 +54,11 @@
             android:layout_gravity="right|center_vertical"
             android:layout_marginEnd="20dp"
             android:gravity="center"
+            android:paddingEnd="3dp"
+            android:paddingBottom="2dp"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="3"
             android:text="@string/pause"
             android:textSize="14sp" />
     </LinearLayout>
@@ -63,6 +68,9 @@
         style="@style/largeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="3"
         android:text="@string/detailed_results"
         android:textAlignment="center"
         android:textSize="24sp"
