@@ -18,13 +18,13 @@
         android:outlineProvider="bounds"
         android:paddingEnd="5dp"
         android:shadowColor="@android:color/black"
-        android:shadowDx="2"
-        android:shadowDy="2"
-        android:shadowRadius="3"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="5"
         android:singleLine="true"
         android:text="@string/round"
         android:textColor="@color/colorAccent"
-        android:textSize="14sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/diceTable"
         app:layout_constraintStart_toStartOf="@+id/diceTable"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,13 +38,13 @@
         android:maxLines="1"
         android:paddingEnd="5dp"
         android:shadowColor="@android:color/black"
-        android:shadowDx="2"
-        android:shadowDy="2"
-        android:shadowRadius="3"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="5"
         android:text="@string/score"
         android:textAlignment="textEnd"
         android:textColor="@color/colorAccent"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:typeface="normal"
         app:layout_constraintEnd_toEndOf="@+id/diceTable"
         app:layout_constraintTop_toTopOf="parent" />
@@ -56,11 +56,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|top"
         android:minLines="1"
-        android:shadowDx="2"
-        android:shadowDy="2"
-        android:shadowRadius="3"
         android:text="@string/music"
-        android:textSize="24sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@+id/playView"
         app:layout_constraintHorizontal_bias="0.93"
         app:layout_constraintStart_toEndOf="@+id/scoreTextView"
@@ -73,12 +70,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ellipsize="none"
-        android:shadowDx="2"
-        android:shadowDy="2"
-        android:shadowRadius="3"
         android:singleLine="true"
         android:text="@string/pause"
-        android:textSize="14sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -104,12 +98,12 @@
 
                 <ImageView
                     android:id="@+id/diePlaceOne"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:background="#00FFD200"
                     android:contentDescription="@string/die_one"
                     android:elevation="10dp"
-                    android:padding="2dp"
+                    android:padding="5dp"
                     android:src="@drawable/die1grad" />
             </androidx.cardview.widget.CardView>
 
@@ -121,9 +115,9 @@
 
                 <ImageView
                     android:id="@+id/diePlaceTwo"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:padding="2dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:padding="5dp"
                     android:src="@drawable/die2grad" />
             </androidx.cardview.widget.CardView>
 
@@ -135,9 +129,9 @@
 
                 <ImageView
                     android:id="@+id/diePlaceThree"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:padding="2dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:padding="5dp"
                     android:src="@drawable/die3grad" />
             </androidx.cardview.widget.CardView>
 
@@ -156,10 +150,10 @@
 
                 <ImageView
                     android:id="@+id/diePlaceFour"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:contentDescription="@string/die_one"
-                    android:padding="2dp"
+                    android:padding="5dp"
                     android:src="@drawable/die4grad" />
             </androidx.cardview.widget.CardView>
 
@@ -171,9 +165,9 @@
 
                 <ImageView
                     android:id="@+id/diePlaceFive"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:padding="2dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:padding="5dp"
                     android:src="@drawable/die5grad" />
             </androidx.cardview.widget.CardView>
 
@@ -185,9 +179,9 @@
 
                 <ImageView
                     android:id="@+id/diePlaceSix"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:padding="2dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:padding="5dp"
                     android:src="@drawable/die6grad" />
             </androidx.cardview.widget.CardView>
 
@@ -207,12 +201,12 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:shadowColor="@android:color/black"
-        android:shadowDx="2"
-        android:shadowDy="2"
-        android:shadowRadius="3"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="5"
         android:text="@string/throws_left"
         android:textColor="@color/colorAccent"
-        android:textSize="14sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/diceTable" />
@@ -235,8 +229,8 @@
         <Button
             android:id="@+id/throwButton"
             style="@style/cardButton"
-            android:layout_width="110dp"
-            android:layout_height="30dp"
+            android:layout_width="140dp"
+            android:layout_height="35dp"
             android:layout_gravity="center|center_horizontal|center_vertical"
             android:elevation="10dp"
             android:fontFamily="@font/bangers"
@@ -245,7 +239,7 @@
             android:paddingEnd="30dp"
             android:text="@string/throw_string"
             android:textAlignment="gravity"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/resultButton"
@@ -293,7 +287,7 @@
 
                 <TextView
                     android:id="@+id/combLowTextView"
-                    android:layout_width="75dp"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:backgroundTint="#000000"
@@ -301,13 +295,13 @@
                     android:gravity="center|center_horizontal|center_vertical"
                     android:outlineProvider="bounds"
                     android:shadowColor="@android:color/black"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
-                    android:shadowRadius="3"
+                    android:shadowDx="4"
+                    android:shadowDy="4"
+                    android:shadowRadius="5"
                     android:text="@string/low_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="14sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -329,13 +323,13 @@
                     android:gravity="center|center_horizontal|center_vertical"
                     android:outlineProvider="bounds"
                     android:shadowColor="@android:color/black"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
-                    android:shadowRadius="3"
+                    android:shadowDx="4"
+                    android:shadowDy="4"
+                    android:shadowRadius="5"
                     android:text="@string/four_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="14sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -357,13 +351,13 @@
                     android:gravity="center|center_horizontal|center_vertical"
                     android:outlineProvider="bounds"
                     android:shadowColor="@android:color/black"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
-                    android:shadowRadius="3"
+                    android:shadowDx="4"
+                    android:shadowDy="4"
+                    android:shadowRadius="5"
                     android:text="@string/five_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="14sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -385,13 +379,13 @@
                     android:gravity="center|center_horizontal|center_vertical"
                     android:outlineProvider="bounds"
                     android:shadowColor="@android:color/black"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
-                    android:shadowRadius="3"
+                    android:shadowDx="4"
+                    android:shadowDy="4"
+                    android:shadowRadius="5"
                     android:text="@string/six_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="14sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -413,13 +407,13 @@
                     android:gravity="center|center_horizontal|center_vertical"
                     android:outlineProvider="bounds"
                     android:shadowColor="@android:color/black"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
-                    android:shadowRadius="3"
+                    android:shadowDx="4"
+                    android:shadowDy="4"
+                    android:shadowRadius="5"
                     android:text="@string/seven_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="14sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
         </TableRow>
@@ -452,13 +446,13 @@
                     android:gravity="center|center_horizontal|center_vertical"
                     android:outlineProvider="bounds"
                     android:shadowColor="@android:color/black"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
-                    android:shadowRadius="3"
+                    android:shadowDx="4"
+                    android:shadowDy="4"
+                    android:shadowRadius="5"
                     android:text="@string/eight_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="14sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -479,11 +473,11 @@
                     android:gravity="center|center_horizontal|center_vertical"
                     android:outlineProvider="bounds"
                     android:shadowColor="@android:color/black"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
+                    android:shadowDx="4"
+                    android:shadowDy="4"
                     android:text="@string/nine_combs"
                     android:textAlignment="center"
-                    android:textSize="14sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -506,13 +500,13 @@
                     android:gravity="center|center_horizontal|center_vertical"
                     android:outlineProvider="bounds"
                     android:shadowColor="@android:color/black"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
-                    android:shadowRadius="3"
+                    android:shadowDx="4"
+                    android:shadowDy="4"
+                    android:shadowRadius="5"
                     android:text="@string/ten_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="14sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -535,13 +529,13 @@
                     android:gravity="center|center_horizontal|center_vertical"
                     android:outlineProvider="bounds"
                     android:shadowColor="@android:color/black"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
-                    android:shadowRadius="3"
+                    android:shadowDx="4"
+                    android:shadowDy="4"
+                    android:shadowRadius="5"
                     android:text="@string/eleven_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="14sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -564,13 +558,13 @@
                     android:gravity="center|center_horizontal|center_vertical"
                     android:outlineProvider="bounds"
                     android:shadowColor="@android:color/black"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
-                    android:shadowRadius="3"
+                    android:shadowDx="4"
+                    android:shadowDy="4"
+                    android:shadowRadius="5"
                     android:text="@string/twelve_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="14sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
         </TableRow>

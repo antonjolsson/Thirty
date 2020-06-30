@@ -35,8 +35,9 @@
             android:layout_marginTop="-2dp"
             android:layout_weight="1"
             android:gravity="center"
+            android:paddingEnd="5dp"
             android:text="@string/music"
-            android:textSize="30sp" />
+            android:textSize="24sp" />
 
         <Space
             android:layout_width="7dp"
@@ -52,8 +53,46 @@
             android:layout_marginEnd="20dp"
             android:gravity="center"
             android:text="@string/pause"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/roundTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="#000000"
+        android:fontFamily="@font/bangers"
+        android:outlineProvider="bounds"
+        android:paddingEnd="10dp"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="5"
+        android:text="@string/round"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/diceTable"
+        app:layout_constraintStart_toStartOf="@+id/diceTable" />
+
+    <TextView
+        android:id="@+id/scoreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/bangers"
+        android:paddingEnd="5dp"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="5"
+        android:text="@string/score"
+        android:textAlignment="textEnd"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:typeface="normal"
+        app:layout_constraintBottom_toTopOf="@+id/diceTable"
+        app:layout_constraintEnd_toEndOf="@+id/diceTable" />
 
     <LinearLayout
         android:id="@+id/linearLayout5"
@@ -61,46 +100,9 @@
         android:layout_height="wrap_content"
         android:gravity="center|center_horizontal"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/diceTable"
+        app:layout_constraintStart_toStartOf="@+id/diceTable"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
-
-        <TextView
-            android:id="@+id/roundTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="110dp"
-            android:layout_weight="1"
-            android:backgroundTint="#000000"
-            android:fontFamily="@font/bangers"
-            android:outlineProvider="bounds"
-            android:padding="10dp"
-            android:paddingTop="0dp"
-            android:shadowColor="@android:color/black"
-            android:shadowDx="4"
-            android:shadowDy="4"
-            android:shadowRadius="5"
-            android:text="@string/round"
-            android:textColor="@color/colorAccent"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/scoreTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/bangers"
-            android:padding="10dp"
-            android:paddingTop="0dp"
-            android:shadowColor="@android:color/black"
-            android:shadowDx="4"
-            android:shadowDy="4"
-            android:shadowRadius="5"
-            android:text="@string/score"
-            android:textAlignment="textEnd"
-            android:textColor="@color/colorAccent"
-            android:textSize="24sp"
-            android:typeface="normal" />
 
     </LinearLayout>
 
@@ -108,12 +110,11 @@
         android:id="@+id/diceTable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/throwTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-        app:layout_constraintVertical_bias="0.48000002">
+        app:layout_constraintVertical_bias="1.0">
 
         <TableRow
             android:layout_width="match_parent"
@@ -129,8 +130,8 @@
 
                 <ImageView
                     android:id="@+id/diePlaceOne"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:background="#00FFD200"
                     android:contentDescription="@string/die_one"
                     android:elevation="10dp"
@@ -146,8 +147,8 @@
 
                 <ImageView
                     android:id="@+id/diePlaceTwo"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:padding="5dp"
                     android:src="@drawable/die2grad" />
             </androidx.cardview.widget.CardView>
@@ -160,8 +161,8 @@
 
                 <ImageView
                     android:id="@+id/diePlaceThree"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:padding="5dp"
                     android:src="@drawable/die3grad" />
             </androidx.cardview.widget.CardView>
@@ -181,8 +182,8 @@
 
                 <ImageView
                     android:id="@+id/diePlaceFour"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:contentDescription="@string/die_one"
                     android:padding="5dp"
                     android:src="@drawable/die4grad" />
@@ -196,8 +197,8 @@
 
                 <ImageView
                     android:id="@+id/diePlaceFive"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:padding="5dp"
                     android:src="@drawable/die5grad" />
             </androidx.cardview.widget.CardView>
@@ -210,8 +211,8 @@
 
                 <ImageView
                     android:id="@+id/diePlaceSix"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:padding="5dp"
                     android:src="@drawable/die6grad" />
             </androidx.cardview.widget.CardView>
@@ -223,21 +224,20 @@
     <TextView
         android:id="@+id/throwTextView"
         android:layout_width="wrap_content"
-        android:layout_height="63dp"
+        android:layout_height="wrap_content"
         android:backgroundTint="#000000"
         android:fontFamily="@font/bangers"
         android:gravity="center|center_horizontal"
         android:outlineProvider="bounds"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:paddingBottom="10dp"
         android:shadowColor="@android:color/black"
         android:shadowDx="4"
         android:shadowDy="4"
         android:shadowRadius="5"
         android:text="@string/throws_left"
         android:textColor="@color/colorAccent"
-        android:textSize="30sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -247,20 +247,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.55" />
+        app:layout_constraintGuide_end="237dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:animateLayoutChanges="true"
         android:clipToPadding="false"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/combTable"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/throwTextView">
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:layout_constraintVertical_bias="0.84000003">
 
         <Button
             android:id="@+id/throwButton"
@@ -275,7 +278,7 @@
             android:paddingEnd="40dp"
             android:text="@string/throw_string"
             android:textAlignment="gravity"
-            android:textSize="24sp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/resultButton"
@@ -297,35 +300,34 @@
 
     <TableLayout
         android:id="@+id/combTable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline10"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
         app:layout_constraintVertical_bias="0.64">
 
         <TableRow
             android:id="@+id/combRow0"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:gravity="center">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/lowCardView"
                 style="@style/invisibleCard"
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/combLowTextView"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:backgroundTint="#000000"
                     android:fontFamily="@font/bangers"
                     android:gravity="center|center_horizontal|center_vertical"
@@ -337,13 +339,13 @@
                     android:text="@string/low_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/fourCardView"
                 style="@style/invisibleCard"
-                android:layout_width="match_parent"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:layout_weight="1"
@@ -351,7 +353,7 @@
 
                 <TextView
                     android:id="@+id/comb4TextView"
-                    android:layout_width="75dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="#000000"
                     android:fontFamily="@font/bangers"
@@ -364,13 +366,13 @@
                     android:text="@string/four_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/fiveCardView"
                 style="@style/invisibleCard"
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:layout_weight="1"
@@ -378,7 +380,7 @@
 
                 <TextView
                     android:id="@+id/comb5TextView"
-                    android:layout_width="75dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="#000000"
                     android:fontFamily="@font/bangers"
@@ -391,13 +393,13 @@
                     android:text="@string/five_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/sixCardView"
                 style="@style/invisibleCard"
-                android:layout_width="match_parent"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:layout_weight="1"
@@ -405,7 +407,7 @@
 
                 <TextView
                     android:id="@+id/comb6TextView"
-                    android:layout_width="75dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="#000000"
                     android:fontFamily="@font/bangers"
@@ -418,13 +420,13 @@
                     android:text="@string/six_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/sevenCardView"
                 style="@style/invisibleCard"
-                android:layout_width="match_parent"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:layout_weight="1"
@@ -432,7 +434,7 @@
 
                 <TextView
                     android:id="@+id/comb7TextView"
-                    android:layout_width="75dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="#000000"
                     android:fontFamily="@font/bangers"
@@ -445,7 +447,7 @@
                     android:text="@string/seven_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
         </TableRow>
@@ -454,15 +456,13 @@
             android:id="@+id/combRow1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:gravity="center">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/eightCardView"
                 style="@style/invisibleCard"
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:layout_weight="1"
@@ -471,7 +471,7 @@
 
                 <TextView
                     android:id="@+id/comb8TextView"
-                    android:layout_width="75dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/bangers"
                     android:gravity="center|center_horizontal|center_vertical"
@@ -483,13 +483,13 @@
                     android:text="@string/eight_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/nineCardView"
                 style="@style/card"
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:layout_weight="1">
@@ -497,7 +497,7 @@
                 <TextView
                     android:id="@+id/comb9TextView"
                     style="@style/buttonText"
-                    android:layout_width="75dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/bangers"
                     android:gravity="center|center_horizontal|center_vertical"
@@ -507,13 +507,13 @@
                     android:shadowDy="4"
                     android:text="@string/nine_combs"
                     android:textAlignment="center"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/tenCardView"
                 style="@style/invisibleCard"
-                android:layout_width="match_parent"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:layout_weight="1"
@@ -522,7 +522,7 @@
 
                 <TextView
                     android:id="@+id/comb10TextView"
-                    android:layout_width="75dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="#000000"
                     android:fontFamily="@font/bangers"
@@ -535,13 +535,13 @@
                     android:text="@string/ten_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/elevenCardView"
                 style="@style/invisibleCard"
-                android:layout_width="match_parent"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:layout_weight="1"
@@ -550,7 +550,7 @@
 
                 <TextView
                     android:id="@+id/comb11TextView"
-                    android:layout_width="75dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="#000000"
                     android:fontFamily="@font/bangers"
@@ -563,13 +563,13 @@
                     android:text="@string/eleven_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/twelveCardView"
                 style="@style/invisibleCard"
-                android:layout_width="match_parent"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:layout_weight="1"
@@ -578,7 +578,7 @@
 
                 <TextView
                     android:id="@+id/comb12TextView"
-                    android:layout_width="75dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="#000000"
                     android:fontFamily="@font/bangers"
@@ -591,7 +591,7 @@
                     android:text="@string/twelve_combs"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
         </TableRow>
@@ -603,6 +603,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintGuide_percent="0.95" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

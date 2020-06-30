@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:gravity="center"
-    android:orientation="vertical"
     tools:context=".ScoreActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|top"
-        android:layout_marginTop="-7dp"
-        android:layout_marginEnd="3dp"
-        android:layout_weight="0"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.02" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline5">
 
         <TextView
             android:id="@+id/textView3"
@@ -28,7 +34,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/music"
-            android:textSize="18sp" />
+            android:textSize="30sp" />
 
         <Space
             android:layout_width="7dp"
@@ -44,7 +50,7 @@
             android:layout_marginEnd="20dp"
             android:gravity="center"
             android:text="@string/pause"
-            android:textSize="12sp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <TextView
@@ -52,26 +58,28 @@
         style="@style/largeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0"
-        android:padding="2dp"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
-        android:paddingBottom="2dp"
-        android:shadowDx="2"
-        android:shadowDy="2"
-        android:shadowRadius="3"
         android:text="@string/detailed_results"
         android:textAlignment="center"
-        android:textSize="14sp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.18" />
 
     <TableLayout
         android:id="@+id/scoreTable"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
         android:paddingStart="10dp"
-        android:paddingEnd="10dp">
+        android:paddingEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline7">
 
         <TableRow
             android:layout_width="match_parent"
@@ -84,16 +92,12 @@
                 style="@style/smallText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
+                android:layout_gravity="bottom|left"
                 android:layout_weight="1"
-                android:gravity="bottom|center_horizontal"
+                android:gravity="bottom"
                 android:includeFontPadding="false"
-                android:paddingEnd="10dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="@string/results_round"
-                android:textSize="12sp" />
+                android:paddingStart="10dp"
+                android:text="@string/results_round" />
 
             <Space
                 android:layout_width="55dp"
@@ -110,11 +114,7 @@
                 android:layout_weight="1"
                 android:gravity="bottom|center"
                 android:includeFontPadding="false"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="POINTS"
-                android:textSize="12sp" />
+                android:text="POINTS" />
 
             <TextView
                 android:id="@+id/combView1"
@@ -122,14 +122,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="bottom|center"
+                android:gravity="bottom|end"
                 android:includeFontPadding="false"
-                android:paddingStart="2dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="COMBINATION"
-                android:textSize="12sp" />
+                android:paddingStart="0dp"
+                android:paddingEnd="10dp"
+                android:text="COMBINATION" />
 
         </TableRow>
 
@@ -139,20 +136,18 @@
             android:layout_width="match_parent"
             android:layout_height="13dp"
             android:layout_gravity="top"
+            android:layout_marginTop="-3dp"
             android:layout_weight="0"
-            android:gravity="center|top"
+            android:gravity="top"
             android:includeFontPadding="false"
             android:shadowColor="#56000000"
-            android:shadowDx="2"
-            android:shadowDy="2"
-            android:shadowRadius="3"
-            android:text="@string/top_score_small_screen"
-            android:textColor="@color/colorAccent"
-            android:textSize="12sp" />
+            android:text="͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞͞͞͞͞͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞ ͞͞"
+            android:textColor="@color/colorAccent" />
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/roundView"
@@ -162,11 +157,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingEnd="15dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="1"
-                android:textSize="12sp" />
+                android:text="1" />
 
             <Space
                 android:layout_width="55dp"
@@ -181,11 +172,7 @@
                 android:layout_gravity="bottom|center"
                 android:layout_weight="1"
                 android:gravity="bottom|center"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="18"
-                android:textSize="12sp" />
+                android:text="18" />
 
             <TextView
                 android:id="@+id/combView"
@@ -196,17 +183,13 @@
                 android:gravity="center"
                 android:paddingStart="15dp"
                 android:paddingEnd="0dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="6"
-                android:textSize="12sp" />
+                android:text="6" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="3dp">
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/roundView2"
@@ -216,11 +199,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingEnd="15dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="2"
-                android:textSize="12sp" />
+                android:text="2" />
 
             <Space
                 android:layout_width="55dp"
@@ -235,11 +214,7 @@
                 android:layout_gravity="bottom|center"
                 android:layout_weight="1"
                 android:gravity="bottom|center"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="7"
-                android:textSize="12sp" />
+                android:text="7" />
 
             <TextView
                 android:id="@+id/combView2"
@@ -250,17 +225,13 @@
                 android:gravity="bottom|center"
                 android:paddingStart="15dp"
                 android:paddingEnd="0dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="LOW"
-                android:textSize="12sp" />
+                android:text="LOW" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="3dp">
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/roundView3"
@@ -270,11 +241,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingEnd="15dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="3"
-                android:textSize="12sp" />
+                android:text="3" />
 
             <Space
                 android:layout_width="55dp"
@@ -289,11 +256,7 @@
                 android:layout_gravity="bottom|center"
                 android:layout_weight="1"
                 android:gravity="bottom|center"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="22"
-                android:textSize="12sp" />
+                android:text="22" />
 
             <TextView
                 android:id="@+id/combView3"
@@ -304,17 +267,13 @@
                 android:gravity="bottom|center"
                 android:paddingStart="15dp"
                 android:paddingEnd="0dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="11"
-                android:textSize="12sp" />
+                android:text="11" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="3dp">
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/roundView12"
@@ -324,11 +283,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingEnd="15dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="4"
-                android:textSize="12sp" />
+                android:text="4" />
 
             <Space
                 android:layout_width="55dp"
@@ -343,11 +298,7 @@
                 android:layout_gravity="bottom|center"
                 android:layout_weight="1"
                 android:gravity="bottom|center"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="24"
-                android:textSize="12sp" />
+                android:text="24" />
 
             <TextView
                 android:id="@+id/combView4"
@@ -358,17 +309,13 @@
                 android:gravity="bottom|center"
                 android:paddingStart="15dp"
                 android:paddingEnd="0dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="12"
-                android:textSize="12sp" />
+                android:text="12" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="3dp">
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/roundView13"
@@ -378,11 +325,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingEnd="15dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="5"
-                android:textSize="12sp" />
+                android:text="5" />
 
             <Space
                 android:layout_width="55dp"
@@ -397,11 +340,7 @@
                 android:layout_gravity="bottom|center"
                 android:layout_weight="1"
                 android:gravity="bottom|center"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="18"
-                android:textSize="12sp" />
+                android:text="18" />
 
             <TextView
                 android:id="@+id/combView5"
@@ -412,17 +351,13 @@
                 android:gravity="bottom|center"
                 android:paddingStart="15dp"
                 android:paddingEnd="0dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="9"
-                android:textSize="12sp" />
+                android:text="9" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="3dp">
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/roundView14"
@@ -432,11 +367,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingEnd="15dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="6"
-                android:textSize="12sp" />
+                android:text="6" />
 
             <Space
                 android:layout_width="55dp"
@@ -451,11 +382,7 @@
                 android:layout_gravity="bottom|center"
                 android:layout_weight="1"
                 android:gravity="bottom|center"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="18"
-                android:textSize="12sp" />
+                android:text="18" />
 
             <TextView
                 android:id="@+id/combView6"
@@ -466,17 +393,13 @@
                 android:gravity="bottom|center"
                 android:paddingStart="15dp"
                 android:paddingEnd="0dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="6"
-                android:textSize="12sp" />
+                android:text="6" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="3dp">
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/roundView15"
@@ -486,11 +409,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingEnd="15dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="7"
-                android:textSize="12sp" />
+                android:text="7" />
 
             <Space
                 android:layout_width="55dp"
@@ -505,11 +424,7 @@
                 android:layout_gravity="bottom|center"
                 android:layout_weight="1"
                 android:gravity="bottom|center"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="20"
-                android:textSize="12sp" />
+                android:text="20" />
 
             <TextView
                 android:id="@+id/combView7"
@@ -520,17 +435,13 @@
                 android:gravity="bottom|center"
                 android:paddingStart="15dp"
                 android:paddingEnd="0dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="10"
-                android:textSize="12sp" />
+                android:text="10" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="3dp">
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/roundView16"
@@ -540,11 +451,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingEnd="15dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="8"
-                android:textSize="12sp" />
+                android:text="8" />
 
             <Space
                 android:layout_width="55dp"
@@ -559,11 +466,7 @@
                 android:layout_gravity="bottom|center"
                 android:layout_weight="1"
                 android:gravity="bottom|center"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="36"
-                android:textSize="12sp" />
+                android:text="36" />
 
             <TextView
                 android:id="@+id/combView8"
@@ -574,17 +477,13 @@
                 android:gravity="bottom|center"
                 android:paddingStart="15dp"
                 android:paddingEnd="0dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="6"
-                android:textSize="12sp" />
+                android:text="6" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="3dp">
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/roundView17"
@@ -594,11 +493,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingEnd="15dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="9"
-                android:textSize="12sp" />
+                android:text="9" />
 
             <Space
                 android:layout_width="55dp"
@@ -613,11 +508,7 @@
                 android:layout_gravity="bottom|center"
                 android:layout_weight="1"
                 android:gravity="bottom|center"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="24"
-                android:textSize="12sp" />
+                android:text="24" />
 
             <TextView
                 android:id="@+id/combView9"
@@ -628,17 +519,13 @@
                 android:gravity="bottom|center"
                 android:paddingStart="15dp"
                 android:paddingEnd="0dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="12"
-                android:textSize="12sp" />
+                android:text="12" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="3dp">
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/roundView18"
@@ -648,11 +535,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingEnd="15dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="10"
-                android:textSize="12sp" />
+                android:text="10" />
 
             <Space
                 android:layout_width="55dp"
@@ -667,11 +550,7 @@
                 android:layout_gravity="bottom|center"
                 android:layout_weight="1"
                 android:gravity="bottom|center"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="25"
-                android:textSize="12sp" />
+                android:text="25" />
 
             <TextView
                 android:id="@+id/combView10"
@@ -682,16 +561,15 @@
                 android:gravity="bottom|center"
                 android:paddingStart="15dp"
                 android:paddingEnd="0dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="5"
-                android:textSize="12sp" />
+                android:text="5" />
         </TableRow>
+
+        <Space android:layout_height="wrap_content"></Space>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="15dp">
+            android:layout_height="match_parent"
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/roundView20"
@@ -702,15 +580,11 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingEnd="15dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="TOTAL"
-                android:textSize="12sp" />
+                android:text="TOTAL" />
 
             <Space
                 android:layout_width="55dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1" />
 
             <TextView
@@ -718,18 +592,10 @@
                 style="@style/largeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="bottom|center"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:lineSpacingExtra="0sp"
-                android:padding="2dp"
-                android:password="false"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="3"
-                android:text="236"
-                android:textSize="14sp" />
+                android:gravity="bottom|center"
+                android:text="236" />
 
             <TextView
                 android:id="@+id/combView11"
@@ -747,13 +613,21 @@
         android:id="@+id/scoreBackButton"
         style="@style/cardButton"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_weight="0"
+        android:layout_height="wrap_content"
         android:background="@color/colorAccent"
         android:elevation="10dp"
         android:fontFamily="@font/bangers"
         android:text="@string/back"
-        android:textSize="14sp" />
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.94" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +37,6 @@ public class GameActivity extends MusicPlayingActivity {
     private static final int SCORE_ANIM_FRAME_DUR = 50;
     private static final int COMB_PICKED_SOUND_DUR = 600;
     private static final float INCREASE_POINT_VOLUME = 0.15f;
-
 
     TextView roundsView;
     TextView scoreView;
@@ -111,8 +111,9 @@ public class GameActivity extends MusicPlayingActivity {
 
         initMusicControlView();
 
-        initCombinations();
-        initDice();
+        float relativeViewSize = 1;
+        initCombinations(relativeViewSize);
+        initDice(relativeViewSize);
     }
 
     private void loadSounds(final boolean rollDice) {
@@ -138,14 +139,18 @@ public class GameActivity extends MusicPlayingActivity {
 
     }
 
-    private void initDice() {
+    private void initDice(float relativeViewSize) {
         TableLayout table = findViewById(R.id.diceTable);
+        table.setScaleX(relativeViewSize);
+        table.setScaleY(relativeViewSize);
         for (int i = 0; i < table.getChildCount(); i++) {
             TableRow row = (TableRow) table.getChildAt(i);
             for (int j = 0; j < row.getChildCount(); j++) {
                 CardView cardView = (CardView) row.getChildAt(j);
                 cardView.setSoundEffectsEnabled(false);
                 ImageView diceView = (ImageView) cardView.getChildAt(0);
+                diceView.setScaleX(relativeViewSize);
+                diceView.setScaleY(relativeViewSize);
                 final int index = i * row.getChildCount() + j;
                 diceViews[index] = diceView;
                 setDiePicked(cardView, index, game.isDiePicked(index));
@@ -179,7 +184,7 @@ public class GameActivity extends MusicPlayingActivity {
         }
     }
 
-    private void initCombinations() {
+    private void initCombinations(float relativeViewSize) {
         combViews.clear();
         TableLayout table = findViewById(R.id.combTable);
         for (int i = 0; i < table.getChildCount(); i++) {
