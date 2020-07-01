@@ -13,6 +13,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
 
+// Super class for all activities, handling music logic
 public class MusicPlayingActivity extends AppCompatActivity {
 
     protected static final int MESSAGE_PLAY_MUSIC = 0;
@@ -54,6 +55,7 @@ public class MusicPlayingActivity extends AppCompatActivity {
         }
     }
 
+    // Set size of music controls
     private void setTextSizes() {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
@@ -90,7 +92,7 @@ public class MusicPlayingActivity extends AppCompatActivity {
 
     protected void unbindMusicService()
     {
-        if(serviceBound)
+        if (serviceBound)
         {
             unbindService(serviceConnection);
             serviceBound = false;
@@ -103,6 +105,9 @@ public class MusicPlayingActivity extends AppCompatActivity {
         serviceBound = true;
     }
 
+    // If music is playing and pausing is due to switching activities, delay pausing so that new
+    // activity can cancel the pausing, preventing any stuttering. If pausing is due to exiting the
+    // game, music will be paused/stopped as well.
     @Override
     protected void onPause() {
         super.onPause();
@@ -129,6 +134,7 @@ public class MusicPlayingActivity extends AppCompatActivity {
         setMusicControlText();
     }
 
+    // Resize font size of music control symbols to keep their sizes approx. the same
     private void setMusicControlText() {
         if (!playMusic) {
             musicControlView.setText(R.string.play);

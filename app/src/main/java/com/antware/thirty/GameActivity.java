@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
+// Class for main game UI
 public class GameActivity extends MusicPlayingActivity {
 
     public static final String SCORE_MESSAGE = "com.example.geoquiz.SCORE_MESSAGE";
@@ -37,11 +38,9 @@ public class GameActivity extends MusicPlayingActivity {
     private static final int COMB_PICKED_SOUND_DUR = 600;
     private static final float INCREASE_POINT_VOLUME = 0.15f;
 
-    TextView roundsView;
-    TextView scoreView;
-    TextView throwsView;
+    TextView roundsView, scoreView, throwsView;
     Button throwButton, resultButton;
-    List<CardView> combViews = new ArrayList<>();
+    List<CardView> combViews = new ArrayList<>(); // Views for the combinations
     ImageView[] diceViews = new ImageView[6];
 
     Game game = new Game();
@@ -110,9 +109,8 @@ public class GameActivity extends MusicPlayingActivity {
 
         initMusicControlView();
 
-        float relativeViewSize = 1;
         initCombinations();
-        initDice(relativeViewSize);
+        initDice();
     }
 
     private void loadSounds(final boolean rollDice) {
@@ -138,18 +136,14 @@ public class GameActivity extends MusicPlayingActivity {
 
     }
 
-    private void initDice(float relativeViewSize) {
+    private void initDice() {
         TableLayout table = findViewById(R.id.diceTable);
-        table.setScaleX(relativeViewSize);
-        table.setScaleY(relativeViewSize);
         for (int i = 0; i < table.getChildCount(); i++) {
             TableRow row = (TableRow) table.getChildAt(i);
             for (int j = 0; j < row.getChildCount(); j++) {
                 CardView cardView = (CardView) row.getChildAt(j);
                 cardView.setSoundEffectsEnabled(false);
                 ImageView diceView = (ImageView) cardView.getChildAt(0);
-                diceView.setScaleX(relativeViewSize);
-                diceView.setScaleY(relativeViewSize);
                 final int index = i * row.getChildCount() + j;
                 diceViews[index] = diceView;
                 setDiePicked(cardView, index, game.isDiePicked(index));
@@ -170,6 +164,7 @@ public class GameActivity extends MusicPlayingActivity {
         intent.putExtra(SCORE_PER_ROUND_MESSAGE, game.getScorePerRound());
         intent.putExtra(COMB_PER_ROUND_MESSAGE, game.getCombPerRound());
         intent.putExtra(KEY_PLAY_MUSIC, playMusic);
+        // Notify this activity if the music status was changed in ScoreActivity
         startActivityForResult(intent, MESSAGE_PLAY_MUSIC);
     }
 
@@ -178,6 +173,7 @@ public class GameActivity extends MusicPlayingActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MESSAGE_PLAY_MUSIC) {
             assert data != null;
+            // If music status was changed in ScoreActivity, change it in this activity accordingly
             if (playMusic != data.getBooleanExtra(KEY_PLAY_MUSIC, playMusic))
                 toggleMusic();
         }
@@ -196,6 +192,7 @@ public class GameActivity extends MusicPlayingActivity {
                 cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        // Only one combination can be picked per round and choice cannot be undone
                         if (game.isAnyCombPickedThisRound() || game.isCombPicked(cardNum)) return;
                         game.setCombPicked(cardNum);
                         setCombinationClicked((CardView) view, true);
@@ -213,6 +210,7 @@ public class GameActivity extends MusicPlayingActivity {
         setCardBackground(view, elevation, color);
     }
 
+    // Highlight or un-highlight die or combination
     private void setCardBackground(CardView cardView, int elevation, int color) {
         cardView.setCardElevation(elevation);
         int bgColorId = getResources().getColor(color, null);
@@ -232,6 +230,7 @@ public class GameActivity extends MusicPlayingActivity {
         if (isClicked) {
             if (game.getThrowsLeft() == 0) {
                 Handler handler = new Handler();
+                // Delay score-increase animation until picked-combination sound has been played
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -251,6 +250,7 @@ public class GameActivity extends MusicPlayingActivity {
         }
         soundPool.play(diceRollSound, 1, 1, 0, 0, 1);
         animateDice();
+        // Check if round number is the same after the dice throw
         int round = game.getRound();
         game.throwDice();
         updateFigures(false);
@@ -333,9 +333,10 @@ public class GameActivity extends MusicPlayingActivity {
     }
 
     private int getDieFaceView(int dieFace) {
-        return getResources().getIdentifier("die" + dieFace + "grad", "drawable", getPackageName());
+        return getResources().getIdentifier("die" + dieFace, "drawable", getPackageName());
     }
 
+    // Update all values in views (except for dice)
     private void updateFigures(boolean updateScore) {
         setNumberInTextView(throwsView, game.getThrowsLeft());
         setNumberInTextView(roundsView, game.getRound());

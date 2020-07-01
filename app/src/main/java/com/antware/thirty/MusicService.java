@@ -14,7 +14,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
     private final IBinder mBinder = new ServiceBinder();
 
     MediaPlayer player;
-    private int currentPos = 0;
+    private int currentPos = 0; // Current playback position in ms
 
     Handler pauseHandler = new Handler();
     Runnable pauseRunnable = new Runnable() {
@@ -28,10 +28,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
         return mBinder;
     }
 
-    public boolean isPlaying() {
-        return player.isPlaying();
-    }
-
+    // See explanation in MusicPlayingActivity
     public void pauseDelayed() {
         pauseHandler.postDelayed(pauseRunnable, PAUSE_DELAY);
     }
@@ -44,8 +41,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
 
     public void pauseMusic()
     {
-        if (player.isPlaying())
-        {
+        if (player.isPlaying()) {
             player.pause();
             currentPos = player.getCurrentPosition();
         }
@@ -60,18 +56,11 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
         }
     }
 
-    public void stopMusic()
-    {
-        player.stop();
-        player.release();
-        player = null;
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
         player = MediaPlayer.create(this, R.raw.music);
-        player.setLooping(true); // Set looping
+        player.setLooping(true);
         player.setVolume(MUSIC_VOLUME,MUSIC_VOLUME);
 
     }

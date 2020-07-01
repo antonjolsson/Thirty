@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+// Class for pure game logic
 public class Game implements Parcelable {
 
     private final static int NUM_ROUNDS = 10;
@@ -50,6 +51,7 @@ public class Game implements Parcelable {
         computeCombPoints();
     }
 
+    // Restore current dice set from saved state
     private void restoreDice(Parcel in) {
         int[] dieFaces = new int[dice.length];
         boolean[] pickedDice = new boolean[dice.length];
@@ -147,6 +149,7 @@ public class Game implements Parcelable {
             initNextRound();
     }
 
+    // Compute max points of all non-picked combinations (or comb picked this round if throws left)
     private void computeCombPoints() {
         Set<Set<List<Die>>> allDicePartitions = Combination.getPartitions(new ArrayList<>(Arrays.asList(dice)));
         for (Combination comb : combs) {

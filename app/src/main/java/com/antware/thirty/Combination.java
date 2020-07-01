@@ -8,8 +8,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+// Class representing a point combination (Low, 4, 5... etc)
 public class Combination implements Cloneable{
 
+    // Get all possible partitions of the current dice set
     public static Set<Set<List<Die>>> getPartitions(List<Die> dice){
         if (dice.size() == 0 || dice.size() == 1) {
             Set<Set<List<Die>>> partitions = new HashSet<>();
@@ -41,6 +43,7 @@ public class Combination implements Cloneable{
         }
     }
 
+    // Copy a partition
     private static Set<List<Die>> getCopy(Set<List<Die>> partition) {
         Set<List<Die>> partitionCopy = new HashSet<>();
         for (List<Die> list : partition) {
@@ -50,6 +53,7 @@ public class Combination implements Cloneable{
         return partitionCopy;
     }
 
+    // Get the 0-indexed order number of a combination (starting from Low)
     public static int getOrderNum(int nameAsInt) {
         return nameAsInt == 1 ? 0 : nameAsInt - LOWEST_NUM_VALUE + 1;
     }
@@ -61,8 +65,10 @@ public class Combination implements Cloneable{
     CombName[] combNames = CombName.values();
 
     private CombName name;
+    // If combination has been picked and its max points added to total score; final max points. Else,
+    // max points of current dice.
     private int points = 0;
-    private boolean isPicked;
+    private boolean isPicked; // Has this combination been picked?
 
     Combination(int combNum) {
         name = combNames[combNum];
@@ -85,6 +91,7 @@ public class Combination implements Cloneable{
         this.isPicked = isPicked;
     }
 
+    // Compute max points for this combination from all possible dice partitions
     public void computePoints(Set<Set<List<Die>>> allPartitions, Die[] dice) {
         points = 0;
         if (name == CombName.LOW){
@@ -112,6 +119,7 @@ public class Combination implements Cloneable{
         return sum;
     }
 
+    // Get the sum of all dice with values < 4
     private void addLowFaces(Die[] dice) {
         for (Die die : dice) {
             if (die.getFace() < LOWEST_NUM_VALUE)
@@ -131,6 +139,7 @@ public class Combination implements Cloneable{
         else return getOrderNumber() + LOWEST_NUM_VALUE - 1;
     }
 
+    // Get the 0-indexed order number of this combination
     public int getOrderNumber() {
         for (int i = 0; i < combNames.length; i++) {
             if (combNames[i] == name)

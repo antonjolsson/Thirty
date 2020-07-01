@@ -2,10 +2,13 @@ package com.antware.thirty;
 
 import java.util.Random;
 
+// Class representing a die
 public class Die {
 
     Random random = new Random();
+    // Value between 1 and 6
     private int face = 0;
+    // Is the die picked so it won't be re-throwed?
     private boolean isPicked;
 
     Die() {
