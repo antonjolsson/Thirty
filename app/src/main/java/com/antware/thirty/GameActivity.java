@@ -60,6 +60,13 @@ public class GameActivity extends MusicPlayingActivity {
         bindMusicService();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (musicService != null && playMusic)
+            musicService.resumeMusic();
+    }
+
     private void resumeGame(Bundle savedInstanceState) {
         game = savedInstanceState.getParcelable(KEY_GAME);
         initElements(false);
