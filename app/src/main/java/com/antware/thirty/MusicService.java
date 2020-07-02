@@ -9,7 +9,7 @@ import android.os.IBinder;
 
 public class MusicService extends Service implements MediaPlayer.OnErrorListener{
 
-    private static final float MUSIC_VOLUME = 0.3f;
+    private static final float MUSIC_VOLUME = 0.2f;
     private static final long PAUSE_DELAY = 400;
     private final IBinder mBinder = new ServiceBinder();
 

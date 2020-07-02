@@ -362,7 +362,6 @@ public class GameActivity extends MusicPlayingActivity {
                     setNumberInTextView(scoreView, oldScore + finalI);
                     soundPool.play(increasePointsSound, INCREASE_POINT_VOLUME,
                             INCREASE_POINT_VOLUME, finalI, 0, 1);
-                    Log.d("GameActivity", scoreView.getText().toString());
                 }
             }, SCORE_ANIM_FRAME_DUR * i);
         }

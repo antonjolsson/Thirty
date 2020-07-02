@@ -28,7 +28,6 @@ public class ScoreActivity extends MusicPlayingActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
         TextView scoreView = findViewById(R.id.totalScoreView);
-        initBackButton();
 
         int totalScore = getIntent().getIntExtra(SCORE_MESSAGE, 0);
         int[] scorePerRound = getIntent().getIntArrayExtra(SCORE_PER_ROUND_MESSAGE);
@@ -53,22 +52,13 @@ public class ScoreActivity extends MusicPlayingActivity {
         bindMusicService();
     }
 
-    private void initBackButton() {
-        Button backButton = findViewById(R.id.scoreBackButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackButtonPressed();
-            }
-        });
-    }
-
     // Notice GameActivity if music playback status was changed in this activity
-    private void onBackButtonPressed() {
+    @Override
+    public void onBackPressed() {
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra(KEY_PLAY_MUSIC, playMusic);
         setResult(MESSAGE_PLAY_MUSIC, intent);
-        finish();
+        super.onBackPressed();
     }
 
     private String getCombName(int combAsInt) {

@@ -68,6 +68,7 @@
         style="@style/largeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="3"
@@ -83,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="80dp" />
+        app:layout_constraintGuide_end="396dp" />
 
     <TableLayout
         android:id="@+id/scoreTable"
@@ -91,7 +92,6 @@
         android:layout_height="wrap_content"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/scoreBackButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline7">
@@ -809,20 +809,6 @@
                 android:paddingEnd="0dp" />
         </TableRow>
     </TableLayout>
-
-    <Button
-        android:id="@+id/scoreBackButton"
-        style="@style/cardButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:elevation="10dp"
-        android:fontFamily="@font/bangers"
-        android:text="@string/back"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"

@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/felt"
@@ -67,17 +67,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout7" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="74dp" />
+
     <TableLayout
         android:id="@+id/scoreTable"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/scoreBackButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toTopOf="@+id/guideline8">
 
         <TableRow
             android:layout_width="match_parent"
@@ -592,8 +597,6 @@
                 android:textSize="18sp" />
         </TableRow>
 
-        <Space android:layout_height="wrap_content" />
-
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="15dp">
@@ -604,6 +607,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingEnd="15dp"
@@ -624,9 +628,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:lineSpacingExtra="0sp"
-                android:padding="2dp"
-                android:password="false"
+                android:paddingEnd="2dp"
+                android:paddingBottom="6dp"
                 android:text="236"
                 android:textSize="24sp" />
 
@@ -641,21 +644,5 @@
                 android:paddingEnd="0dp" />
         </TableRow>
     </TableLayout>
-
-    <Button
-        android:id="@+id/scoreBackButton"
-        style="@style/cardButton"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/colorAccent"
-        android:elevation="10dp"
-        android:fontFamily="@font/bangers"
-        android:text="@string/back"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scoreTable" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
