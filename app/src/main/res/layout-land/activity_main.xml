@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/felt"
+    android:animateLayoutChanges="true"
     tools:context=".GameActivity">
 
     <TextView
@@ -204,7 +205,6 @@
         android:id="@+id/throwTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
         android:backgroundTint="#000000"
         android:fontFamily="@font/bangers"
         android:gravity="center|center_horizontal"
@@ -218,12 +218,35 @@
         android:text="@string/throws_left"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/pickCombView"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/diceTable" />
+
+    <TextView
+        android:id="@+id/pickCombView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#000000"
+        android:fontFamily="@font/bangers"
+        android:gravity="center|center_horizontal"
+        android:outlineProvider="bounds"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="3"
+        android:text="@string/pick_comb"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/throwTextView"
         app:layout_constraintTop_toBottomOf="@+id/diceTable" />
 
     <LinearLayout
         android:id="@+id/linearLayout3"
+        android:animateLayoutChanges="true"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
