@@ -303,6 +303,27 @@
             tools:visibility="visible" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/pickCombView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#000000"
+        android:fontFamily="@font/bangers"
+        android:gravity="center|center_horizontal"
+        android:outlineProvider="bounds"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="3"
+        android:text="@string/pick_comb"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/combTable"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TableLayout
         android:id="@+id/combTable"
         android:layout_width="0dp"

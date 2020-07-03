@@ -6,8 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/felt"
-
+    android:animateLayoutChanges="true"
     android:orientation="vertical"
+    android:visibility="visible"
     tools:context=".GameActivity">
 
     <androidx.constraintlayout.widget.Guideline
@@ -249,7 +250,7 @@
         app:layout_constraintGuide_percent="0.55" />
 
     <LinearLayout
-        android:id="@+id/linearLayout6"
+        android:id="@+id/centralButtonsLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
@@ -283,16 +284,44 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|center_horizontal|center_vertical"
             android:layout_marginStart="15dp"
+            android:alpha="0.5"
+            android:background="@color/colorAccentSemiTransp"
             android:elevation="10dp"
+            android:enabled="false"
             android:fontFamily="@font/bangers"
             android:gravity="center|center_horizontal|center_vertical"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:text="@string/show_score"
             android:textAlignment="gravity"
+            android:textColor="@color/blackAlmostTransparent"
             android:textSize="24sp"
             tools:visibility="gone" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/pickCombView"
+        android:layout_width="wrap_content"
+        android:layout_height="63dp"
+        android:layout_weight="1"
+        android:backgroundTint="#000000"
+        android:fontFamily="@font/bangers"
+        android:gravity="center|center_horizontal"
+        android:outlineProvider="bounds"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="10dp"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="5"
+        android:text="@string/pick_comb"
+        android:textColor="@color/colorAccent"
+        android:textSize="30sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/combTable"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TableLayout
         android:id="@+id/combTable"
@@ -300,9 +329,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
-        app:layout_constraintVertical_bias="0.64">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TableRow
             android:id="@+id/combRow0"

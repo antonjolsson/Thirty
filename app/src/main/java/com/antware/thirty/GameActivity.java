@@ -3,8 +3,13 @@ package com.antware.thirty;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
+import android.animation.Animator;
+import android.animation.LayoutTransition;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
@@ -12,8 +17,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -38,10 +45,11 @@ public class GameActivity extends MusicPlayingActivity {
     private static final int COMB_PICKED_SOUND_DUR = 600;
     private static final float INCREASE_POINT_VOLUME = 0.15f;
 
-    TextView roundsView, scoreView, throwsView;
+    TextView roundsView, scoreView, throwsView, pickCombView;
     Button throwButton, resultButton;
     List<CardView> combViews = new ArrayList<>(); // Views for the combinations
     ImageView[] diceViews = new ImageView[6];
+    LinearLayout centralButtonsLayout;
 
     Game game = new Game();
     private int diceRollSound, selectDieSound, combPickSound, increasePointsSound;
@@ -96,6 +104,7 @@ public class GameActivity extends MusicPlayingActivity {
         setNumberInTextView(scoreView, 0);
         throwsView = findViewById(R.id.throwTextView);
         throwsView.setText(R.string.throws_left);
+        pickCombView = findViewById(R.id.pickCombView);
         throwButton = findViewById(R.id.throwButton);
         throwButton.setSoundEffectsEnabled(false);
         throwButton.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +122,7 @@ public class GameActivity extends MusicPlayingActivity {
                 showDetailedScore();
             }
         });
+        centralButtonsLayout = findViewById(R.id.centralButtonsLayout);
 
         initMusicControlView();
 
@@ -236,6 +246,7 @@ public class GameActivity extends MusicPlayingActivity {
 
         if (isClicked) {
             if (game.getThrowsLeft() == 0) {
+                forceCombChoice(false);
                 Handler handler = new Handler();
                 // Delay score-increase animation until picked-combination sound has been played
                 handler.postDelayed(new Runnable() {
@@ -247,6 +258,22 @@ public class GameActivity extends MusicPlayingActivity {
             }
             soundPool.play(combPickSound, 1, 1, 0, 0, 1);
         }
+    }
+
+    private void forceCombChoice(boolean forceChoice) {
+        setButtonEnabled(throwButton, !forceChoice);
+        pickCombView.setVisibility(forceChoice ? View.VISIBLE : View.GONE);
+        if (resultButton.getVisibility() == View.VISIBLE) {
+            setButtonEnabled(resultButton, !forceChoice);
+        }
+    }
+
+    private void setButtonEnabled(Button button, boolean enable) {
+        button.setEnabled(enable);
+        int bgColor = enable ? R.color.colorAccent : R.color.colorAccentSemiTransp;
+        button.setBackgroundColor(ContextCompat.getColor(this, bgColor));
+        int textColor = enable ? R.color.blackSemiTransparent : R.color.blackAlmostTransparent;
+        button.setTextColor(ContextCompat.getColor(this, textColor));
     }
 
     private void onThrowButtonPressed() {
@@ -317,6 +344,8 @@ public class GameActivity extends MusicPlayingActivity {
             if (animateScore) animateScoreIncrease();
             else setNumberInTextView(scoreView, game.getScore());
         }
+        if (!game.isAnyCombPickedThisRound())
+            forceCombChoice(true);
     }
 
     private void onGameOver() {
@@ -328,7 +357,20 @@ public class GameActivity extends MusicPlayingActivity {
                 initGameActivity();
             }
         });
-        resultButton.setEnabled(true);
+        setButtonEnabled(resultButton, game.isAnyCombPickedThisRound());
+        /*LayoutTransition transition = centralButtonsLayout.getLayoutTransition();
+
+        transition.addTransitionListener(new LayoutTransition.TransitionListener() {
+
+            @Override
+            public void startTransition(LayoutTransition layoutTransition, ViewGroup viewGroup, View view, int i) {
+            }
+
+            @Override
+            public void endTransition(LayoutTransition layoutTransition, ViewGroup viewGroup, View view, int i) {
+
+            }
+        });*/
         resultButton.setVisibility(View.VISIBLE);
     }
 

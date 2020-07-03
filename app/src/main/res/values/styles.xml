@@ -9,13 +9,11 @@
 
     <style name="buttonText">
         <item name="android:textColor">@color/blackSemiTransparent</item>
-        <!--<item name="android:alpha">0.65</item>-->
         <item name="android:shadowRadius">0</item>
     </style>
 
     <style name="invButtonText">
         <item name="android:textColor">@color/colorAccent</item>
-       <!-- <item name="android:alpha">1</item>-->
         <item name="android:shadowRadius">5</item>
     </style>
 
