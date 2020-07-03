@@ -29,7 +29,7 @@ public class MusicPlayingActivity extends AppCompatActivity {
     TextView musicControlView;
 
     protected Intent musicIntent;
-    protected boolean playMusic = false;
+    protected boolean playMusic = true;
     protected boolean serviceBound = false;
     protected MusicService musicService;
 
@@ -74,6 +74,13 @@ public class MusicPlayingActivity extends AppCompatActivity {
                 toggleMusic();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (musicService != null && playMusic)
+            musicService.resumeMusic();
     }
 
     @Override

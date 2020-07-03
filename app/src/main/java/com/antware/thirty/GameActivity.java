@@ -43,7 +43,6 @@ public class GameActivity extends MusicPlayingActivity {
     Button throwButton, resultButton;
     List<CardView> combViews = new ArrayList<>(); // Views for the combinations
     ImageView[] diceViews = new ImageView[6];
-    LinearLayout centralButtonsLayout;
 
     Game game = new Game();
     private int diceRollSound, selectDieSound, combPickSound, increasePointsSound;
@@ -60,13 +59,6 @@ public class GameActivity extends MusicPlayingActivity {
         else initGameActivity();
 
         bindMusicService();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (musicService != null && playMusic)
-            musicService.resumeMusic();
     }
 
     private void resumeGame(Bundle savedInstanceState) {
@@ -423,4 +415,9 @@ public class GameActivity extends MusicPlayingActivity {
         text.setText(newText);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        musicService = null;
+    }
 }
