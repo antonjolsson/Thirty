@@ -13,6 +13,9 @@ public class SplashActivity extends MusicPlayingActivity {
     private final static int SPLASH_DUR = 3000; // Display duration time
     private static final long ANIMATION_DUR = 1000;
 
+    Handler startActivityHandler;
+    Runnable startActivityRunnable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,13 +24,15 @@ public class SplashActivity extends MusicPlayingActivity {
         if (savedInstanceState == null){
             initMusic();
             final Intent intent = new Intent(this, GameActivity.class);
-            new Handler().postDelayed(new Runnable() {
+            startActivityHandler = new Handler();
+            startActivityRunnable = new Runnable() {
                 @Override
                 public void run() {
                     startActivity(intent);
                     finish();
                 }
-            }, SPLASH_DUR);
+            };
+            startActivityHandler.postDelayed(startActivityRunnable, SPLASH_DUR);
         }
         else bindMusicService();
     }
@@ -43,5 +48,13 @@ public class SplashActivity extends MusicPlayingActivity {
         AnimatorSet set = new AnimatorSet();
         set.playTogether(scaleX, scaleY, rotation);
         set.start();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivityHandler.removeCallbacks(startActivityRunnable);
+        musicService.pauseMusic();
+        musicService.setPlaybackPos(0);
     }
 }

@@ -33,6 +33,11 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
         pauseHandler.postDelayed(pauseRunnable, PAUSE_DELAY);
     }
 
+    public void setPlaybackPos(int position) {
+        currentPos = position;
+        player.seekTo(position);
+    }
+
     public class ServiceBinder extends Binder {
         MusicService getService() {
             return MusicService.this;

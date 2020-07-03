@@ -418,6 +418,7 @@ public class GameActivity extends MusicPlayingActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        musicService = null;
+        musicService.pauseMusic();
+        musicService.setPlaybackPos(0);
     }
 }
