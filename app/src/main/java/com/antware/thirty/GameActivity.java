@@ -358,19 +358,6 @@ public class GameActivity extends MusicPlayingActivity {
             }
         });
         setButtonEnabled(resultButton, game.isAnyCombPickedThisRound());
-        /*LayoutTransition transition = centralButtonsLayout.getLayoutTransition();
-
-        transition.addTransitionListener(new LayoutTransition.TransitionListener() {
-
-            @Override
-            public void startTransition(LayoutTransition layoutTransition, ViewGroup viewGroup, View view, int i) {
-            }
-
-            @Override
-            public void endTransition(LayoutTransition layoutTransition, ViewGroup viewGroup, View view, int i) {
-
-            }
-        });*/
         resultButton.setVisibility(View.VISIBLE);
     }
 
