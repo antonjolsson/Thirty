@@ -1,29 +1,23 @@
 package com.antware.thirty;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
-
-import android.animation.Animator;
-import android.animation.LayoutTransition;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,14 +109,12 @@ public class GameActivity extends MusicPlayingActivity {
         });
         resultButton = findViewById(R.id.resultButton);
         resultButton.setVisibility(View.GONE);
-        resultButton.setEnabled(false);
         resultButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDetailedScore();
             }
         });
-        centralButtonsLayout = findViewById(R.id.centralButtonsLayout);
 
         initMusicControlView();
 
@@ -247,6 +239,7 @@ public class GameActivity extends MusicPlayingActivity {
         if (isClicked) {
             if (game.getThrowsLeft() == 0) {
                 forceCombChoice(false);
+                pickCombView.setVisibility(View.GONE);
                 Handler handler = new Handler();
                 // Delay score-increase animation until picked-combination sound has been played
                 handler.postDelayed(new Runnable() {
@@ -262,14 +255,26 @@ public class GameActivity extends MusicPlayingActivity {
 
     private void forceCombChoice(boolean forceChoice) {
         setButtonEnabled(throwButton, !forceChoice);
-        pickCombView.setVisibility(forceChoice ? View.VISIBLE : View.GONE);
         if (resultButton.getVisibility() == View.VISIBLE) {
             setButtonEnabled(resultButton, !forceChoice);
         }
     }
 
-    private void setButtonEnabled(Button button, boolean enable) {
-        button.setEnabled(enable);
+    private void setButtonEnabled(final Button button, final boolean enable) {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (enable) {
+                    if (button.getId() == R.id.resultButton) {
+                        showDetailedScore();
+                    } else {
+                        if (gameOver()) initGameActivity();
+                        else onThrowButtonPressed();
+                    }
+                }
+                else pickCombView.setVisibility(View.VISIBLE);
+            }
+        });
         int bgColor = enable ? R.color.colorAccent : R.color.colorAccentSemiTransp;
         button.setBackgroundColor(ContextCompat.getColor(this, bgColor));
         int textColor = enable ? R.color.blackSemiTransparent : R.color.blackAlmostTransparent;
@@ -337,8 +342,7 @@ public class GameActivity extends MusicPlayingActivity {
 
     private void onNoThrowsLeft(boolean animateScore) {
         int round = game.getRound();
-        if (round == game.getMaxRounds())
-            onGameOver();
+        if (gameOver()) onGameOver();
         else throwButton.setText(R.string.next_round);
         if (game.getScorePerRound()[round - 1] > 0){
             if (animateScore) animateScoreIncrease();
@@ -346,6 +350,10 @@ public class GameActivity extends MusicPlayingActivity {
         }
         if (!game.isAnyCombPickedThisRound())
             forceCombChoice(true);
+    }
+
+    private boolean gameOver() {
+        return game.getThrowsLeft() == 0 && game.getRound() == game.getMaxRounds();
     }
 
     private void onGameOver() {
