@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -25,6 +24,10 @@ import java.util.Objects;
 import java.util.Random;
 
 // Class for main game UI
+
+/**
+ * Class/Activity for the main/game screen.
+ */
 public class GameActivity extends MusicPlayingActivity {
 
     public static final String SCORE_MESSAGE = "com.example.geoquiz.SCORE_MESSAGE";
@@ -39,8 +42,8 @@ public class GameActivity extends MusicPlayingActivity {
     private static final int COMB_PICKED_SOUND_DUR = 600;
     private static final float INCREASE_POINT_VOLUME = 0.15f;
 
-    TextView roundsView, scoreView, throwsView, pickCombView;
-    Button throwButton, resultButton;
+    TextView roundsView, scoreView, rollsView, pickCombView;
+    Button rollButton, resultButton;
     List<CardView> combViews = new ArrayList<>(); // Views for the combinations
     ImageView[] diceViews = new ImageView[6];
 
@@ -48,6 +51,12 @@ public class GameActivity extends MusicPlayingActivity {
     private int diceRollSound, selectDieSound, combPickSound, increasePointsSound;
     private SoundPool soundPool;
 
+    /**
+     * Creates the Activity and inflates the layout. If savedInstanceState is not null the game is
+     * being restored, so the state of the UI elements is restored as well. Else, the elements are
+     * initialized. Also initializes the music logic.
+     * @param savedInstanceState the saved instance state, if game is being re-created. Else, the value is null
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,42 +70,58 @@ public class GameActivity extends MusicPlayingActivity {
         bindMusicService();
     }
 
+    /**
+     * Logic for resuming the game. Must re-check if there are no rolls left, and in that case
+     * execute the logic for that state
+     * @param savedInstanceState the saved instance state, might be null
+     */
     private void resumeGame(Bundle savedInstanceState) {
         game = savedInstanceState.getParcelable(KEY_GAME);
         initElements(false);
         setDieFaces();
         updateFigures(true);
-        if (game.getThrowsLeft() == 0)
-            onNoThrowsLeft(false);
+        if (game.getRollsLeft() == 0)
+            onNoRollsLeft(false);
     }
 
+    /**
+     * Overridden method to save the game state (excluding the UI) as a <code>Parcelable.</code>
+     * @param outState the saved instance state, with the game state added to it
+     */
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(KEY_GAME, game);
     }
 
+    /**
+     * Method run only when the application starts or the player decides to play again, on game over.
+     */
     private void initGameActivity() {
         game.initGame();
         initElements(true);
-        onThrowButtonPressed();
+        onRollButtonPressed();
     }
 
+    /**
+     * Initializes all audio-visual elements on this screen.
+     * @param rollDice whether the dice-roll sound should be instantly played
+     */
     private void initElements(boolean rollDice) {
         loadSounds(rollDice);
 
         roundsView = findViewById(R.id.roundTextView);
         scoreView = findViewById(R.id.scoreTextView);
         setNumberInTextView(scoreView, 0);
-        throwsView = findViewById(R.id.throwTextView);
-        throwsView.setText(R.string.throws_left);
+        rollsView = findViewById(R.id.rollTextView);
+        rollsView.setText(R.string.rolls_left);
         pickCombView = findViewById(R.id.pickCombView);
-        throwButton = findViewById(R.id.throwButton);
-        throwButton.setSoundEffectsEnabled(false);
-        throwButton.setOnClickListener(new View.OnClickListener() {
+        rollButton = findViewById(R.id.rollButton);
+        rollButton.setSoundEffectsEnabled(false);
+        rollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onThrowButtonPressed();
+                onRollButtonPressed();
             }
         });
         resultButton = findViewById(R.id.resultButton);
@@ -114,6 +139,10 @@ public class GameActivity extends MusicPlayingActivity {
         initDice();
     }
 
+    /**
+     * Loads all sound effects (not including the music) used in the game, in a <code>SoundPool.</code>
+     * @param rollDice whether the dice-roll sound should be instantly played
+     */
     private void loadSounds(final boolean rollDice) {
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -137,6 +166,9 @@ public class GameActivity extends MusicPlayingActivity {
 
     }
 
+    /**
+     * Initializes the views and sounds associated with the dice.
+     */
     private void initDice() {
         TableLayout table = findViewById(R.id.diceTable);
         for (int i = 0; i < table.getChildCount(); i++) {
@@ -159,6 +191,9 @@ public class GameActivity extends MusicPlayingActivity {
         }
     }
 
+    /**
+     * Starts the result screen Activity and creates an Intent with all necessary information.
+     */
     private void showDetailedScore() {
         Intent intent = new Intent(this, ScoreActivity.class);
         intent.putExtra(SCORE_MESSAGE, game.getScore());
@@ -169,6 +204,12 @@ public class GameActivity extends MusicPlayingActivity {
         startActivityForResult(intent, MESSAGE_PLAY_MUSIC);
     }
 
+    /**
+     * Method executed when returning from ScoreActivity, to decide whether to play music or not.
+     * @param requestCode the request code for the result; MESSAGE_PLAY_MUSIC
+     * @param resultCode the resultCode
+     * @param data the music playback state in ResultActivity just before returning
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -180,6 +221,9 @@ public class GameActivity extends MusicPlayingActivity {
         }
     }
 
+    /**
+     * Initializes the graphics associated with the combinations.
+     */
     private void initCombinations() {
         combViews.clear();
         TableLayout table = findViewById(R.id.combTable);
@@ -204,6 +248,12 @@ public class GameActivity extends MusicPlayingActivity {
         }
     }
 
+    /**
+     * Marks the die graphic as picked or not.
+     * @param view The CardView parent of the ImageView containing the die image.
+     * @param index the index of the die in the Game object dice array
+     * @param isPicked whether the die shall be marked or not
+     */
     private void setDiePicked(CardView view, int index, boolean isPicked) {
         int elevation = isPicked ? R.dimen.selectedCardElev : R.dimen.nonSelectedCardElev;
         int color = isPicked ? R.color.colorAccent : R.color.transparent;
@@ -211,13 +261,24 @@ public class GameActivity extends MusicPlayingActivity {
         setCardBackground(view, elevation, color);
     }
 
-    // Highlight or un-highlight die or combination
+    /**
+     * Highlight or un-highlights a die or combination.
+     * @param cardView The CardView containing the graphic
+     * @param elevation The new elevation of the CardView
+     * @param color The new color of the CardView (may be transparent)
+     */
     private void setCardBackground(CardView cardView, int elevation, int color) {
         cardView.setCardElevation(elevation);
         int bgColorId = getResources().getColor(color, null);
         cardView.setCardBackgroundColor(bgColorId);
     }
 
+    /**
+     * OnClickListener for combinations. Marks a combination as picked or not and updates figures afterwards.
+     * Removes the "Pick combination!" reminder and enables rollButton and resultButton, if applicable.
+     * @param cardView the CardView containing the combination
+     * @param isClicked whether the die should be clicked or not
+     */
     private void setCombinationClicked(CardView cardView, boolean isClicked) {
         TextView text = (TextView) cardView.getChildAt(0);
         text.setTextColor(getResources().getColor(isClicked ? R.color.blackSemiTransparent : R.color.colorAccent));
@@ -229,7 +290,7 @@ public class GameActivity extends MusicPlayingActivity {
         updateFigures(false);
 
         if (isClicked) {
-            if (game.getThrowsLeft() == 0) {
+            if (game.getRollsLeft() == 0) {
                 forceCombChoice(false);
                 pickCombView.setVisibility(View.GONE);
                 Handler handler = new Handler();
@@ -245,13 +306,24 @@ public class GameActivity extends MusicPlayingActivity {
         }
     }
 
+    /**
+     * Method to enable or disable rollButton and possible resultButton, depending on whether the
+     * player has picked a combination this round yet and the number of rolls left.
+     * @param forceChoice whether to enable or disable the buttons
+     */
     private void forceCombChoice(boolean forceChoice) {
-        setButtonEnabled(throwButton, !forceChoice);
+        setButtonEnabled(rollButton, !forceChoice);
         if (resultButton.getVisibility() == View.VISIBLE) {
             setButtonEnabled(resultButton, !forceChoice);
         }
     }
 
+    /**
+     * Enables/disables (own implementation) rollButton or resultButton and possibly displays the "Pick combination!"
+     * message.
+     * @param button the button of which to alter appearance and functionality
+     * @param enable whether to set the button in enabled or disabled state
+     */
     private void setButtonEnabled(final Button button, final boolean enable) {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -261,7 +333,7 @@ public class GameActivity extends MusicPlayingActivity {
                         showDetailedScore();
                     } else {
                         if (gameOver()) initGameActivity();
-                        else onThrowButtonPressed();
+                        else onRollButtonPressed();
                     }
                 }
                 else pickCombView.setVisibility(View.VISIBLE);
@@ -273,30 +345,42 @@ public class GameActivity extends MusicPlayingActivity {
         button.setTextColor(ContextCompat.getColor(this, textColor));
     }
 
-    private void onThrowButtonPressed() {
-        if (game.getThrowsLeft() == 0) {
+    /**
+     * OnClickListener for rollButton. Could be considered "main" method of the application, along with
+     * setCombinationClicked.
+     */
+    private void onRollButtonPressed() {
+        if (game.getRollsLeft() == 0) {
             for (int i = 0; i < diceViews.length; i++) {
                 setDiePicked((CardView) diceViews[i].getParent(), i, false);
             }
         }
         soundPool.play(diceRollSound, 1, 1, 0, 0, 1);
         animateDice();
-        // Check if round number is the same after the dice throw
+        // Check if round number is the same after the dice roll
         int round = game.getRound();
-        game.throwDice();
+        game.rollDice();
         updateFigures(false);
         if (newRound(round)) {
             resetCombPoints();
         }
-        if (game.getThrowsLeft() == 0)
-            onNoThrowsLeft(true);
-        else throwButton.setText(R.string.throw_string);
+        if (game.getRollsLeft() == 0)
+            onNoRollsLeft(true);
+        else rollButton.setText(R.string.roll_string);
     }
 
-    private boolean newRound(int round) {
-        return round < game.getRound();
+    /**
+     * Returns whether the game has entered a new round.
+     * @param oldRound the round number before game logic for a dice roll was executed
+     * @return whether the game has entered a new round
+     */
+    private boolean newRound(int oldRound) {
+        return oldRound < game.getRound();
     }
 
+    /**
+     * Hides all combinations' points, except for those picked.
+     */
     private void resetCombPoints() {
         for (int i = 0; i < combViews.size(); i++) {
             if (game.isCombPicked(i)) continue;
@@ -305,6 +389,10 @@ public class GameActivity extends MusicPlayingActivity {
         }
     }
 
+    /**
+     * Animates random die faces in each die ImageView, except for those picked, while the
+     * diceRollSound is played.
+     */
     private void animateDice() {
         for (int i = 0; i < diceViews.length; i++) {
             if (game.isDiePicked(i)) continue;
@@ -332,10 +420,14 @@ public class GameActivity extends MusicPlayingActivity {
         }
     }
 
-    private void onNoThrowsLeft(boolean animateScore) {
+    /**
+     * Logic for handling the state of no dice rolls left.
+     * @param animateScore
+     */
+    private void onNoRollsLeft(boolean animateScore) {
         int round = game.getRound();
         if (gameOver()) onGameOver();
-        else throwButton.setText(R.string.next_round);
+        else rollButton.setText(R.string.next_round);
         if (game.getScorePerRound()[round - 1] > 0){
             if (animateScore) animateScoreIncrease();
             else setNumberInTextView(scoreView, game.getScore());
@@ -345,13 +437,13 @@ public class GameActivity extends MusicPlayingActivity {
     }
 
     private boolean gameOver() {
-        return game.getThrowsLeft() == 0 && game.getRound() == game.getMaxRounds();
+        return game.getRollsLeft() == 0 && game.getRound() == game.getMaxRounds();
     }
 
     private void onGameOver() {
-        throwsView.setText(R.string.game_over);
-        throwButton.setText(R.string.new_game);
-        throwButton.setOnClickListener(new View.OnClickListener() {
+        rollsView.setText(R.string.game_over);
+        rollButton.setText(R.string.new_game);
+        rollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 initGameActivity();
@@ -374,7 +466,7 @@ public class GameActivity extends MusicPlayingActivity {
 
     // Update all values in views (except for dice)
     private void updateFigures(boolean updateScore) {
-        setNumberInTextView(throwsView, game.getThrowsLeft());
+        setNumberInTextView(rollsView, game.getRollsLeft());
         setNumberInTextView(roundsView, game.getRound());
         if (updateScore) setNumberInTextView(scoreView, game.getScore());
         for (int i = 0; i < combViews.size(); i++) {

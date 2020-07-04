@@ -3,8 +3,8 @@
     <string name="die_one">die one</string>
     <string name="score">SCORE: 12</string>
     <string name="round">ROUND: 3</string>
-    <string name="throws_left">THROWS LEFT: 2</string>
-    <string name="throw_string">THROW</string>
+    <string name="rolls_left">ROLLS LEFT: 2</string>
+    <string name="roll_string">ROLL</string>
     <string name="low_combs">LOW\n9 P</string>
     <string name="four_combs">4\n12 P</string>
     <string name="five_combs">5\n10 P</string>

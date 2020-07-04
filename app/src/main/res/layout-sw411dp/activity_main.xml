@@ -109,7 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/throwTextView"
+        app:layout_constraintBottom_toTopOf="@+id/rollTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
@@ -221,7 +221,7 @@
     </TableLayout>
 
     <TextView
-        android:id="@+id/throwTextView"
+        android:id="@+id/rollTextView"
         android:layout_width="wrap_content"
         android:layout_height="63dp"
         android:backgroundTint="#000000"
@@ -235,7 +235,7 @@
         android:shadowDx="4"
         android:shadowDy="4"
         android:shadowRadius="5"
-        android:text="@string/throws_left"
+        android:text="@string/rolls_left"
         android:textColor="@color/colorAccent"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
@@ -260,10 +260,10 @@
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/throwTextView">
+        app:layout_constraintTop_toBottomOf="@+id/rollTextView">
 
         <Button
-            android:id="@+id/throwButton"
+            android:id="@+id/rollButton"
             style="@style/cardButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -273,7 +273,7 @@
             android:gravity="center|center_horizontal|center_vertical"
             android:paddingStart="40dp"
             android:paddingEnd="40dp"
-            android:text="@string/throw_string"
+            android:text="@string/roll_string"
             android:textAlignment="gravity"
             android:textSize="24sp" />
 

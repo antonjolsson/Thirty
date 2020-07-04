@@ -8,10 +8,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-// Class representing a point combination (Low, 4, 5... etc)
+/**
+ * Class representing a point-combination (Low, 3, 5, ... , 12)
+ * @author Anton J Olsson
+ */
 public class Combination implements Cloneable{
 
-    // Get all possible partitions of the current dice set
+    /**
+     * Returns all possible partitions of a List of Die.
+     * @param dice the List of Die of which to return partitions
+     * @return A Set containing all partitions; a partition is represented by a Set, containing parts
+     * in the form of List's
+     */
     public static Set<Set<List<Die>>> getPartitions(List<Die> dice){
         if (dice.size() == 0 || dice.size() == 1) {
             Set<Set<List<Die>>> partitions = new HashSet<>();
@@ -43,7 +51,11 @@ public class Combination implements Cloneable{
         }
     }
 
-    // Copy a partition
+    /**
+     * Copies a <code>Set</code> of <code>List</code>'s of <code>Die</code>, representing a partition of dice.
+     * @param partition the partition to be copied
+     * @return A copy of the partition
+     */
     private static Set<List<Die>> getCopy(Set<List<Die>> partition) {
         Set<List<Die>> partitionCopy = new HashSet<>();
         for (List<Die> list : partition) {
@@ -53,7 +65,11 @@ public class Combination implements Cloneable{
         return partitionCopy;
     }
 
-    // Get the 0-indexed order number of a combination (starting from Low)
+    /**
+     * Returns the 0-indexed order number of a Combination (starting from Low).
+     * @param nameAsInt name of the combination as an <code>int</code>
+     * @return The 0-indexed order number
+     */
     public static int getOrderNum(int nameAsInt) {
         return nameAsInt == 1 ? 0 : nameAsInt - LOWEST_NUM_VALUE + 1;
     }
@@ -65,33 +81,63 @@ public class Combination implements Cloneable{
     CombName[] combNames = CombName.values();
 
     private CombName name;
-    // If combination has been picked and its max points added to total score; final max points. Else,
-    // max points of current dice.
-    private int points = 0;
-    private boolean isPicked; // Has this combination been picked?
 
+    /**
+     * If <code>Combination</code> has been picked and its max points added to total score; final max points. Else,
+     * max points of current dice.
+     */
+    private int points = 0;
+    /**
+     * Representing whether this <code>Combination</code> has been picked or not.
+     */
+    private boolean isPicked;
+
+    /**
+     * Constructs a new <code>Combination</code> given an index number. Sets <code>isPicked</code> to <code>false</code> as default.
+     * @param combNum the index number from which the <code>Combination</code> sets its <code>name.</code>
+     */
     Combination(int combNum) {
         name = combNames[combNum];
         isPicked = false;
     }
 
+    /**
+     * Sets the points this <code>Combination</code> yields.
+     * @param points the number of points
+     */
     public void setPoints(int points) {
         this.points = points;
     }
 
+    /**
+     * Returns the number of points this <code>Combination</code> yields.
+     * @return The number of points
+     */
     public int getPoints() {
         return points;
     }
 
+    /**
+     * Returns whether this <code>Combination</code> has been picked yet or not.
+     * @return the value of <code>isPicked</code>
+     */
     public boolean isPicked() {
         return isPicked;
     }
 
+    /**
+     * Sets whether this <code>Combination</code> has been picked yet or not.
+     * @param isPicked whether this <code>Combination</code> has been picked or not
+     */
     public void setPickedComb(boolean isPicked) {
         this.isPicked = isPicked;
     }
 
-    // Compute max points for this combination from all possible dice partitions
+    /**
+     * Computes max points for this combination from all possible dice partitions.
+     * @param allPartitions all possible partitions of the current dice set
+     * @param dice the current dice set, used to compute points for <code>Combination LOW.</code>
+     */
     public void computePoints(Set<Set<List<Die>>> allPartitions, Die[] dice) {
         points = 0;
         if (name == CombName.LOW){
@@ -111,6 +157,11 @@ public class Combination implements Cloneable{
         }
     }
 
+    /**
+     * Returns the sum of faces of a <code>List</code> of <code>Die.</code>
+     * @param part the <code>List</code> of <List>Die.</List>
+     * @return The sum
+     */
     private int getDiceSum(List<Die> part) {
         int sum = 0;
         for (Die die : part) {
@@ -120,6 +171,11 @@ public class Combination implements Cloneable{
     }
 
     // Get the sum of all dice with values < 4
+
+    /**
+     * Adds the sum of all dice with values less than 4 to <code>points</code>.
+     * @param dice the current dice set
+     */
     private void addLowFaces(Die[] dice) {
         for (Die die : dice) {
             if (die.getFace() < LOWEST_NUM_VALUE)
@@ -127,6 +183,11 @@ public class Combination implements Cloneable{
         }
     }
 
+    /**
+     * Necessary to make this class <code>Cloneable</code>.
+     * @return A clone of an object
+     * @throws CloneNotSupportedException
+     */
     @NotNull
     public Object clone() throws
             CloneNotSupportedException
@@ -134,12 +195,22 @@ public class Combination implements Cloneable{
         return super.clone();
     }
 
+    /**
+     * Returns <code>name</code> of this object as an int. <code>LOW</code> equals 1, other combinations
+     * are represented by their name in numeric form.
+     * @return <code>name</code> as an <code>int.</code>
+     */
     public int getNameAsInt() {
         if (name == CombName.LOW) return 1;
         else return getOrderNumber() + LOWEST_NUM_VALUE - 1;
     }
 
     // Get the 0-indexed order number of this combination
+
+    /**
+     *
+     * @return Returns the 0-indexed order number of this combination, as ordered in <code>CombName.</code>
+     */
     public int getOrderNumber() {
         for (int i = 0; i < combNames.length; i++) {
             if (combNames[i] == name)
