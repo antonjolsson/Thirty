@@ -1,28 +1,29 @@
 package com.antware.thirty;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import static com.antware.thirty.GameActivity.COMB_PER_ROUND_MESSAGE;
 import static com.antware.thirty.GameActivity.SCORE_MESSAGE;
 import static com.antware.thirty.GameActivity.SCORE_PER_ROUND_MESSAGE;
 
-// Class for displaying score per round
+/**
+ * Class for displaying score per round.
+ * @author Anton J Olsson
+ */
 public class ScoreActivity extends MusicPlayingActivity {
 
     private final static int SCORE_VIEW_INDEX = 2; // Index of score View in TableLayout
     private static final int COMB_VIEW_INDEX = 3; // Index of chosen combination  View in TableLayout
     private static final int POINTS_ROW_START_INDEX = 2; // Starting row in TableLayout for displaying points
 
+    /**
+     * Creates the UI from Intent created in GameActivity.
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,9 @@ public class ScoreActivity extends MusicPlayingActivity {
         bindMusicService();
     }
 
-    // Notice GameActivity if music playback status was changed in this activity
+    /**
+     * Notices GameActivity if music playback status was changed in this activity
+     */
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, GameActivity.class);
@@ -61,6 +64,11 @@ public class ScoreActivity extends MusicPlayingActivity {
         super.onBackPressed();
     }
 
+    /**
+     * Gets a combination name as a String from its integer name.
+     * @param combAsInt the integer name.
+     * @return the name as a String
+     */
     private String getCombName(int combAsInt) {
         switch (combAsInt) {
             case 0:

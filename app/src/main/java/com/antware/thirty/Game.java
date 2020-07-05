@@ -10,6 +10,7 @@ import java.util.Set;
 
 /**
  * Class for handling pure game logic.
+ * @author Anton J Olsson
  */
 public class Game implements Parcelable {
 
@@ -28,13 +29,13 @@ public class Game implements Parcelable {
     private int[] combPerRound;
 
     /**
-     * Constructs a new <code>Game.</code>
+     * Constructs a new Game.
      */
     public Game() {}
 
     /**
      * Constructor used to restore the current game state after being destroyed.
-     * @param in The game state as a <code>Parcel.</code>
+     * @param in The game state as a Parcel.
      */
     protected Game(Parcel in) {
         round = in.readInt();
@@ -64,7 +65,7 @@ public class Game implements Parcelable {
 
     /**
      * Restores the current dice set from saved state.
-     * @param in The game state as a <code>Parcel.</code>
+     * @param in The game state as a Parcel.
      */
     private void restoreDice(Parcel in) {
         int[] dieFaces = new int[dice.length];
@@ -78,8 +79,8 @@ public class Game implements Parcelable {
     }
 
     /**
-     * Saves current game state as a <code>Parcel.</code>
-     * @param dest The <code>Parcel</code> to write to.
+     * Saves current game state as a Parcel.
+     * @param dest The Parcel to write to.
      * @param flags Additional flags about how the object should be written
      */
     @Override
@@ -109,7 +110,7 @@ public class Game implements Parcelable {
     }
 
     /**
-     * Returns all die faces as an <code>int[].</code>
+     * Returns all die faces as an int[].
      * @return all die faces
      */
     private int[] getDieFaces() {
@@ -121,7 +122,7 @@ public class Game implements Parcelable {
     }
 
     /**
-     * Code necessary for implementing <code>Parcelable</code>.
+     * Code necessary for implementing Parcelable.
      * <a href>https://developer.android.com/reference/android/os/Parcelable</a>
      */
     @Override
@@ -131,7 +132,7 @@ public class Game implements Parcelable {
 
     public static final Creator<Game> CREATOR = new Creator<Game>() {
         /**
-         * Code necessary for implementing <code>Parcelable</code>.
+         * Code necessary for implementing Parcelable.
          * <a href>https://developer.android.com/reference/android/os/Parcelable.Creator</a>
          */
         @Override
@@ -140,7 +141,7 @@ public class Game implements Parcelable {
         }
 
         /**
-         * Code necessary for implementing <code>Parcelable</code>.
+         * Code necessary for implementing Parcelable.
          * <a href>https://developer.android.com/reference/android/os/Parcelable.Creator</a>
          */
         @Override
@@ -172,7 +173,7 @@ public class Game implements Parcelable {
     }
 
     /**
-     * Creates new dice and puts them in <code>dice.</code>
+     * Creates new dice and puts them in dice.
      * @param faces the faces of the dice, if called to restore game state
      */
     private void initDice(int[] faces) {
@@ -184,7 +185,7 @@ public class Game implements Parcelable {
     }
 
     /**
-     * Reduces the number of <code>diceRollsLeft</code>, rolls dice, computes new points for each
+     * Reduces the number of diceRollsLeft, rolls dice, computes new points for each
      * combination. Depending on state, possibly also sets the score of this round or inits a new round.
      */
     public void rollDice() {
@@ -225,7 +226,7 @@ public class Game implements Parcelable {
     }
 
     /**
-     * Adds round-score to total score and total score/round tally and sets <code>combPickedThisRound</code>
+     * Adds round-score to total score and total score/round tally and sets combPickedThisRound
      * to null.
      */
     private void setRoundScore() {

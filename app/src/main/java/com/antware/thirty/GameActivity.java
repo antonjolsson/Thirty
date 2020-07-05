@@ -23,10 +23,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-// Class for main game UI
-
 /**
  * Class/Activity for the main/game screen.
+ * @author Anton J Olsson
  */
 public class GameActivity extends MusicPlayingActivity {
 
@@ -35,12 +34,14 @@ public class GameActivity extends MusicPlayingActivity {
     public static final String SCORE_PER_ROUND_MESSAGE = "com.example.geoquiz.SCORE_PER_ROUND_MESSAGE";
 
     private static final String KEY_GAME = "game";
+    private static final String KEY_PICK_COMB_REMINDER = "showPickCombReminder";
 
     private static final int DICE_ROLL_SOUND_DUR = 600;
     private static final int DICE_ANIMATION_FRAME_DUR = 100;
     private static final int SCORE_ANIM_FRAME_DUR = 50;
     private static final int COMB_PICKED_SOUND_DUR = 600;
     private static final float INCREASE_POINT_VOLUME = 0.15f;
+
 
     TextView roundsView, scoreView, rollsView, pickCombView;
     Button rollButton, resultButton;
@@ -50,6 +51,7 @@ public class GameActivity extends MusicPlayingActivity {
     Game game = new Game();
     private int diceRollSound, selectDieSound, combPickSound, increasePointsSound;
     private SoundPool soundPool;
+    private boolean showPickCombView;
 
     /**
      * Creates the Activity and inflates the layout. If savedInstanceState is not null the game is
@@ -77,6 +79,7 @@ public class GameActivity extends MusicPlayingActivity {
      */
     private void resumeGame(Bundle savedInstanceState) {
         game = savedInstanceState.getParcelable(KEY_GAME);
+        showPickCombView = savedInstanceState.getBoolean(KEY_PICK_COMB_REMINDER);
         initElements(false);
         setDieFaces();
         updateFigures(true);
@@ -85,13 +88,15 @@ public class GameActivity extends MusicPlayingActivity {
     }
 
     /**
-     * Overridden method to save the game state (excluding the UI) as a <code>Parcelable.</code>
-     * @param outState the saved instance state, with the game state added to it
+     * Overridden method to save the game state (excluding the UI) as a Parcelable, and whether to
+     * display the "Pick combination" reminder.
+     * @param outState the saved instance state, with the game state and boolean added to it
      */
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(KEY_GAME, game);
+        outState.putBoolean(KEY_PICK_COMB_REMINDER, showPickCombView);
     }
 
     /**
@@ -115,7 +120,10 @@ public class GameActivity extends MusicPlayingActivity {
         setNumberInTextView(scoreView, 0);
         rollsView = findViewById(R.id.rollTextView);
         rollsView.setText(R.string.rolls_left);
+
         pickCombView = findViewById(R.id.pickCombView);
+        pickCombView.setVisibility(showPickCombView ? View.VISIBLE : View.GONE);
+
         rollButton = findViewById(R.id.rollButton);
         rollButton.setSoundEffectsEnabled(false);
         rollButton.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +132,7 @@ public class GameActivity extends MusicPlayingActivity {
                 onRollButtonPressed();
             }
         });
+
         resultButton = findViewById(R.id.resultButton);
         resultButton.setVisibility(View.GONE);
         resultButton.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +149,7 @@ public class GameActivity extends MusicPlayingActivity {
     }
 
     /**
-     * Loads all sound effects (not including the music) used in the game, in a <code>SoundPool.</code>
+     * Loads all sound effects (not including the music) used in the game, in a SoundPool.
      * @param rollDice whether the dice-roll sound should be instantly played
      */
     private void loadSounds(final boolean rollDice) {
@@ -293,6 +302,7 @@ public class GameActivity extends MusicPlayingActivity {
             if (game.getRollsLeft() == 0) {
                 forceCombChoice(false);
                 pickCombView.setVisibility(View.GONE);
+                showPickCombView = false;
                 Handler handler = new Handler();
                 // Delay score-increase animation until picked-combination sound has been played
                 handler.postDelayed(new Runnable() {
@@ -337,6 +347,7 @@ public class GameActivity extends MusicPlayingActivity {
                     }
                 }
                 else pickCombView.setVisibility(View.VISIBLE);
+                showPickCombView = true;
             }
         });
         int bgColor = enable ? R.color.colorAccent : R.color.colorAccentSemiTransp;
@@ -422,7 +433,8 @@ public class GameActivity extends MusicPlayingActivity {
 
     /**
      * Logic for handling the state of no dice rolls left.
-     * @param animateScore
+     * @param animateScore whether to animate a score increase or not. Necessary as the method may
+     * be called just after state restoration
      */
     private void onNoRollsLeft(boolean animateScore) {
         int round = game.getRound();
@@ -436,10 +448,17 @@ public class GameActivity extends MusicPlayingActivity {
             forceCombChoice(true);
     }
 
+    /**
+     * Checks whether the game is over or not.
+     * @return whether game over or not
+     */
     private boolean gameOver() {
         return game.getRollsLeft() == 0 && game.getRound() == game.getMaxRounds();
     }
 
+    /**
+     * Alters the appearance and functionality of rollButton and resultButton.
+     */
     private void onGameOver() {
         rollsView.setText(R.string.game_over);
         rollButton.setText(R.string.new_game);
@@ -453,6 +472,9 @@ public class GameActivity extends MusicPlayingActivity {
         resultButton.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Sets the image in every die ImageView according to its value.
+     */
     private void setDieFaces() {
         for (int i = 0; i < diceViews.length; i++) {
             int d = getDieFaceView(game.getDieFace(i));
@@ -460,11 +482,19 @@ public class GameActivity extends MusicPlayingActivity {
         }
     }
 
+    /**
+     * Gets the die image resource corresponding to a die face.
+     * @param dieFace
+     * @return
+     */
     private int getDieFaceView(int dieFace) {
         return getResources().getIdentifier("die" + dieFace, "drawable", getPackageName());
     }
 
-    // Update all values in views (except for dice)
+    /**
+     * Updates all numbers in Views (except for dice).
+     * @param updateScore whether to update score as well
+     */
     private void updateFigures(boolean updateScore) {
         setNumberInTextView(rollsView, game.getRollsLeft());
         setNumberInTextView(roundsView, game.getRound());
@@ -477,6 +507,9 @@ public class GameActivity extends MusicPlayingActivity {
         }
     }
 
+    /**
+     * Animates increasing score.
+     */
     private void animateScoreIncrease() {
         final int oldScore = Integer.parseInt(scoreView.getText().toString().
                 replaceAll("[^\\d]", ""));
@@ -495,18 +528,32 @@ public class GameActivity extends MusicPlayingActivity {
         }
     }
 
+    /**
+     * Sets numbers in TextViews.
+     * @param textView the TextView containing the number
+     * @param number the new number to set
+     */
     private void setNumberInTextView(TextView textView, int number) {
         String newText = textView.getText().toString().replaceAll("(\\d)+",
                 String.valueOf(number));
         textView.setText(newText);
     }
 
+    /**
+     * Sets the points in a combination TextView.
+     * @param text the TextView to alter
+     * @param points the number of points to set
+     */
     private void setCombPoints(TextView text, int points) {
         String pointStr = "\n" + ((points >= 0) ? points + " P" : "");
         String newText = text.getText().toString().replaceFirst("\\n.*", pointStr);
         text.setText(newText);
     }
 
+    /**
+     * Resets the playback position to the beginning when back button is pressed. Else, the position
+     * will be the same when the app is restarted.
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

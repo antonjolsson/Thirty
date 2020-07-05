@@ -52,7 +52,7 @@ public class Combination implements Cloneable{
     }
 
     /**
-     * Copies a <code>Set</code> of <code>List</code>'s of <code>Die</code>, representing a partition of dice.
+     * Copies a <code>Set of <code>List's of <code>Die, representing a partition of dice.
      * @param partition the partition to be copied
      * @return A copy of the partition
      */
@@ -67,7 +67,7 @@ public class Combination implements Cloneable{
 
     /**
      * Returns the 0-indexed order number of a Combination (starting from Low).
-     * @param nameAsInt name of the combination as an <code>int</code>
+     * @param nameAsInt name of the combination as an <code>int
      * @return The 0-indexed order number
      */
     public static int getOrderNum(int nameAsInt) {
@@ -83,18 +83,18 @@ public class Combination implements Cloneable{
     private CombName name;
 
     /**
-     * If <code>Combination</code> has been picked and its max points added to total score; final max points. Else,
+     * If <code>Combination has been picked and its max points added to total score; final max points. Else,
      * max points of current dice.
      */
     private int points = 0;
     /**
-     * Representing whether this <code>Combination</code> has been picked or not.
+     * Representing whether this <code>Combination has been picked or not.
      */
     private boolean isPicked;
 
     /**
-     * Constructs a new <code>Combination</code> given an index number. Sets <code>isPicked</code> to <code>false</code> as default.
-     * @param combNum the index number from which the <code>Combination</code> sets its <code>name.</code>
+     * Constructs a new <code>Combination given an index number. Sets <code>isPicked to <code>false as default.
+     * @param combNum the index number from which the <code>Combination sets its <code>name.
      */
     Combination(int combNum) {
         name = combNames[combNum];
@@ -102,7 +102,7 @@ public class Combination implements Cloneable{
     }
 
     /**
-     * Sets the points this <code>Combination</code> yields.
+     * Sets the points this <code>Combination yields.
      * @param points the number of points
      */
     public void setPoints(int points) {
@@ -110,7 +110,7 @@ public class Combination implements Cloneable{
     }
 
     /**
-     * Returns the number of points this <code>Combination</code> yields.
+     * Returns the number of points this <code>Combination yields.
      * @return The number of points
      */
     public int getPoints() {
@@ -118,16 +118,16 @@ public class Combination implements Cloneable{
     }
 
     /**
-     * Returns whether this <code>Combination</code> has been picked yet or not.
-     * @return the value of <code>isPicked</code>
+     * Returns whether this <code>Combination has been picked yet or not.
+     * @return the value of <code>isPicked
      */
     public boolean isPicked() {
         return isPicked;
     }
 
     /**
-     * Sets whether this <code>Combination</code> has been picked yet or not.
-     * @param isPicked whether this <code>Combination</code> has been picked or not
+     * Sets whether this <code>Combination has been picked yet or not.
+     * @param isPicked whether this <code>Combination has been picked or not
      */
     public void setPickedComb(boolean isPicked) {
         this.isPicked = isPicked;
@@ -136,7 +136,7 @@ public class Combination implements Cloneable{
     /**
      * Computes max points for this combination from all possible dice partitions.
      * @param allPartitions all possible partitions of the current dice set
-     * @param dice the current dice set, used to compute points for <code>Combination LOW.</code>
+     * @param dice the current dice set, used to compute points for <code>Combination LOW.
      */
     public void computePoints(Set<Set<List<Die>>> allPartitions, Die[] dice) {
         points = 0;
@@ -158,8 +158,8 @@ public class Combination implements Cloneable{
     }
 
     /**
-     * Returns the sum of faces of a <code>List</code> of <code>Die.</code>
-     * @param part the <code>List</code> of <List>Die.</List>
+     * Returns the sum of faces of a <code>List of <code>Die.
+     * @param part the <code>List of <List>Die.</List>
      * @return The sum
      */
     private int getDiceSum(List<Die> part) {
@@ -173,7 +173,7 @@ public class Combination implements Cloneable{
     // Get the sum of all dice with values < 4
 
     /**
-     * Adds the sum of all dice with values less than 4 to <code>points</code>.
+     * Adds the sum of all dice with values less than 4 to <code>points.
      * @param dice the current dice set
      */
     private void addLowFaces(Die[] dice) {
@@ -184,7 +184,7 @@ public class Combination implements Cloneable{
     }
 
     /**
-     * Necessary to make this class <code>Cloneable</code>.
+     * Necessary to make this class <code>Cloneable.
      * @return A clone of an object
      * @throws CloneNotSupportedException
      */
@@ -196,9 +196,9 @@ public class Combination implements Cloneable{
     }
 
     /**
-     * Returns <code>name</code> of this object as an int. <code>LOW</code> equals 1, other combinations
+     * Returns name of this object as an int. LOW equals 1, other combinations
      * are represented by their name in numeric form.
-     * @return <code>name</code> as an <code>int.</code>
+     * @return name as an int.
      */
     public int getNameAsInt() {
         if (name == CombName.LOW) return 1;
@@ -209,7 +209,7 @@ public class Combination implements Cloneable{
 
     /**
      *
-     * @return Returns the 0-indexed order number of this combination, as ordered in <code>CombName.</code>
+     * @return Returns the 0-indexed order number of this combination, as ordered in CombName.
      */
     public int getOrderNumber() {
         for (int i = 0; i < combNames.length; i++) {

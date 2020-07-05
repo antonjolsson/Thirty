@@ -13,7 +13,10 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
 
-// Super class for all activities, handling music logic
+/**
+ * Super class for all Activities, handling music logic.
+ * @author Anton J Olsson
+ */
 public class MusicPlayingActivity extends AppCompatActivity {
 
     protected static final int MESSAGE_PLAY_MUSIC = 0;
@@ -35,17 +38,30 @@ public class MusicPlayingActivity extends AppCompatActivity {
 
     protected final ServiceConnection serviceConnection = new ServiceConnection(){
 
+        /**
+         * Resumes music when service is connected, if playMusic is true.
+         * @param name The concrete component name of the service that has been connected
+         * @param binder The IBinder of the Service's communication channel, which you can now make calls on
+         */
         public void onServiceConnected(ComponentName name, IBinder binder) {
             musicService = ((MusicService.ServiceBinder) binder).getService();
             if (playMusic)
                 musicService.resumeMusic();
         }
 
+        /**
+         * Sets musicService to null when service is disconnected.
+         * @param name The concrete component name of the service whose connection has been lost
+         */
         public void onServiceDisconnected(ComponentName name) {
             musicService = null;
         }
     };
 
+    /**
+     * Restores instance state if not null, and possibly also resumes music playback.
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +71,9 @@ public class MusicPlayingActivity extends AppCompatActivity {
         }
     }
 
-    // Set size of music controls
+    /**
+     * Sets size of the music controls, depending on screen size.
+     */
     private void setTextSizes() {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
@@ -65,6 +83,9 @@ public class MusicPlayingActivity extends AppCompatActivity {
         smallTextSize = smallScreen ? SMALL_TEXT_SIZE_SMALL_SCREEN : SMALL_TEXT_SIZE_LARGE_SCREEN;
     }
 
+    /**
+     * Initializes the music control view and adds a click listener.
+     */
     protected void initMusicControlView() {
         musicControlView = findViewById(R.id.playView);
         setMusicControlText();
@@ -76,6 +97,9 @@ public class MusicPlayingActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method to possibly resume the music playback on app restart.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -83,12 +107,19 @@ public class MusicPlayingActivity extends AppCompatActivity {
             musicService.resumeMusic();
     }
 
+    /**
+     * Saves the music playback state.
+     * @param outState the saved instance state
+     */
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(KEY_PLAY_MUSIC, playMusic);
     }
 
+    /**
+     * Initializes the music playback by starting a Service.
+     */
     protected void initMusic() {
         bindMusicService();
         musicIntent = new Intent();
@@ -97,6 +128,9 @@ public class MusicPlayingActivity extends AppCompatActivity {
         startService(musicIntent);
     }
 
+    /**
+     * Unbinds the music service.
+     */
     protected void unbindMusicService()
     {
         if (serviceBound)
@@ -106,27 +140,38 @@ public class MusicPlayingActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Binds the music service.
+     */
     protected void bindMusicService(){
         bindService(new Intent(this, MusicService.class), serviceConnection,
                 Context.BIND_AUTO_CREATE);
         serviceBound = true;
     }
 
-    // If music is playing and pausing is due to switching activities, delay pausing so that new
-    // activity can cancel the pausing, preventing any stuttering. If pausing is due to exiting the
-    // game, music will be paused/stopped as well.
+    /**
+     * If music is playing and pausing is due to switching activities, delays pausing so that new
+     * activity can cancel the pausing, preventing any stuttering. If pausing is due to exiting the
+     * game, music will be paused/stopped as well.
+     */
     @Override
     protected void onPause() {
         super.onPause();
         musicService.pauseDelayed();
     }
 
+    /**
+     * Unbinds the music service when activity is destroyed.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unbindMusicService();
     }
 
+    /**
+     * If music is playing, pauses the music - and vice versa.
+     */
     protected void toggleMusic() {
         if (playMusic) {
             if (musicService != null)
@@ -141,7 +186,9 @@ public class MusicPlayingActivity extends AppCompatActivity {
         setMusicControlText();
     }
 
-    // Resize font size of music control symbols to keep their sizes approx. the same
+    /**
+     * Resizes the font size of music control symbols to keep their sizes approx. the same.
+     */
     private void setMusicControlText() {
         if (!playMusic) {
             musicControlView.setText(R.string.play);

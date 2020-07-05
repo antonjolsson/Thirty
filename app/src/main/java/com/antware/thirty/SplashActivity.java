@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
 
-// Class for displaying logo/splash screen
+/**
+ * Class for displaying the logo/splash screen.
+ * @author Anton J Olsson
+ */
 public class SplashActivity extends MusicPlayingActivity {
 
     private final static int SPLASH_DUR = 3000; // Display duration time
@@ -16,6 +19,11 @@ public class SplashActivity extends MusicPlayingActivity {
     Handler startActivityHandler;
     Runnable startActivityRunnable;
 
+    /**
+     * Displays the animated logo for 3 seconds before starting GameActivity and music playback.
+     * The delay is implemented by a Handler.
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +45,9 @@ public class SplashActivity extends MusicPlayingActivity {
         else bindMusicService();
     }
 
+    /**
+     * Animates the appearance of the game logo by enlarging and rotating it.
+     */
     private void animateLogo() {
         ImageView logoView = findViewById(R.id.logoView);
         ObjectAnimator scaleX = ObjectAnimator.ofFloat(logoView, "scaleX", 0.f, 1.f);
@@ -50,6 +61,10 @@ public class SplashActivity extends MusicPlayingActivity {
         set.start();
     }
 
+    /**
+     * Pauses the music and resets the position when back button is pressed. Just as in GameActivity,
+     * this must be executed to make the music start from the beginning on app restart.
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

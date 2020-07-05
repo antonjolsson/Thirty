@@ -15,14 +15,14 @@ public class Die {
     private boolean isPicked;
 
     /**
-     * Constructs a new <code>Die.</code> Sets face to 0 as default.
+     * Constructs a new Die. Sets face to 0 as default.
      */
     Die() {
         setFace(0);
     }
 
     /**
-     * Constructs a new <code>Die.</code>
+     * Constructs a new Die.
      * @param face the initial face of the die
      */
     Die(int face) {
