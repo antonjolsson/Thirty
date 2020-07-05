@@ -34,14 +34,13 @@ public class GameActivity extends MusicPlayingActivity {
     public static final String SCORE_PER_ROUND_MESSAGE = "com.example.geoquiz.SCORE_PER_ROUND_MESSAGE";
 
     private static final String KEY_GAME = "game";
-    private static final String KEY_PICK_COMB_REMINDER = "showPickCombReminder";
+    private static final String KEY_PICK_COMB_VISIBILITY = "showPickCombVisibility";
 
     private static final int DICE_ROLL_SOUND_DUR = 600;
     private static final int DICE_ANIMATION_FRAME_DUR = 100;
     private static final int SCORE_ANIM_FRAME_DUR = 50;
     private static final int COMB_PICKED_SOUND_DUR = 600;
     private static final float INCREASE_POINT_VOLUME = 0.15f;
-
 
     TextView roundsView, scoreView, rollsView, pickCombView;
     Button rollButton, resultButton;
@@ -51,7 +50,6 @@ public class GameActivity extends MusicPlayingActivity {
     Game game = new Game();
     private int diceRollSound, selectDieSound, combPickSound, increasePointsSound;
     private SoundPool soundPool;
-    private boolean showPickCombView;
 
     /**
      * Creates the Activity and inflates the layout. If savedInstanceState is not null the game is
@@ -79,8 +77,8 @@ public class GameActivity extends MusicPlayingActivity {
      */
     private void resumeGame(Bundle savedInstanceState) {
         game = savedInstanceState.getParcelable(KEY_GAME);
-        showPickCombView = savedInstanceState.getBoolean(KEY_PICK_COMB_REMINDER);
-        initElements(false);
+        int showPickCombVisibility = savedInstanceState.getInt(KEY_PICK_COMB_VISIBILITY);
+        initElements(false, showPickCombVisibility);
         setDieFaces();
         updateFigures(true);
         if (game.getRollsLeft() == 0)
@@ -88,15 +86,15 @@ public class GameActivity extends MusicPlayingActivity {
     }
 
     /**
-     * Overridden method to save the game state (excluding the UI) as a Parcelable, and whether to
-     * display the "Pick combination" reminder.
-     * @param outState the saved instance state, with the game state and boolean added to it
+     * Overridden method to save the game state (excluding the UI) as a Parcelable, and the visibility
+     * of the "Pick combination" reminder.
+     * @param outState the saved instance state, with the game state and integer added to it
      */
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(KEY_GAME, game);
-        outState.putBoolean(KEY_PICK_COMB_REMINDER, showPickCombView);
+        outState.putInt(KEY_PICK_COMB_VISIBILITY, pickCombView.getVisibility());
     }
 
     /**
@@ -104,15 +102,16 @@ public class GameActivity extends MusicPlayingActivity {
      */
     private void initGameActivity() {
         game.initGame();
-        initElements(true);
+        initElements(true, View.GONE);
         onRollButtonPressed();
     }
 
     /**
      * Initializes all audio-visual elements on this screen.
      * @param rollDice whether the dice-roll sound should be instantly played
+     * @param showPickCombVisibility the visibility of the "Pick combination!" View
      */
-    private void initElements(boolean rollDice) {
+    private void initElements(boolean rollDice, int showPickCombVisibility) {
         loadSounds(rollDice);
 
         roundsView = findViewById(R.id.roundTextView);
@@ -122,7 +121,6 @@ public class GameActivity extends MusicPlayingActivity {
         rollsView.setText(R.string.rolls_left);
 
         pickCombView = findViewById(R.id.pickCombView);
-        pickCombView.setVisibility(showPickCombView ? View.VISIBLE : View.GONE);
 
         rollButton = findViewById(R.id.rollButton);
         rollButton.setSoundEffectsEnabled(false);
@@ -146,6 +144,8 @@ public class GameActivity extends MusicPlayingActivity {
 
         initCombinations();
         initDice();
+
+        pickCombView.setVisibility(showPickCombVisibility);
     }
 
     /**
@@ -302,7 +302,7 @@ public class GameActivity extends MusicPlayingActivity {
             if (game.getRollsLeft() == 0) {
                 forceCombChoice(false);
                 pickCombView.setVisibility(View.GONE);
-                showPickCombView = false;
+                //showPickCombView = false;
                 Handler handler = new Handler();
                 // Delay score-increase animation until picked-combination sound has been played
                 handler.postDelayed(new Runnable() {
@@ -347,7 +347,6 @@ public class GameActivity extends MusicPlayingActivity {
                     }
                 }
                 else pickCombView.setVisibility(View.VISIBLE);
-                showPickCombView = true;
             }
         });
         int bgColor = enable ? R.color.colorAccent : R.color.colorAccentSemiTransp;
