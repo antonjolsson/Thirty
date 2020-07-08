@@ -123,7 +123,7 @@ public class Game implements Parcelable {
 
     /**
      * Code necessary for implementing Parcelable.
-     * <a href>https://developer.android.com/reference/android/os/Parcelable</a>
+     * <a href="https://developer.android.com/reference/android/os/Parcelable">Documentation.</a>
      */
     @Override
     public int describeContents() {
@@ -133,7 +133,7 @@ public class Game implements Parcelable {
     public static final Creator<Game> CREATOR = new Creator<Game>() {
         /**
          * Code necessary for implementing Parcelable.
-         * <a href>https://developer.android.com/reference/android/os/Parcelable.Creator</a>
+         * <a href="https://developer.android.com/reference/android/os/Parcelable.Creator">Documentation.</a>
          */
         @Override
         public Game createFromParcel(Parcel in) {
@@ -142,7 +142,7 @@ public class Game implements Parcelable {
 
         /**
          * Code necessary for implementing Parcelable.
-         * <a href>https://developer.android.com/reference/android/os/Parcelable.Creator</a>
+         * <a href="https://developer.android.com/reference/android/os/Parcelable.Creator">Documentation.</a>
          */
         @Override
         public Game[] newArray(int size) {
@@ -173,7 +173,7 @@ public class Game implements Parcelable {
     }
 
     /**
-     * Creates new dice and puts them in dice.
+     * Creates new dice and puts them in the array of dice.
      * @param faces the faces of the dice, if called to restore game state
      */
     private void initDice(int[] faces) {

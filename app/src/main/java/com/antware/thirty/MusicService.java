@@ -130,7 +130,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
     }
 
     /**
-     * Called to indicate an error.
+     * Called to indicate an error. <a href="https://developer.android.com/reference/android/media/MediaPlayer.OnErrorListener#onError(android.media.MediaPlayer,%20int,%20int)">Documentation.</a>
      */
     @Override
     public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {

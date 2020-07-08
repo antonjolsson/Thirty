@@ -483,8 +483,8 @@ public class GameActivity extends MusicPlayingActivity {
 
     /**
      * Gets the die image resource corresponding to a die face.
-     * @param dieFace
-     * @return
+     * @param dieFace the die face to get the corresponding image for
+     * @return the ImageView resource id for the image
      */
     private int getDieFaceView(int dieFace) {
         return getResources().getIdentifier("die" + dieFace, "drawable", getPackageName());

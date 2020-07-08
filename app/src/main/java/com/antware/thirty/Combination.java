@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Class representing a point-combination (Low, 3, 5, ... , 12)
+ * Class representing a point-combination (Low, 3, 5, ... , 12).
  * @author Anton J Olsson
  */
 public class Combination implements Cloneable{
@@ -52,7 +52,7 @@ public class Combination implements Cloneable{
     }
 
     /**
-     * Copies a <code>Set of <code>List's of <code>Die, representing a partition of dice.
+     * Copies a Set of Lists of Die, representing a partition of dice.
      * @param partition the partition to be copied
      * @return A copy of the partition
      */
@@ -83,18 +83,18 @@ public class Combination implements Cloneable{
     private CombName name;
 
     /**
-     * If <code>Combination has been picked and its max points added to total score; final max points. Else,
+     * If Combination has been picked and its max points added to total score; final max points. Else,
      * max points of current dice.
      */
     private int points = 0;
     /**
-     * Representing whether this <code>Combination has been picked or not.
+     * Representing whether this Combination has been picked or not.
      */
     private boolean isPicked;
 
     /**
-     * Constructs a new <code>Combination given an index number. Sets <code>isPicked to <code>false as default.
-     * @param combNum the index number from which the <code>Combination sets its <code>name.
+     * Constructs a new Combination given an index number. Sets isPicked to false as default.
+     * @param combNum the index number from which the Combination sets its name.
      */
     Combination(int combNum) {
         name = combNames[combNum];
@@ -102,7 +102,7 @@ public class Combination implements Cloneable{
     }
 
     /**
-     * Sets the points this <code>Combination yields.
+     * Sets the points this Combination yields.
      * @param points the number of points
      */
     public void setPoints(int points) {
@@ -110,7 +110,7 @@ public class Combination implements Cloneable{
     }
 
     /**
-     * Returns the number of points this <code>Combination yields.
+     * Returns the number of points this Combination yields.
      * @return The number of points
      */
     public int getPoints() {
@@ -118,16 +118,16 @@ public class Combination implements Cloneable{
     }
 
     /**
-     * Returns whether this <code>Combination has been picked yet or not.
-     * @return the value of <code>isPicked
+     * Returns whether this Combination has been picked yet or not.
+     * @return the value of isPicked
      */
     public boolean isPicked() {
         return isPicked;
     }
 
     /**
-     * Sets whether this <code>Combination has been picked yet or not.
-     * @param isPicked whether this <code>Combination has been picked or not
+     * Sets whether this Combination has been picked yet or not.
+     * @param isPicked whether this Combination has been picked or not
      */
     public void setPickedComb(boolean isPicked) {
         this.isPicked = isPicked;
@@ -136,7 +136,7 @@ public class Combination implements Cloneable{
     /**
      * Computes max points for this combination from all possible dice partitions.
      * @param allPartitions all possible partitions of the current dice set
-     * @param dice the current dice set, used to compute points for <code>Combination LOW.
+     * @param dice the current dice set, used to compute points for Combination LOW.
      */
     public void computePoints(Set<Set<List<Die>>> allPartitions, Die[] dice) {
         points = 0;
@@ -158,8 +158,8 @@ public class Combination implements Cloneable{
     }
 
     /**
-     * Returns the sum of faces of a <code>List of <code>Die.
-     * @param part the <code>List of <List>Die.</List>
+     * Returns the sum of faces of a List of Die.
+     * @param part the List of Die
      * @return The sum
      */
     private int getDiceSum(List<Die> part) {
@@ -170,10 +170,8 @@ public class Combination implements Cloneable{
         return sum;
     }
 
-    // Get the sum of all dice with values < 4
-
     /**
-     * Adds the sum of all dice with values less than 4 to <code>points.
+     * Adds the sum of all dice with values less than 4 to points.
      * @param dice the current dice set
      */
     private void addLowFaces(Die[] dice) {
@@ -184,7 +182,7 @@ public class Combination implements Cloneable{
     }
 
     /**
-     * Necessary to make this class <code>Cloneable.
+     * Necessary to make this class Cloneable.
      * @return A clone of an object
      * @throws CloneNotSupportedException
      */
@@ -205,10 +203,8 @@ public class Combination implements Cloneable{
         else return getOrderNumber() + LOWEST_NUM_VALUE - 1;
     }
 
-    // Get the 0-indexed order number of this combination
-
     /**
-     *
+     * Get the 0-indexed order number of this combination
      * @return Returns the 0-indexed order number of this combination, as ordered in CombName.
      */
     public int getOrderNumber() {
